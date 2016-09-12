@@ -6,11 +6,11 @@ require 'govuk_navigation_helpers/version'
 Gem::Specification.new do |spec|
   spec.name          = "govuk_navigation_helpers"
   spec.version       = GovukNavigationHelpers::VERSION
-  spec.authors       = ["Tijmen Brommet"]
-  spec.email         = ["tijmen@gmail.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
-  spec.homepage      = ""
+  spec.authors       = ["GOV.UK Dev"]
+  spec.email         = ["govuk-dev@digital.cabinet-office.gov.uk"]
+  spec.summary       = "Gem to transform items from the content-store into payloads for GOV.UK components"
+  spec.description   = "Gem to transform items from the content-store into payloads for GOV.UK components"
+  spec.homepage      = "https://github.com/alphagov/govuk_navigation_helpers"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
