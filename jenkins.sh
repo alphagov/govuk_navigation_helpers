@@ -36,6 +36,12 @@ git clean -fdx
 # is master.
 git merge --no-commit origin/master || git merge --abort
 
+echo "Running ruby linter"
+bundle install --path "${HOME}/bundles/${JOB_NAME}"
+bundle exec govuk-lint-ruby \
+  --format html --out rubocop-${GIT_COMMIT}.html \
+  --format clang
+
 # Bundle and run tests against multiple ruby versions
 for version in 2.3.1; do
   rm -f Gemfile.lock
