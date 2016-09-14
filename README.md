@@ -24,22 +24,23 @@ And then execute:
 
 ### Usage
 
-Query the content store using gds-api-adapters:
+Get the JSON representation of a page using the [gds-api-adapters](https://github.com/alphagov/gds-api-adapters/):
 
-```
-TODO
-```
-
-Get the data you need for your component, eg
-
-```
-# TODO
+```ruby
+content_store = GdsApi::ContentStore.new(Plek.current.find("content-store"))
+content_item = content_store.content_item("/register-to-vote")
 ```
 
-Pass to slimmer:
+Initialise the helper:
 
+```ruby
+@nav = GovukNavigationHelpers::NavigationHelper.new(content_item)
 ```
-TODO
+
+Render the component:
+
+```ruby
+<%= render partial: 'govuk_component/breadcrumbs', locals: { breadcrumbs: @nav.breadcrumbs }
 ```
 
 ### Running the test suite
