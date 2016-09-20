@@ -42,6 +42,15 @@ bundle exec govuk-lint-ruby \
   --format html --out rubocop-${GIT_COMMIT}.html \
   --format clang
 
+  # Clone govuk-content-schemas depedency for contract tests
+  rm -rf /tmp/govuk-content-schemas
+  git clone git@github.com:alphagov/govuk-content-schemas.git /tmp/govuk-content-schemas
+  (
+    cd /tmp/govuk-content-schemas
+    git checkout ${SCHEMA_GIT_COMMIT:-"master"}
+  )
+  export GOVUK_CONTENT_SCHEMAS_PATH=/tmp/govuk-content-schemas
+
 # Bundle and run tests against multiple ruby versions
 for version in 2.3.1; do
   rm -f Gemfile.lock

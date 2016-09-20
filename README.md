@@ -17,3 +17,11 @@ And then execute:
 ## Usage
 
 TBD.
+
+### Documentation
+
+See [RubyDoc](http://www.rubydoc.info/gems/govuk_navigation_helpers) for some limited documentation.
+
+To run a Yard server locally to preview documentation, run:
+
+    $ bundle exec yard server --reload
