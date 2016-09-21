@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'govuk_navigation_helpers'
 require 'govuk_schemas'
 
-RSpec.describe GovukNavigationHelpers::NavigationHelper do
+RSpec.describe GovukNavigationHelpers::Breadcrumbs do
   describe "#breadcrumbs" do
     it "can handle any valid content item" do
       generator = GovukSchemas::RandomExample.for_schema("placeholder", schema_type: "frontend")
@@ -95,6 +95,9 @@ RSpec.describe GovukNavigationHelpers::NavigationHelper do
   def breadcrumbs_for(content_item)
     generator = GovukSchemas::RandomExample.for_schema("placeholder", schema_type: "frontend")
     fully_valid_content_item = generator.merge_and_validate(content_item)
-    described_class.new(fully_valid_content_item).breadcrumbs
+
+    # Use the main class instead of GovukNavigationHelpers::Breadcrumbs, so that
+    # we're testing both at the same time.
+    GovukNavigationHelpers::NavigationHelper.new(fully_valid_content_item).breadcrumbs
   end
 end
