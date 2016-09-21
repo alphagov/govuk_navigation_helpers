@@ -24,23 +24,19 @@ And then execute:
 
 ### Usage
 
-Get the JSON representation of a page using the [gds-api-adapters](https://github.com/alphagov/gds-api-adapters/):
+Get the JSON representation of a page and initialise the helper:
 
 ```ruby
-content_store = GdsApi::ContentStore.new(Plek.current.find("content-store"))
-content_item = content_store.content_item("/register-to-vote")
-```
-
-Initialise the helper:
-
-```ruby
-@nav = GovukNavigationHelpers::NavigationHelper.new(content_item)
+def some_controller_method
+  content_item = Services.content_store.content_item("/register-to-vote")
+  @navigation = GovukNavigationHelpers::NavigationHelper.new(content_item)
+end
 ```
 
 Render the component:
 
 ```ruby
-<%= render partial: 'govuk_component/breadcrumbs', locals: { breadcrumbs: @nav.breadcrumbs }
+<%= render partial: 'govuk_component/breadcrumbs', locals: { breadcrumbs: @navigation.breadcrumbs }
 ```
 
 ### Running the test suite
