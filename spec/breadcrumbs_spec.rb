@@ -1,17 +1,11 @@
 require 'spec_helper'
-require 'govuk_navigation_helpers'
-require 'govuk_schemas'
 
 RSpec.describe GovukNavigationHelpers::Breadcrumbs do
   describe "#breadcrumbs" do
     it "can handle any valid content item" do
       generator = GovukSchemas::RandomExample.for_schema("placeholder", schema_type: "frontend")
 
-      50.times do
-        expect {
-          described_class.new(generator.payload).breadcrumbs
-        }.to_not raise_error
-      end
+      expect { GovukNavigationHelpers::Breadcrumbs.new(generator.payload).breadcrumbs }.to_not raise_error
     end
 
     it "returns the root when parent is not specified" do
