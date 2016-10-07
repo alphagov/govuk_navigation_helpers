@@ -15,7 +15,7 @@ module GovukNavigationHelpers
       Breadcrumbs.new(content_item).breadcrumbs
     end
 
-    # Generate a the related items payload
+    # Generate a related items payload
     #
     # @return [Hash] Payload for the GOV.UK Component
     def related_items
