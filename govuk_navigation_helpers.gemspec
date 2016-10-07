@@ -25,7 +25,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "govuk-lint", "~> 1.2.1"
   spec.add_development_dependency "pry-byebug", "~> 3.4"
   spec.add_development_dependency "yard", "~> 0.8"
-  spec.add_development_dependency "govuk_schemas", "~> 0.1"
+  spec.add_development_dependency "govuk_schemas", "~> 1.0"
 
   spec.required_ruby_version = ">= 2.3.1"
 end
