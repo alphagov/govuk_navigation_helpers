@@ -59,9 +59,9 @@ module GovukNavigationHelpers
     end
 
     def elsewhere_on_govuk_section
-      return unless grouped.related_with_nothing_in_common.any?
+      return unless grouped.related_with_no_parents_in_common.any?
 
-      items = grouped.related_with_nothing_in_common.map do |related_item|
+      items = grouped.related_with_no_parents_in_common.map do |related_item|
         {
           title: related_item.title,
           url: related_item.base_path

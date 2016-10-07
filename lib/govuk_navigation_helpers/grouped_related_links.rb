@@ -5,43 +5,41 @@ module GovukNavigationHelpers
   #
   # @private
   class GroupedRelatedLinks
-    attr_reader :content_item,
-
-      # This will contain related items that have the same `parent` (breadcrumb)
-      # as the content item.
-      :related_with_parent_in_common,
-
-      # This will contain related items that have a grandparent in common with
-      # the content item.
-      :related_with_grandparent_in_common,
-
-      # This will contain the related items that have a completely different
-      # parent/breadcrumb from the content item.
-      :related_with_nothing_in_common
+    attr_reader :content_item
 
     def initialize(content_item)
       @content_item = content_item
-      @related_with_parent_in_common = []
-      @related_with_grandparent_in_common = []
-      @related_with_nothing_in_common = []
-      group_related_links!
     end
 
-  private
+    # This will return related items that have the same `parent` (breadcrumb)
+    # as the content item.
+    def related_with_parent_in_common
+      return [] unless content_item.parent
 
-    def group_related_links!
-      content_item.related_links.each do |related_item|
-        if content_item.parent && related_item.parent
-          if related_item.parent.content_id == content_item.parent.content_id
-            @related_with_parent_in_common << related_item
-          elsif related_item.parent.parent.content_id == content_item.parent.parent.content_id
-            @related_with_grandparent_in_common << related_item
-          else
-            @related_with_nothing_in_common << related_item
-          end
-        else
-          @related_with_nothing_in_common << related_item
-        end
+      @related_with_parent_in_common ||= content_item.related_links.select do |related_item|
+        next unless related_item.parent
+        related_item.parent.content_id == content_item.parent.content_id
+      end
+    end
+
+    # This will contain related items that have a grandparent in common with
+    # the content item.
+    def related_with_grandparent_in_common
+      return [] unless content_item.parent && content_item.parent.parent
+
+      @related_with_grandparent_in_common ||= content_item.related_links.select do |related_item|
+        next unless related_item.parent && related_item.parent.parent
+        related_item.parent.parent.content_id == content_item.parent.parent.content_id
+      end
+    end
+
+    # This will contain the related items that have a completely different
+    # parent/breadcrumb from the content item.
+    def related_with_no_parents_in_common
+      all_content_ids = (related_with_parent_in_common + related_with_grandparent_in_common).map(&:content_id)
+
+      @related_with_no_parents_in_common ||= content_item.related_links.reject do |related_item|
+        all_content_ids.include?(related_item.content_id)
       end
     end
   end
