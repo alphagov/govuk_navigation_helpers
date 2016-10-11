@@ -42,7 +42,7 @@ module GovukNavigationHelpers
         }
       end
 
-      { title: content_item.parent.title, items: items }
+      { title: content_item.parent.title, url: content_item.parent.base_path, items: items }
     end
 
     def with_grandparent_in_common_section
@@ -55,7 +55,7 @@ module GovukNavigationHelpers
         }
       end
 
-      { title: content_item.parent.parent.title, items: items }
+      { title: content_item.parent.parent.title, url: content_item.parent.parent.base_path, items: items }
     end
 
     def elsewhere_on_govuk_section

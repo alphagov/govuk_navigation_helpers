@@ -119,6 +119,7 @@ RSpec.describe GovukNavigationHelpers::RelatedItems do
         sections: [
           {
             title: "Foo's parent",
+            url: "/foo-parent",
             items: [
               { title: "Foo", url: "/bar" },
             ]
@@ -186,6 +187,7 @@ RSpec.describe GovukNavigationHelpers::RelatedItems do
         sections: [
           {
             title: "Foo's grandparent",
+            url: "/foo-grand-parent",
             items: [
               { title: "Foo", url: "/bar" },
             ]
