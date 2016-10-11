@@ -36,7 +36,11 @@ end
 Render the component:
 
 ```ruby
-<%= render partial: 'govuk_component/breadcrumbs', locals: { breadcrumbs: @navigation.breadcrumbs }
+<%= render partial: 'govuk_component/breadcrumbs', locals: @navigation.breadcrumbs %>
+```
+
+```ruby
+<%= render partial: 'govuk_component/related_items', locals: @navigation.related_items %>
 ```
 
 ### Running the test suite
@@ -53,4 +57,4 @@ To run a Yard server locally to preview documentation, run:
 
 ## Licence
 
-    [MIT License](LICENCE.txt)
+[MIT License](LICENCE.txt)
