@@ -26,7 +26,7 @@ RSpec.describe GovukNavigationHelpers::RelatedItems do
       expect(nothing).to eql(sections: [])
     end
 
-    it "returns an elswhere on GOV.UK section" do
+    it "returns an elswhere on GOV.UK section for related items with no browse pages in common" do
       payload = payload_for(
         "details" => {
           "external_related_links" => []
@@ -55,7 +55,7 @@ RSpec.describe GovukNavigationHelpers::RelatedItems do
       )
     end
 
-    it "includes the external related links" do
+    it "returns the external related links" do
       payload = payload_for(
         "details" => {
           "external_related_links" => [
@@ -80,7 +80,7 @@ RSpec.describe GovukNavigationHelpers::RelatedItems do
       )
     end
 
-    it "creates a primary section for related items with the same breadcrumb as the item" do
+    it "returns a primary section for related items tagged to the same mainstream browse page as the item" do
       payload = payload_for(
         "details" => {
           "external_related_links" => []
@@ -101,7 +101,7 @@ RSpec.describe GovukNavigationHelpers::RelatedItems do
               "base_path" => "/bar",
               "locale" => "en",
               "links" => {
-                "parent" => [
+                "mainstream_browse_pages" => [
                   {
                     "title" => "Foo's parent",
                     "content_id" => "a9c6f24a-92a1-4ead-a776-532d1d99123c",
@@ -128,7 +128,7 @@ RSpec.describe GovukNavigationHelpers::RelatedItems do
       )
     end
 
-    it "creates a secondary section for related items with the same breadcrumb-parent as the item" do
+    it "returns a secondary section for related items tagged to the same mainstream browse page as the item's parent" do
       payload = payload_for(
         "details" => {
           "external_related_links" => []
@@ -159,7 +159,7 @@ RSpec.describe GovukNavigationHelpers::RelatedItems do
               "base_path" => "/bar",
               "locale" => "en",
               "links" => {
-                "parent" => [
+                "mainstream_browse_pages" => [
                   {
                     "title" => "Some sibling of foo-parent",
                     "content_id" => "c34672dc-2ff3-4d28-92fd-bcba382e8a0b",
@@ -188,6 +188,74 @@ RSpec.describe GovukNavigationHelpers::RelatedItems do
           {
             title: "Foo's grandparent",
             url: "/foo-grand-parent",
+            items: [
+              { title: "Foo", url: "/bar" },
+            ]
+          },
+        ]
+      )
+    end
+
+    it "returns only related items in the primary section where they are tagged to the same mainstream browse pages as both the item and the item's parent" do
+      payload = payload_for(
+        "details" => {
+          "external_related_links" => []
+        },
+        "links" => {
+          "parent" => [
+            {
+              "title" => "Foo's parent",
+              "content_id" => "67c28e19-9934-462c-b174-db5b8e566384",
+              "base_path" => "/foo-parent",
+              "locale" => "en",
+              "links" => {
+                "parent" => [
+                  {
+                    "title" => "Foo's grandparent",
+                    "content_id" => "a9c6f24a-92a1-4ead-a776-532d1d99123c",
+                    "base_path" => "/foo-grand-parent",
+                    "locale" => "en",
+                  }
+                ]
+              }
+            }
+          ],
+          "ordered_related_items" => [
+            {
+              "content_id" => "9effaabe-346d-4ad0-9c1b-baa49bc084d6",
+              "title" => "Foo",
+              "base_path" => "/bar",
+              "locale" => "en",
+              "links" => {
+                "mainstream_browse_pages" => [
+                  {
+                    "title" => "Foo's parent",
+                    "content_id" => "67c28e19-9934-462c-b174-db5b8e566384",
+                    "base_path" => "/foo-parent",
+                    "locale" => "en",
+                    "links" => {
+                      "parent" => [
+                        {
+                          "title" => "Foo's grandparent",
+                          "content_id" => "a9c6f24a-92a1-4ead-a776-532d1d99123c",
+                          "base_path" => "/foo-grand-parent",
+                          "locale" => "en",
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      )
+
+      expect(payload).to eql(
+        sections: [
+          {
+            title: "Foo's parent",
+            url: "/foo-parent",
             items: [
               { title: "Foo", url: "/bar" },
             ]

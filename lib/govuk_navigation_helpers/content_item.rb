@@ -1,6 +1,6 @@
 module GovukNavigationHelpers
   # Simple wrapper around a content store representation of a content item. Works
-  # for both the main content item as the expanded links in the links hash.
+  # for both the main content item and the expanded links in the links hash.
   #
   # @private
   class ContentItem
@@ -14,6 +14,12 @@ module GovukNavigationHelpers
       parent_item = content_store_response.dig("links", "parent", 0)
       return unless parent_item
       ContentItem.new(parent_item)
+    end
+
+    def mainstream_browse_pages
+      content_store_response.dig("links", "mainstream_browse_pages").to_a.map do |link|
+        ContentItem.new(link)
+      end
     end
 
     def title
