@@ -20,9 +20,9 @@ module GovukNavigationHelpers
     def related_items
       {
         sections: [
-          with_parent_in_common_section,
-          with_grandparent_in_common_section,
-          elsewhere_on_govuk_section,
+          tagged_to_same_mainstream_browse_page_section,
+          parents_tagged_to_same_mainstream_browse_page_section,
+          tagged_to_different_mainstream_browse_pages_section,
           related_external_links_section,
         ].compact
       }
@@ -32,10 +32,10 @@ module GovukNavigationHelpers
 
     attr_reader :content_item
 
-    def with_parent_in_common_section
-      return unless grouped.related_with_parent_in_common.any?
+    def tagged_to_same_mainstream_browse_page_section
+      return unless grouped.tagged_to_same_mainstream_browse_page.any?
 
-      items = grouped.related_with_parent_in_common.map do |related_item|
+      items = grouped.tagged_to_same_mainstream_browse_page.map do |related_item|
         {
           title: related_item.title,
           url: related_item.base_path
@@ -45,10 +45,10 @@ module GovukNavigationHelpers
       { title: content_item.parent.title, url: content_item.parent.base_path, items: items }
     end
 
-    def with_grandparent_in_common_section
-      return unless grouped.related_with_grandparent_in_common.any?
+    def parents_tagged_to_same_mainstream_browse_page_section
+      return unless grouped.parents_tagged_to_same_mainstream_browse_page.any?
 
-      items = grouped.related_with_grandparent_in_common.map do |related_item|
+      items = grouped.parents_tagged_to_same_mainstream_browse_page.map do |related_item|
         {
           title: related_item.title,
           url: related_item.base_path
@@ -58,10 +58,10 @@ module GovukNavigationHelpers
       { title: content_item.parent.parent.title, url: content_item.parent.parent.base_path, items: items }
     end
 
-    def elsewhere_on_govuk_section
-      return unless grouped.related_with_no_parents_in_common.any?
+    def tagged_to_different_mainstream_browse_pages_section
+      return unless grouped.tagged_to_different_mainstream_browse_pages.any?
 
-      items = grouped.related_with_no_parents_in_common.map do |related_item|
+      items = grouped.tagged_to_different_mainstream_browse_pages.map do |related_item|
         {
           title: related_item.title,
           url: related_item.base_path

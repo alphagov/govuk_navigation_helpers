@@ -10,7 +10,8 @@ module GovukNavigationHelpers
 
     # Generate a breacrumb trail
     #
-    # @return [Array<Hash>] Each item is a hash containing `:title` and `:url` for one link in the breadcrumb
+    # @return [Hash] Payload for the GOV.UK breadcrumbs component
+    # @see http://govuk-component-guide.herokuapp.com/components/breadcrumbs
     def breadcrumbs
       Breadcrumbs.new(content_item).breadcrumbs
     end
@@ -18,6 +19,7 @@ module GovukNavigationHelpers
     # Generate a related items payload
     #
     # @return [Hash] Payload for the GOV.UK Component
+    # @see http://govuk-component-guide.herokuapp.com/components/related_items
     def related_items
       RelatedItems.new(content_item).related_items
     end
