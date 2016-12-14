@@ -5,17 +5,8 @@ module GovukNavigationHelpers
     end
 
     def breadcrumbs
-      direct_parent = content_item.parent
-
-      ordered_parents = []
-
-      while direct_parent
-        ordered_parents << {
-          title: direct_parent.title,
-          url: direct_parent.base_path,
-        }
-
-        direct_parent = direct_parent.parent
+      ordered_parents = all_parents.map do |parent|
+        { title: parent.title, url: parent.base_path }
       end
 
       ordered_parents << { title: "Home", url: "/" }
@@ -28,5 +19,18 @@ module GovukNavigationHelpers
   private
 
     attr_reader :content_item
+
+    def all_parents
+      parents = []
+
+      direct_parent = content_item.parent
+      while direct_parent
+        parents << direct_parent
+
+        direct_parent = direct_parent.parent
+      end
+
+      parents
+    end
   end
 end
