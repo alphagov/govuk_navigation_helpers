@@ -16,6 +16,13 @@ module GovukNavigationHelpers
       ContentItem.new(parent_item)
     end
 
+    def parent_taxon
+      # TODO: Determine what to do when there are multiple parents. For now just display the first
+      parent_taxon = content_store_response.dig("links", "parent_taxons", 0)
+      return unless parent_taxon
+      ContentItem.new(parent_taxon)
+    end
+
     def mainstream_browse_pages
       content_store_response.dig("links", "mainstream_browse_pages").to_a.map do |link|
         ContentItem.new(link)
