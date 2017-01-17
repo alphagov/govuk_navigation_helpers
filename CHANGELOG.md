@@ -1,3 +1,7 @@
+## 2.1.0
+
+* Add helper to render taxon breadcrumbs
+
 ## 2.0.0
 
 * Functionality to generate data for the related items component
