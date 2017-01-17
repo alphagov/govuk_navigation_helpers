@@ -1,6 +1,7 @@
 require "govuk_navigation_helpers/version"
 require "govuk_navigation_helpers/breadcrumbs"
 require "govuk_navigation_helpers/related_items"
+require "govuk_navigation_helpers/taxon_breadcrumbs"
 
 module GovukNavigationHelpers
   class NavigationHelper
@@ -8,12 +9,20 @@ module GovukNavigationHelpers
       @content_item = content_item
     end
 
-    # Generate a breacrumb trail
+    # Generate a breadcrumb trail
     #
     # @return [Hash] Payload for the GOV.UK breadcrumbs component
     # @see http://govuk-component-guide.herokuapp.com/components/breadcrumbs
     def breadcrumbs
       Breadcrumbs.new(content_item).breadcrumbs
+    end
+
+    # Generate a breadcrumb trail for a taxon, using the taxon_parent link field
+    #
+    # @return [Hash] Payload for the GOV.UK breadcrumbs component
+    # @see http://govuk-component-guide.herokuapp.com/components/breadcrumbs
+    def taxon_breadcrumbs
+      TaxonBreadcrumbs.new(content_item).breadcrumbs
     end
 
     # Generate a related items payload
