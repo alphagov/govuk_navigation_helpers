@@ -1,3 +1,7 @@
+## 2.1.1
+
+* Add `Jenkinsfile` for CI on Jenkins 2
+
 ## 2.1.0
 
 * Add helper to render taxon breadcrumbs
