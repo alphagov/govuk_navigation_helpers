@@ -33,7 +33,9 @@ node {
 
     if(env.BRANCH_NAME == "master") {
       stage('Publish Gem') {
-        govuk.runRakeTask("publish_gem --trace")
+        sshagent(['govuk-ci-ssh-key']) {
+          govuk.runRakeTask("publish_gem --trace")
+        }
       }
     }
 
