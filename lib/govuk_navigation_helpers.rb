@@ -14,7 +14,9 @@ module GovukNavigationHelpers
     # @return [Hash] Payload for the GOV.UK breadcrumbs component
     # @see http://govuk-component-guide.herokuapp.com/components/breadcrumbs
     def breadcrumbs
-      Breadcrumbs.new(content_item).breadcrumbs
+      NavigationHelper.format_breadcrumb_for_component(
+        Breadcrumbs.from_content_store_response(content_item).breadcrumbs
+      )
     end
 
     # Generate a breadcrumb trail for a taxon, using the taxon_parent link field
@@ -22,7 +24,9 @@ module GovukNavigationHelpers
     # @return [Hash] Payload for the GOV.UK breadcrumbs component
     # @see http://govuk-component-guide.herokuapp.com/components/breadcrumbs
     def taxon_breadcrumbs
-      TaxonBreadcrumbs.new(content_item).breadcrumbs
+      NavigationHelper.format_breadcrumb_for_component(
+        TaxonBreadcrumbs.from_content_store_response(content_item).breadcrumbs
+      )
     end
 
     # Generate a related items payload
@@ -31,6 +35,18 @@ module GovukNavigationHelpers
     # @see http://govuk-component-guide.herokuapp.com/components/related_items
     def related_items
       RelatedItems.new(content_item).related_items
+    end
+
+    def self.format_breadcrumb_for_component(all_parents)
+      breadcrumbs = all_parents.map do |parent|
+        { title: parent.title, url: parent.base_path }
+      end
+
+      breadcrumbs.unshift(title: "Home", url: "/")
+
+      {
+        breadcrumbs: breadcrumbs
+      }
     end
 
   private

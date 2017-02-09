@@ -5,7 +5,7 @@ RSpec.describe GovukNavigationHelpers::Breadcrumbs do
     it "can handle any valid content item" do
       generator = GovukSchemas::RandomExample.for_schema("placeholder", schema_type: "frontend")
 
-      expect { GovukNavigationHelpers::Breadcrumbs.new(generator.payload).breadcrumbs }.to_not raise_error
+      expect { GovukNavigationHelpers::Breadcrumbs.from_content_store_response(generator.payload).breadcrumbs }.to_not raise_error
     end
 
     it "returns the root when parent is not specified" do
