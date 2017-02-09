@@ -1,3 +1,7 @@
+## 2.1.2
+
+* Add SSH agent for Gem publishing
+
 ## 2.1.1
 
 * Add `Jenkinsfile` for CI on Jenkins 2
