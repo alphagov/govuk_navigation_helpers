@@ -1,3 +1,8 @@
+## 2.2.0
+
+* make sure `taxon_breadcrumbs` generates data for both `taxons` and other
+  content items tagged to a taxon.
+
 ## 2.1.2
 
 * Add SSH agent for Gem publishing
