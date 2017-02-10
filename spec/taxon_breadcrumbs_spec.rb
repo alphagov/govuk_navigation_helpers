@@ -8,7 +8,7 @@ RSpec.describe GovukNavigationHelpers::TaxonBreadcrumbs do
       expect { GovukNavigationHelpers::TaxonBreadcrumbs.new(generator.payload).breadcrumbs }.to_not raise_error
     end
 
-    it "returns the root when parent is not specified" do
+    it "returns the root when taxon is not specified" do
       content_item = { "links" => {} }
       breadcrumbs = breadcrumbs_for(content_item)
 
@@ -19,37 +19,19 @@ RSpec.describe GovukNavigationHelpers::TaxonBreadcrumbs do
       )
     end
 
-    it "returns the root when parent is empty" do
+    it "places parent under the root when there is a taxon" do
       content_item = content_item_with_parents([])
       breadcrumbs = breadcrumbs_for(content_item)
 
       expect(breadcrumbs).to eq(
         breadcrumbs: [
           { title: "Home", url: "/" },
+          { title: "Taxon", url: "/a-taxon" }
         ]
       )
     end
 
-    it "places parent under the root when there is a parent" do
-      parent = {
-          "content_id" => "30c1b93d-2553-47c9-bc3c-fc5b513ecc32",
-          "locale" => "en",
-          "title" => "A-parent",
-          "base_path" => "/a-parent",
-      }
-
-      content_item = content_item_with_parents([parent])
-      breadcrumbs = breadcrumbs_for(content_item)
-
-      expect(breadcrumbs).to eq(
-        breadcrumbs: [
-          { title: "Home", url: "/" },
-          { title: "A-parent", url: "/a-parent" }
-        ]
-      )
-    end
-
-    it "includes grandparent when available" do
+    it "includes parents and grandparents when available" do
       grandparent = {
           "title" => "Another-parent",
           "base_path" => "/another-parent",
@@ -74,7 +56,8 @@ RSpec.describe GovukNavigationHelpers::TaxonBreadcrumbs do
         breadcrumbs: [
           { title: "Home", url: "/" },
           { title: "Another-parent", url: "/another-parent" },
-          { title: "A-parent", url: "/a-parent" }
+          { title: "A-parent", url: "/a-parent" },
+          { title: "Taxon", url: "/a-taxon" },
         ]
       )
     end
@@ -91,7 +74,19 @@ RSpec.describe GovukNavigationHelpers::TaxonBreadcrumbs do
 
   def content_item_with_parents(parents)
     {
-        "links" => { "parent_taxons" => parents }
+      "links" => {
+        "taxons" => [
+          {
+            "content_id" => "30c1b93d-2553-47c9-bc3c-fc5b513ecc32",
+            "locale" => "en",
+            "title" => "Taxon",
+            "base_path" => "/a-taxon",
+            "links" => {
+              "parent_taxons" => parents
+            },
+          },
+        ],
+      },
     }
   end
 end
