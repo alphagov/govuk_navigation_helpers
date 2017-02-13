@@ -52,5 +52,9 @@ module GovukNavigationHelpers
     def external_links
       content_store_response.dig("details", "external_related_links").to_a
     end
+
+    def is_a_taxon?
+      content_store_response.fetch("document_type") == "taxon"
+    end
   end
 end

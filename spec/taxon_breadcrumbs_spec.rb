@@ -16,12 +16,13 @@ RSpec.describe GovukNavigationHelpers::TaxonBreadcrumbs do
     end
 
     it "returns the root when taxon is not specified" do
-      content_item = { "links" => {} }
+      content_item = { "title" => "Some Content", "links" => {} }
       breadcrumbs = breadcrumbs_for(content_item)
 
       expect(breadcrumbs).to eq(
         breadcrumbs: [
           { title: "Home", url: "/" },
+          { title: "Some Content", url: "#content" }
         ]
       )
     end
@@ -33,7 +34,8 @@ RSpec.describe GovukNavigationHelpers::TaxonBreadcrumbs do
       expect(breadcrumbs).to eq(
         breadcrumbs: [
           { title: "Home", url: "/" },
-          { title: "Taxon", url: "/taxon" }
+          { title: "Taxon", url: "/taxon" },
+          { title: "Some Content", url: "#content" },
         ]
       )
     end
@@ -66,12 +68,13 @@ RSpec.describe GovukNavigationHelpers::TaxonBreadcrumbs do
             { title: "Another-parent", url: "/another-parent" },
             { title: "A-parent", url: "/a-parent" },
             { title: "Taxon", url: "/taxon" },
+            { title: "Some Content", url: "#content" },
           ]
         )
       end
     end
 
-    context 'with a content item tagged to taxons' do
+    context 'with a taxon with parent taxons' do
       it "includes parents and grandparents when available" do
         parent = {
             "content_id" => "30c1b93d-2553-47c9-bc3c-fc5b513ecc32",
@@ -90,7 +93,7 @@ RSpec.describe GovukNavigationHelpers::TaxonBreadcrumbs do
           breadcrumbs: [
             { title: "Home", url: "/" },
             { title: "A-parent", url: "/a-parent" },
-            { title: "Taxon", url: "/taxon" },
+            { title: "Taxon", url: "#content" },
           ]
         )
       end
@@ -108,26 +111,18 @@ RSpec.describe GovukNavigationHelpers::TaxonBreadcrumbs do
 
   def taxon_with_parent_taxons(parents)
     {
-      "title" => "A taxon",
+      "title" => "Taxon",
+      "document_type" => "taxon",
       "links" => {
-        "parent_taxons" => [
-          {
-            "content_id" => "30c1b93d-2553-47c9-bc3c-fc5b513ecc32",
-            "locale" => "en",
-            "title" => "Taxon",
-            "base_path" => "/taxon",
-            "links" => {
-              "parent_taxons" => parents
-            },
-          },
-        ],
+        "parent_taxons" => parents,
       },
     }
   end
 
   def content_item_tagged_to_taxon(parents)
     {
-      "title" => "A piece of content",
+      "title" => "Some Content",
+      "document_type" => "guidance",
       "links" => {
         "taxons" => [
           {

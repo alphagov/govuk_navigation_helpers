@@ -11,8 +11,11 @@ module GovukNavigationHelpers
 
       ordered_parents << { title: "Home", url: "/" }
 
+      ordered_breadcrumbs = ordered_parents.reverse
+      ordered_breadcrumbs << { title: content_item.title, url: "#content" }
+
       {
-          breadcrumbs: ordered_parents.reverse
+        breadcrumbs: ordered_breadcrumbs
       }
     end
 
