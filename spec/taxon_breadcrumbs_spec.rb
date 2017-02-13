@@ -3,9 +3,16 @@ require 'spec_helper'
 RSpec.describe GovukNavigationHelpers::TaxonBreadcrumbs do
   describe "Taxon breadcrumbs" do
     it "can handle any valid content item" do
-      generator = GovukSchemas::RandomExample.for_schema("taxon", schema_type: "frontend")
+      generator = GovukSchemas::RandomExample.for_schema(
+        "taxon",
+        schema_type: "frontend"
+      )
 
-      expect { GovukNavigationHelpers::TaxonBreadcrumbs.new(generator.payload).breadcrumbs }.to_not raise_error
+      expect {
+        GovukNavigationHelpers::TaxonBreadcrumbs.new(
+          generator.payload
+        ).breadcrumbs
+      }.to_not raise_error
     end
 
     it "returns the root when taxon is not specified" do
@@ -20,46 +27,73 @@ RSpec.describe GovukNavigationHelpers::TaxonBreadcrumbs do
     end
 
     it "places parent under the root when there is a taxon" do
-      content_item = content_item_with_parents([])
+      content_item = content_item_tagged_to_taxon([])
       breadcrumbs = breadcrumbs_for(content_item)
 
       expect(breadcrumbs).to eq(
         breadcrumbs: [
           { title: "Home", url: "/" },
-          { title: "Taxon", url: "/a-taxon" }
+          { title: "Taxon", url: "/taxon" }
         ]
       )
     end
 
-    it "includes parents and grandparents when available" do
-      grandparent = {
-          "title" => "Another-parent",
-          "base_path" => "/another-parent",
-          "content_id" => "30c1b93d-2553-47c9-bc3c-fc5b513ecc32",
-          "locale" => "en",
-      }
+    context 'with a taxon content item with taxon parents' do
+      it "includes parents and grandparents when available" do
+        grandparent = {
+            "title" => "Another-parent",
+            "base_path" => "/another-parent",
+            "content_id" => "30c1b93d-2553-47c9-bc3c-fc5b513ecc32",
+            "locale" => "en",
+        }
 
-      parent = {
-          "content_id" => "30c1b93d-2553-47c9-bc3c-fc5b513ecc32",
-          "locale" => "en",
-          "title" => "A-parent",
-          "base_path" => "/a-parent",
-          "links" => {
-              "parent_taxons" => [grandparent]
-          }
-      }
+        parent = {
+            "content_id" => "30c1b93d-2553-47c9-bc3c-fc5b513ecc32",
+            "locale" => "en",
+            "title" => "A-parent",
+            "base_path" => "/a-parent",
+            "links" => {
+                "parent_taxons" => [grandparent]
+            }
+        }
 
-      content_item = content_item_with_parents([parent])
-      breadcrumbs = breadcrumbs_for(content_item)
+        content_item = content_item_tagged_to_taxon([parent])
+        breadcrumbs = breadcrumbs_for(content_item)
 
-      expect(breadcrumbs).to eq(
-        breadcrumbs: [
-          { title: "Home", url: "/" },
-          { title: "Another-parent", url: "/another-parent" },
-          { title: "A-parent", url: "/a-parent" },
-          { title: "Taxon", url: "/a-taxon" },
-        ]
-      )
+        expect(breadcrumbs).to eq(
+          breadcrumbs: [
+            { title: "Home", url: "/" },
+            { title: "Another-parent", url: "/another-parent" },
+            { title: "A-parent", url: "/a-parent" },
+            { title: "Taxon", url: "/taxon" },
+          ]
+        )
+      end
+    end
+
+    context 'with a content item tagged to taxons' do
+      it "includes parents and grandparents when available" do
+        parent = {
+            "content_id" => "30c1b93d-2553-47c9-bc3c-fc5b513ecc32",
+            "locale" => "en",
+            "title" => "A-parent",
+            "base_path" => "/a-parent",
+            "links" => {
+                "parent_taxons" => []
+            }
+        }
+
+        content_item = taxon_with_parent_taxons([parent])
+        breadcrumbs = breadcrumbs_for(content_item)
+
+        expect(breadcrumbs).to eq(
+          breadcrumbs: [
+            { title: "Home", url: "/" },
+            { title: "A-parent", url: "/a-parent" },
+            { title: "Taxon", url: "/taxon" },
+          ]
+        )
+      end
     end
   end
 
@@ -72,15 +106,35 @@ RSpec.describe GovukNavigationHelpers::TaxonBreadcrumbs do
     GovukNavigationHelpers::NavigationHelper.new(fully_valid_content_item).taxon_breadcrumbs
   end
 
-  def content_item_with_parents(parents)
+  def taxon_with_parent_taxons(parents)
     {
+      "title" => "A taxon",
+      "links" => {
+        "parent_taxons" => [
+          {
+            "content_id" => "30c1b93d-2553-47c9-bc3c-fc5b513ecc32",
+            "locale" => "en",
+            "title" => "Taxon",
+            "base_path" => "/taxon",
+            "links" => {
+              "parent_taxons" => parents
+            },
+          },
+        ],
+      },
+    }
+  end
+
+  def content_item_tagged_to_taxon(parents)
+    {
+      "title" => "A piece of content",
       "links" => {
         "taxons" => [
           {
             "content_id" => "30c1b93d-2553-47c9-bc3c-fc5b513ecc32",
             "locale" => "en",
             "title" => "Taxon",
-            "base_path" => "/a-taxon",
+            "base_path" => "/taxon",
             "links" => {
               "parent_taxons" => parents
             },
