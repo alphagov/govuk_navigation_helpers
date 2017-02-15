@@ -22,7 +22,7 @@ RSpec.describe GovukNavigationHelpers::TaxonBreadcrumbs do
       expect(breadcrumbs).to eq(
         breadcrumbs: [
           { title: "Home", url: "/" },
-          { title: "Some Content", url: "#content" }
+          { title: "Some Content", is_current_page: true }
         ]
       )
     end
@@ -35,7 +35,7 @@ RSpec.describe GovukNavigationHelpers::TaxonBreadcrumbs do
         breadcrumbs: [
           { title: "Home", url: "/" },
           { title: "Taxon", url: "/taxon" },
-          { title: "Some Content", url: "#content" },
+          { title: "Some Content", is_current_page: true },
         ]
       )
     end
@@ -68,7 +68,7 @@ RSpec.describe GovukNavigationHelpers::TaxonBreadcrumbs do
             { title: "Another-parent", url: "/another-parent" },
             { title: "A-parent", url: "/a-parent" },
             { title: "Taxon", url: "/taxon" },
-            { title: "Some Content", url: "#content" },
+            { title: "Some Content", is_current_page: true },
           ]
         )
       end
@@ -93,7 +93,7 @@ RSpec.describe GovukNavigationHelpers::TaxonBreadcrumbs do
           breadcrumbs: [
             { title: "Home", url: "/" },
             { title: "A-parent", url: "/a-parent" },
-            { title: "Taxon", url: "#content" },
+            { title: "Taxon", is_current_page: true },
           ]
         )
       end
