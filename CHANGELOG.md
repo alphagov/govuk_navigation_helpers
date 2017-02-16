@@ -1,3 +1,7 @@
+## 2.3.1
+
+* Convert all ContentItem initialization objects to a hash
+
 ## 2.3.0
 
 * Add support for adding the current page to Taxon breadcrumbs
