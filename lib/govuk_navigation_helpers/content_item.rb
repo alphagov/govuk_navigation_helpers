@@ -7,7 +7,7 @@ module GovukNavigationHelpers
     attr_reader :content_store_response
 
     def initialize(content_store_response)
-      @content_store_response = content_store_response
+      @content_store_response = content_store_response.to_h
     end
 
     def parent
