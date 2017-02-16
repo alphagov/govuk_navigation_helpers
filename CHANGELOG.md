@@ -1,3 +1,7 @@
+## 2.3.0
+
+* Add support for adding the current page to Taxon breadcrumbs
+
 ## 2.2.0
 
 * make sure `taxon_breadcrumbs` generates data for both `taxons` and other
