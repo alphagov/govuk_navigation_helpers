@@ -1,5 +1,7 @@
 #!/usr/bin/env groovy
 
+REPOSITORY = 'govuk_navigation_helpers'
+
 node {
   def govuk = load '/var/lib/jenkins/groovy_scripts/govuk_jenkinslib.groovy'
 
@@ -33,8 +35,35 @@ node {
 
     if(env.BRANCH_NAME == "master") {
       stage('Publish Gem') {
-        sshagent(['govuk-ci-ssh-key']) {
-          govuk.runRakeTask("publish_gem --trace")
+        def version = sh(
+          script: /ruby -e "puts eval(File.read('${REPOSITORY}.gemspec'), TOPLEVEL_BINDING).version.to_s"/,
+          returnStdout: true
+        ).trim()
+
+        def taggedReleaseExists = sh(
+          script: "git tag | grep v${version}",
+          returnStatus: true
+        ) == 0
+
+        if (taggedReleaseExists) {
+          echo "Version ${version} has already been tagged on Github"
+        } else {
+          echo('Pushing tag')
+          govuk.pushTag(REPOSITORY, env.BRANCH_NAME, 'v' + version)
+        }
+
+        def escapedVersion = version.replaceAll(/\./, /\\\\./)
+        def versionAlreadyPublished = sh(
+          script: /gem list ^${REPOSITORY}\$ --remote --all --quiet | grep [^0-9\\.]${escapedVersion}[^0-9\\.]/,
+          returnStatus: true
+        ) == 0
+
+        if (versionAlreadyPublished) {
+          echo "Version ${version} has already been published to rubygems.org"
+        } else {
+          echo('Publishing gem')
+          sh("gem build ${REPOSITORY}.gemspec")
+          sh("gem push '${REPOSITORY}-${version}.gem'")
         }
       }
     }
