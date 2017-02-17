@@ -1,6 +1,7 @@
 module GovukNavigationHelpers
-  # Simple wrapper around a content store representation of a content item. Works
-  # for both the main content item and the expanded links in the links hash.
+  # Simple wrapper around a content store representation of a content item.
+  # Works for both the main content item and the expanded links in the links
+  # hash.
   #
   # @private
   class ContentItem
