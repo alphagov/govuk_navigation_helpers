@@ -18,12 +18,20 @@ module GovukNavigationHelpers
     end
 
     def parent_taxon
-      # TODO: Determine what to do when there are multiple taxons/parents. For now just display the first of each.
-      taxon = content_store_response.dig("links", "taxons", 0)
-      return ContentItem.new(taxon) if taxon
+      # TODO: Determine what to do when there are multiple taxons/parents. For
+      # now just display the first of each.
+      parent_taxons.first
+    end
 
-      parent_taxon = content_store_response.dig("links", "parent_taxons", 0)
-      return ContentItem.new(parent_taxon) if parent_taxon
+    def parent_taxons
+      # First handle the case for content items tagged to the taxonomy.
+      taxons = Array(content_store_response.dig("links", "taxons"))
+      return taxons.map { |taxon| ContentItem.new(taxon) } if taxons.any?
+
+      # If that link isn't present, assume we're dealing with a taxon and check
+      # for its parents in the taxonomy.
+      parent_taxons = Array(content_store_response.dig("links", "parent_taxons"))
+      parent_taxons.map { |taxon| ContentItem.new(taxon) }
     end
 
     def mainstream_browse_pages
