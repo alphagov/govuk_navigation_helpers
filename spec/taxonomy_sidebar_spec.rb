@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-RSpec.describe GovukNavigationHelpers::TaxonSidebar do
+RSpec.describe GovukNavigationHelpers::TaxonomySidebar do
   describe '#sidebar' do
     it 'can handle any valid content item' do
       generator = GovukSchemas::RandomExample.for_schema(
-        'placeholder',
+        'taxon',
         schema_type: 'frontend'
       )
 
@@ -30,8 +30,8 @@ RSpec.describe GovukNavigationHelpers::TaxonSidebar do
             {
               title: "More about",
               items: [
-                { title: "Taxon 1", url: "/taxon-1" },
-                { title: "Taxon 2", url: "/taxon-2" },
+                { title: "Taxon 1", url: "/taxon-1", description: "The 1st taxon." },
+                { title: "Taxon 2", url: "/taxon-2", description: "The 2nd taxon." },
               ],
             }
           ]
@@ -41,7 +41,7 @@ RSpec.describe GovukNavigationHelpers::TaxonSidebar do
   end
 
   def sidebar_for(content_item)
-    GovukNavigationHelpers::NavigationHelper.new(content_item).taxon_sidebar
+    GovukNavigationHelpers::NavigationHelper.new(content_item).taxonomy_sidebar
   end
 
   def content_item_tagged_to_taxon
@@ -52,10 +52,12 @@ RSpec.describe GovukNavigationHelpers::TaxonSidebar do
           {
             "title" => "Taxon 1",
             "base_path" => "/taxon-1",
+            "description" => "The 1st taxon.",
           },
           {
             "title" => "Taxon 2",
             "base_path" => "/taxon-2",
+            "description" => "The 2nd taxon.",
           },
         ],
       },
