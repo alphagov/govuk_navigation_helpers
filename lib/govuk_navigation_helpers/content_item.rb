@@ -49,7 +49,7 @@ module GovukNavigationHelpers
     end
 
     def description
-      content_store_response.fetch("description")
+      content_store_response.fetch("description", "")
     end
 
     def content_id
