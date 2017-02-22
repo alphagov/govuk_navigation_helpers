@@ -4,7 +4,7 @@ RSpec.describe GovukNavigationHelpers::TaxonomySidebar do
   describe '#sidebar' do
     it 'can handle any valid content item' do
       generator = GovukSchemas::RandomExample.for_schema(
-        'taxon',
+        'placeholder',
         schema_type: 'frontend'
       )
 
