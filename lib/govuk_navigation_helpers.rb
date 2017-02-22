@@ -2,7 +2,7 @@ require "govuk_navigation_helpers/version"
 require "govuk_navigation_helpers/breadcrumbs"
 require "govuk_navigation_helpers/related_items"
 require "govuk_navigation_helpers/taxon_breadcrumbs"
-require "govuk_navigation_helpers/taxon_sidebar"
+require "govuk_navigation_helpers/taxonomy_sidebar"
 
 module GovukNavigationHelpers
   class NavigationHelper
@@ -31,8 +31,8 @@ module GovukNavigationHelpers
     #
     # @return [Hash] Payload for the GOV.UK related items component
     # @see http://govuk-component-guide.herokuapp.com/components/related_items
-    def taxon_sidebar
-      TaxonSidebar.new(content_item).sidebar
+    def taxonomy_sidebar
+      TaxonomySidebar.new(content_item).sidebar
     end
 
     # Generate a related items payload

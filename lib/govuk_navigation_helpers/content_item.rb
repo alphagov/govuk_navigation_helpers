@@ -48,6 +48,10 @@ module GovukNavigationHelpers
       content_store_response.fetch("base_path")
     end
 
+    def description
+      content_store_response.fetch("description")
+    end
+
     def content_id
       content_store_response.fetch("content_id")
     end
