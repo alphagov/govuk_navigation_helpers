@@ -1,3 +1,7 @@
+## 2.4.0
+
+* Add helper for rendering sidebar on taxonomy content pages.
+
 ## 2.3.1
 
 * Convert all ContentItem initialization objects to a hash
