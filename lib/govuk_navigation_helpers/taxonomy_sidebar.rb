@@ -10,7 +10,7 @@ module GovukNavigationHelpers
 
     def sidebar
       {
-        sections: taxons.any? ? [{ title: "More about #{@content_item.title}", items: taxons }] : []
+        items: taxons
       }
     end
 
