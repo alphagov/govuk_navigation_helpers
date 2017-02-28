@@ -54,8 +54,8 @@ RSpec.describe GovukNavigationHelpers::TaxonomySidebar do
                   description: "The 1st taxon.",
                   related_content: [
                     {
-                      "title" => 'Result Content',
-                      "link" => '/result-content',
+                      title: 'Result Content',
+                      link: '/result-content',
                     },
                   ],
                 },
@@ -65,8 +65,8 @@ RSpec.describe GovukNavigationHelpers::TaxonomySidebar do
                   description: "The 2nd taxon.",
                   related_content: [
                     {
-                      "title" => 'Result Content',
-                      "link" => '/result-content',
+                      title: 'Result Content',
+                      link: '/result-content',
                     },
                   ],
                 },

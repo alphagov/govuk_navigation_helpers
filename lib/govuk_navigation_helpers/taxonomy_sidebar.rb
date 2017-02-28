@@ -33,7 +33,7 @@ module GovukNavigationHelpers
     # the content store
     def content_related_to(taxon)
       begin
-        Services.rummager.search(
+        results = Services.rummager.search(
           similar_to: @content_item.base_path,
           start: 0,
           count: 5,
@@ -41,6 +41,13 @@ module GovukNavigationHelpers
           filter_content_store_document_type: Guidance::DOCUMENT_TYPES,
           fields: %w[title link],
         )['results']
+
+        results.map do |result|
+          {
+            title: result['title'],
+            link: result['link'],
+          }
+        end
       rescue StandardError => e
         GovukNavigationHelpers.configuration.error_handler.notify(e)
         []
