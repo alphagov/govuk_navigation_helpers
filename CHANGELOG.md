@@ -1,3 +1,7 @@
+## 2.4.1
+
+* Add related content to the taxonomy sidebar helper
+
 ## 2.4.0
 
 * Add helper for rendering sidebar on taxonomy content pages.
