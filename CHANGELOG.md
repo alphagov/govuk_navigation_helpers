@@ -1,3 +1,30 @@
+## 3.0.0
+
+* **BREAKING CHANGE**: remove unnecessary nesting from taxonomy sidebar helper.
+  The schema has changed from:
+  
+  ```json
+  {
+    "sections": [
+      {
+        "title": "String",
+        "items": []
+      }
+    ]
+  }
+  ```
+  
+  to:
+  
+  ```json
+  {
+    "items": []
+  }
+  ```
+
+* The taxonomy sidebar helper returns an object whose keys are all symbols, as
+  required by Govuk Components
+
 ## 2.4.1
 
 * Add related content to the taxonomy sidebar helper
