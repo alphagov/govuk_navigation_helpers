@@ -34,7 +34,7 @@ RSpec.describe GovukNavigationHelpers::TaxonomySidebar do
         content_item = { "links" => {} }
 
         expect(sidebar_for(content_item)).to eq(
-          sections: []
+          items: []
         )
       end
     end
@@ -44,34 +44,29 @@ RSpec.describe GovukNavigationHelpers::TaxonomySidebar do
         content_item = content_item_tagged_to_taxon
 
         expect(sidebar_for(content_item)).to eq(
-          sections: [
+          items: [
             {
-              title: "More about A piece of content",
-              items: [
+              title: "Taxon 1",
+              url: "/taxon-1",
+              description: "The 1st taxon.",
+              related_content: [
                 {
-                  title: "Taxon 1",
-                  url: "/taxon-1",
-                  description: "The 1st taxon.",
-                  related_content: [
-                    {
-                      title: 'Result Content',
-                      link: '/result-content',
-                    },
-                  ],
-                },
-                {
-                  title: "Taxon 2",
-                  url: "/taxon-2",
-                  description: "The 2nd taxon.",
-                  related_content: [
-                    {
-                      title: 'Result Content',
-                      link: '/result-content',
-                    },
-                  ],
+                  title: 'Result Content',
+                  link: '/result-content',
                 },
               ],
-            }
+            },
+            {
+              title: "Taxon 2",
+              url: "/taxon-2",
+              description: "The 2nd taxon.",
+              related_content: [
+                {
+                  title: 'Result Content',
+                  link: '/result-content',
+                },
+              ],
+            },
           ]
         )
       end
