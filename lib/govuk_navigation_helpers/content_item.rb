@@ -20,7 +20,7 @@ module GovukNavigationHelpers
     def parent_taxon
       # TODO: Determine what to do when there are multiple taxons/parents. For
       # now just display the first of each.
-      parent_taxons.first
+      parent_taxons.sort_by(&:title).first
     end
 
     def parent_taxons
