@@ -36,7 +36,7 @@ module GovukNavigationHelpers
         results = Services.rummager.search(
           similar_to: @content_item.base_path,
           start: 0,
-          count: 5,
+          count: 3,
           filter_taxons: [taxon.content_id],
           filter_content_store_document_type: Guidance::DOCUMENT_TYPES,
           fields: %w[title link],
