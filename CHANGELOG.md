@@ -1,3 +1,7 @@
+## Unreleased
+
+* Sort parent taxons by title before picking the first one for the breadcrumbs.
+
 ## 3.0.1
 
 * Return only 3 related items for the taxonomy sidebar.

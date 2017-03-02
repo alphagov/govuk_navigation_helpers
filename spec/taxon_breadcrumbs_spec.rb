@@ -98,6 +98,40 @@ RSpec.describe GovukNavigationHelpers::TaxonBreadcrumbs do
         )
       end
     end
+
+    context 'with multiple parents' do
+      it "selects the first parent taxon in alphabetical order by title" do
+        parent_1 = {
+            "content_id" => "30c1b93d-2553-47c9-bc3c-fc5b513ecc32",
+            "locale" => "en",
+            "title" => "Parent A",
+            "base_path" => "/parent-a",
+            "links" => {
+                "parent_taxons" => []
+            }
+        }
+        parent_2 = {
+            "content_id" => "30c1b93d-2553-47c9-bc3c-fc5b513ecc32",
+            "locale" => "en",
+            "title" => "Parent B",
+            "base_path" => "/parent-b",
+            "links" => {
+                "parent_taxons" => []
+            }
+        }
+
+        content_item = taxon_with_parent_taxons([parent_2, parent_1])
+        breadcrumbs = breadcrumbs_for(content_item)
+
+        expect(breadcrumbs).to eq(
+          breadcrumbs: [
+            { title: "Home", url: "/" },
+            { title: "Parent A", url: "/parent-a" },
+            { title: "Taxon", is_current_page: true },
+          ]
+        )
+      end
+    end
   end
 
   def breadcrumbs_for(content_item)
