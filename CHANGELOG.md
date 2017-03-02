@@ -1,4 +1,4 @@
-## Unreleased
+## 3.0.2
 
 * Sort parent taxons by title before picking the first one for the breadcrumbs.
 
