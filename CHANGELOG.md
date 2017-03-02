@@ -1,8 +1,12 @@
+## 3.0.1
+
+* Return only 3 related items for the taxonomy sidebar.
+
 ## 3.0.0
 
 * **BREAKING CHANGE**: remove unnecessary nesting from taxonomy sidebar helper.
   The schema has changed from:
-  
+
   ```json
   {
     "sections": [
@@ -13,9 +17,9 @@
     ]
   }
   ```
-  
+
   to:
-  
+
   ```json
   {
     "items": []
