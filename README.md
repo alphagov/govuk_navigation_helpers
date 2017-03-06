@@ -22,6 +22,14 @@ And then execute:
 
     $ bundle
 
+### Configuration
+
+This gem allows the configuration of:
+
+- an error handler class (e.g. `Airbrake`), that implements a `notify` method
+  which takes an exception object (by default, it prints the exception to stdout
+  when not configured).
+
 ### Usage
 
 Get the JSON representation of a page and initialise the helper:
