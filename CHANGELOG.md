@@ -1,3 +1,8 @@
+## 3.1.0
+
+* Allow a statsd client to be passed in via configuration options. This will
+  allow us to track how many Rummager searches we run and how long they take.
+
 ## 3.0.2
 
 * Sort parent taxons by title before picking the first one for the breadcrumbs.
