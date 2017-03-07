@@ -8,14 +8,23 @@ module GovukNavigationHelpers
   end
 
   class Configuration
-    attr_writer :error_handler
-
-    def initialize
-      @configuration = {}
-    end
+    attr_writer :error_handler, :statsd
 
     def error_handler
       @error_handler ||= NoErrorHandler.new
+    end
+
+    def statsd
+      @statsd ||= NoStatsd.new
+    end
+
+    class NoStatsd
+      def increment(*)
+      end
+
+      def time(*)
+        yield
+      end
     end
 
     class NoErrorHandler

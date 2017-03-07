@@ -16,6 +16,10 @@ module GovukNavigationHelpers
 
   private
 
+    def statsd
+      GovukNavigationHelpers.configuration.statsd
+    end
+
     def taxons
       parent_taxons = @content_item.parent_taxons
       parent_taxons.map do |parent_taxon|
@@ -32,25 +36,29 @@ module GovukNavigationHelpers
     # temporary method that uses search to achieve this. This behaviour is to be moved into
     # the content store
     def content_related_to(taxon)
-      begin
-        results = Services.rummager.search(
-          similar_to: @content_item.base_path,
-          start: 0,
-          count: 3,
-          filter_taxons: [taxon.content_id],
-          filter_content_store_document_type: Guidance::DOCUMENT_TYPES,
-          fields: %w[title link],
-        )['results']
+      statsd.time(:taxonomy_sidebar_search_time) do
+        begin
+          results = Services.rummager.search(
+            similar_to: @content_item.base_path,
+            start: 0,
+            count: 3,
+            filter_taxons: [taxon.content_id],
+            filter_content_store_document_type: Guidance::DOCUMENT_TYPES,
+            fields: %w[title link],
+          )['results']
 
-        results.map do |result|
-          {
-            title: result['title'],
-            link: result['link'],
-          }
+          statsd.increment(:taxonomy_sidebar_searches)
+
+          results.map do |result|
+            {
+              title: result['title'],
+              link: result['link'],
+            }
+          end
+        rescue StandardError => e
+          GovukNavigationHelpers.configuration.error_handler.notify(e)
+          []
         end
-      rescue StandardError => e
-        GovukNavigationHelpers.configuration.error_handler.notify(e)
-        []
       end
     end
   end
