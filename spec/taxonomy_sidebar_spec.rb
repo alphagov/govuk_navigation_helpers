@@ -41,6 +41,12 @@ RSpec.describe GovukNavigationHelpers::TaxonomySidebar do
 
     context 'given a content item tagged to taxons' do
       it 'returns a sidebar hash containing a list of parent taxons and related content' do
+        expect(GovukNavigationHelpers.configuration.statsd).to receive(
+          :increment
+        ).with(
+          :taxonomy_sidebar_searches
+        ).twice
+
         content_item = content_item_tagged_to_taxon
 
         expect(sidebar_for(content_item)).to eq(
@@ -84,6 +90,10 @@ RSpec.describe GovukNavigationHelpers::TaxonomySidebar do
         GovukNavigationHelpers.configure do |config|
           config.error_handler = error_handler
         end
+
+        expect(GovukNavigationHelpers.configuration.statsd).to_not receive(
+          :increment
+        )
       end
 
       it 'does not re-raise' do
