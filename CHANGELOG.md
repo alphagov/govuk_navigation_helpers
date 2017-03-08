@@ -1,3 +1,7 @@
+## 3.2.0
+
+* Alphabetically sort taxons and related links in the taxonomy sidebar.
+
 ## 3.1.1
 
 * Remove `notice` from list of guidance document types.
