@@ -16,7 +16,6 @@ module GovukNavigationHelpers
       local_transaction
       manual
       map
-      notice
       place
       programme
       promotional
