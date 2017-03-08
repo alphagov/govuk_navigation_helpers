@@ -1,3 +1,7 @@
+## 3.1.1
+
+* Remove `notice` from list of guidance document types.
+
 ## 3.1.0
 
 * Allow a statsd client to be passed in via configuration options. This will
