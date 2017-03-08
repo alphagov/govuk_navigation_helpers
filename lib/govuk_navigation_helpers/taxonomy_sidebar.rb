@@ -49,12 +49,9 @@ module GovukNavigationHelpers
 
           statsd.increment(:taxonomy_sidebar_searches)
 
-          results.map do |result|
-            {
-              title: result['title'],
-              link: result['link'],
-            }
-          end
+          results
+            .map { |result| { title: result['title'], link: result['link'], } }
+            .sort_by { |result| result[:title] }
         rescue StandardError => e
           GovukNavigationHelpers.configuration.error_handler.notify(e)
           []

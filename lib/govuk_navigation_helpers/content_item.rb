@@ -26,12 +26,12 @@ module GovukNavigationHelpers
     def parent_taxons
       # First handle the case for content items tagged to the taxonomy.
       taxons = Array(content_store_response.dig("links", "taxons"))
-      return taxons.map { |taxon| ContentItem.new(taxon) } if taxons.any?
+      return taxons.map { |taxon| ContentItem.new(taxon) }.sort_by(&:title) if taxons.any?
 
       # If that link isn't present, assume we're dealing with a taxon and check
       # for its parents in the taxonomy.
       parent_taxons = Array(content_store_response.dig("links", "parent_taxons"))
-      parent_taxons.map { |taxon| ContentItem.new(taxon) }
+      parent_taxons.map { |taxon| ContentItem.new(taxon) }.sort_by(&:title)
     end
 
     def mainstream_browse_pages

@@ -6,19 +6,7 @@ include GdsApi::TestHelpers::Rummager
 
 RSpec.describe GovukNavigationHelpers::TaxonomySidebar do
   describe '#sidebar' do
-    before(:each) do
-      stub_any_rummager_search
-        .to_return(
-          body: {
-            'results': [
-              {
-                'title': 'Result Content',
-                'link': '/result-content',
-              },
-            ],
-          }.to_json
-        )
-    end
+    before { stub_any_rummager_search_to_return_no_results }
 
     it 'can handle any valid content item' do
       generator = GovukSchemas::RandomExample.for_schema(
@@ -39,8 +27,21 @@ RSpec.describe GovukNavigationHelpers::TaxonomySidebar do
       end
     end
 
-    context 'given a content item tagged to taxons' do
-      it 'returns a sidebar hash containing a list of parent taxons and related content' do
+    context 'given a content item tagged to taxons and with related items' do
+      before do
+        stub_any_rummager_search
+          .to_return(
+            body: {
+              'results': [
+                { 'title': 'Related item C', 'link': '/related-item-c', },
+                { 'title': 'Related item B', 'link': '/related-item-b', },
+                { 'title': 'Related item A', 'link': '/related-item-a', },
+              ],
+            }.to_json
+          )
+      end
+
+      it 'returns a sidebar hash containing a sorted list of parent taxons and related content' do
         expect(GovukNavigationHelpers.configuration.statsd).to receive(
           :increment
         ).with(
@@ -52,25 +53,23 @@ RSpec.describe GovukNavigationHelpers::TaxonomySidebar do
         expect(sidebar_for(content_item)).to eq(
           items: [
             {
-              title: "Taxon 1",
-              url: "/taxon-1",
-              description: "The 1st taxon.",
+              title: "Taxon A",
+              url: "/taxon-a",
+              description: "The A taxon.",
               related_content: [
-                {
-                  title: 'Result Content',
-                  link: '/result-content',
-                },
+                { 'title': 'Related item A', 'link': '/related-item-a', },
+                { 'title': 'Related item B', 'link': '/related-item-b', },
+                { 'title': 'Related item C', 'link': '/related-item-c', },
               ],
             },
             {
-              title: "Taxon 2",
-              url: "/taxon-2",
-              description: "The 2nd taxon.",
+              title: "Taxon B",
+              url: "/taxon-b",
+              description: "The B taxon.",
               related_content: [
-                {
-                  title: 'Result Content',
-                  link: '/result-content',
-                },
+                { 'title': 'Related item A', 'link': '/related-item-a', },
+                { 'title': 'Related item B', 'link': '/related-item-b', },
+                { 'title': 'Related item C', 'link': '/related-item-c', },
               ],
             },
           ]
@@ -122,16 +121,16 @@ RSpec.describe GovukNavigationHelpers::TaxonomySidebar do
       "links" => {
         "taxons" => [
           {
-            "title" => "Taxon 1",
-            "base_path" => "/taxon-1",
-            "content_id" => "taxon1",
-            "description" => "The 1st taxon.",
+            "title" => "Taxon B",
+            "base_path" => "/taxon-b",
+            "content_id" => "taxon-b",
+            "description" => "The B taxon.",
           },
           {
-            "title" => "Taxon 2",
-            "base_path" => "/taxon-2",
-            "content_id" => "taxon2",
-            "description" => "The 2nd taxon.",
+            "title" => "Taxon A",
+            "base_path" => "/taxon-a",
+            "content_id" => "taxon-a",
+            "description" => "The A taxon.",
           },
         ],
       },
