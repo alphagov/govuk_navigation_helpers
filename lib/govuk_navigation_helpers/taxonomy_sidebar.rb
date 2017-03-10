@@ -9,12 +9,51 @@ module GovukNavigationHelpers
     end
 
     def sidebar
-      {
-        items: taxons
-      }
+      overriden = sidebar_from_overrides
+      if overriden.empty?
+        {
+          items: taxons
+        }
+      else
+        {
+          items: overriden
+        }
+      end
     end
 
   private
+
+    def sidebar_from_overrides
+      overriden = @content_item.related_overrides
+      taxons = {}
+      grouped_overrides = {}
+
+      overriden.each do |override|
+        override_taxons = override.taxons
+
+        taxon = override_taxons.find { |taxon| taxons.include?(taxon.content_id) }
+        taxon ||= override_taxons.first
+
+        taxons[taxon.content_id] = taxon
+        grouped_overrides[taxon] ||= []
+        grouped_overrides[taxon] << override
+      end
+
+      taxons.values.map do |taxon|
+        related_content = grouped_overrides[taxon].map do |content_item|
+          {
+            title: content_item.title,
+            link: content_item.base_path
+          }
+        end
+
+        {
+          title: taxon.title,
+          url: taxon.base_path,
+          related_content: related_content
+        }
+      end
+    end
 
     def statsd
       GovukNavigationHelpers.configuration.statsd
