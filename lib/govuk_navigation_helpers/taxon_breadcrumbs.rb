@@ -5,11 +5,18 @@ module GovukNavigationHelpers
     end
 
     def breadcrumbs
-      ordered_parents = all_parents.map do |parent|
-        { title: parent.title, url: parent.base_path }
+      ordered_parents = all_parents.map.with_index do |parent, index|
+        {
+          title: parent.title,
+          url: parent.base_path,
+          is_page_parent: index == 0
+        }
       end
 
-      ordered_parents << { title: "Home", url: "/" }
+      ordered_parents << {
+        title: "Home",
+        url: "/",
+        is_page_parent: ordered_parents.empty? }
 
       ordered_breadcrumbs = ordered_parents.reverse
       ordered_breadcrumbs << { title: content_item.title, is_current_page: true }

@@ -21,7 +21,7 @@ RSpec.describe GovukNavigationHelpers::TaxonBreadcrumbs do
 
       expect(breadcrumbs).to eq(
         breadcrumbs: [
-          { title: "Home", url: "/" },
+          { title: "Home", url: "/", is_page_parent: true },
           { title: "Some Content", is_current_page: true }
         ]
       )
@@ -33,8 +33,8 @@ RSpec.describe GovukNavigationHelpers::TaxonBreadcrumbs do
 
       expect(breadcrumbs).to eq(
         breadcrumbs: [
-          { title: "Home", url: "/" },
-          { title: "Taxon", url: "/taxon" },
+          { title: "Home", url: "/", is_page_parent: false },
+          { title: "Taxon", url: "/taxon", is_page_parent: true },
           { title: "Some Content", is_current_page: true },
         ]
       )
@@ -64,10 +64,10 @@ RSpec.describe GovukNavigationHelpers::TaxonBreadcrumbs do
 
         expect(breadcrumbs).to eq(
           breadcrumbs: [
-            { title: "Home", url: "/" },
-            { title: "Another-parent", url: "/another-parent" },
-            { title: "A-parent", url: "/a-parent" },
-            { title: "Taxon", url: "/taxon" },
+            { title: "Home", url: "/", is_page_parent: false },
+            { title: "Another-parent", url: "/another-parent", is_page_parent: false },
+            { title: "A-parent", url: "/a-parent", is_page_parent: false },
+            { title: "Taxon", url: "/taxon", is_page_parent: true },
             { title: "Some Content", is_current_page: true },
           ]
         )
@@ -91,8 +91,8 @@ RSpec.describe GovukNavigationHelpers::TaxonBreadcrumbs do
 
         expect(breadcrumbs).to eq(
           breadcrumbs: [
-            { title: "Home", url: "/" },
-            { title: "A-parent", url: "/a-parent" },
+            { title: "Home", url: "/", is_page_parent: false },
+            { title: "A-parent", url: "/a-parent", is_page_parent: true },
             { title: "Taxon", is_current_page: true },
           ]
         )
@@ -125,8 +125,8 @@ RSpec.describe GovukNavigationHelpers::TaxonBreadcrumbs do
 
         expect(breadcrumbs).to eq(
           breadcrumbs: [
-            { title: "Home", url: "/" },
-            { title: "Parent A", url: "/parent-a" },
+            { title: "Home", url: "/", is_page_parent: false },
+            { title: "Parent A", url: "/parent-a", is_page_parent: true },
             { title: "Taxon", is_current_page: true },
           ]
         )
