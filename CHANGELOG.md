@@ -1,3 +1,8 @@
+## 3.2.1
+
+* Add `is_page_parent` flag to the breadcrumb which is the direct parent of the
+  current taxon.
+
 ## 3.2.0
 
 * Alphabetically sort taxons and related links in the taxonomy sidebar.
