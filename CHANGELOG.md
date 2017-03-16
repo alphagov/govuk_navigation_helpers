@@ -1,3 +1,11 @@
+## 4.0.0
+
+* **BREAKING CHANGE**: remove `Guidance::DOCUMENT_TYPES`. Clients should use
+  filter guidance content using the `navigation_document_supertype` field which
+  has been added to search and the content store.
+* Use `navigation_document_supertype` internally in search queries to find
+  guidance content.
+
 ## 3.2.1
 
 * Add `is_page_parent` flag to the breadcrumb which is the direct parent of the
