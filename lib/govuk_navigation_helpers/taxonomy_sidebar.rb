@@ -1,5 +1,4 @@
 require 'govuk_navigation_helpers/services'
-require 'govuk_navigation_helpers/guidance'
 require 'govuk_navigation_helpers/configuration'
 
 module GovukNavigationHelpers
@@ -43,7 +42,7 @@ module GovukNavigationHelpers
             start: 0,
             count: 3,
             filter_taxons: [taxon.content_id],
-            filter_content_store_document_type: Guidance::DOCUMENT_TYPES,
+            filter_navigation_document_supertype: 'guidance',
             fields: %w[title link],
           )['results']
 
