@@ -9,17 +9,23 @@ module GovukNavigationHelpers
         {
           title: parent.title,
           url: parent.base_path,
-          is_page_parent: index == 0
+          document_type: parent.document_type,
+          is_page_parent: index == 0,
         }
       end
 
       ordered_parents << {
         title: "Home",
         url: "/",
-        is_page_parent: ordered_parents.empty? }
+        is_page_parent: ordered_parents.empty?,
+      }
 
       ordered_breadcrumbs = ordered_parents.reverse
-      ordered_breadcrumbs << { title: content_item.title, is_current_page: true }
+      ordered_breadcrumbs << {
+        title: content_item.title,
+        document_type: content_item.document_type,
+        is_current_page: true,
+      }
 
       {
         breadcrumbs: ordered_breadcrumbs

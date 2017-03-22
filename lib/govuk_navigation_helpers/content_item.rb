@@ -65,5 +65,9 @@ module GovukNavigationHelpers
     def external_links
       content_store_response.dig("details", "external_related_links").to_a
     end
+
+    def document_type
+      content_store_response.fetch("document_type")
+    end
   end
 end
