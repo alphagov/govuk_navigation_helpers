@@ -21,12 +21,15 @@ module GovukNavigationHelpers
 
     def taxons
       parent_taxons = @content_item.parent_taxons
-      parent_taxons.map do |parent_taxon|
+
+      parent_taxons.each_with_index.map do |parent_taxon, index|
+        related_content = index < 2 ? content_related_to(parent_taxon) : []
+
         {
           title: parent_taxon.title,
           url: parent_taxon.base_path,
           description: parent_taxon.description,
-          related_content: content_related_to(parent_taxon),
+          related_content: related_content,
         }
       end
     end

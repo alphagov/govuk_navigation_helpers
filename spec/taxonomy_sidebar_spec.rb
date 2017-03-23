@@ -75,6 +75,54 @@ RSpec.describe GovukNavigationHelpers::TaxonomySidebar do
           ]
         )
       end
+
+      it 'only shows related links for the first 2 taxons with related content' do
+        expect(GovukNavigationHelpers.configuration.statsd).to receive(
+          :increment
+        ).with(
+          :taxonomy_sidebar_searches
+        ).twice
+
+        content_item = content_item_tagged_to_taxon
+
+        content_item['links']['taxons'] << {
+          "title" => "Taxon C",
+          "base_path" => "/taxon-c",
+          "content_id" => "taxon-c",
+          "description" => "The C taxon."
+        }
+
+        expect(sidebar_for(content_item)).to eq(
+          items: [
+            {
+              title: "Taxon A",
+              url: "/taxon-a",
+              description: "The A taxon.",
+              related_content: [
+                { 'title': 'Related item A', 'link': '/related-item-a', },
+                { 'title': 'Related item B', 'link': '/related-item-b', },
+                { 'title': 'Related item C', 'link': '/related-item-c', },
+              ],
+            },
+            {
+              title: "Taxon B",
+              url: "/taxon-b",
+              description: "The B taxon.",
+              related_content: [
+                { 'title': 'Related item A', 'link': '/related-item-a', },
+                { 'title': 'Related item B', 'link': '/related-item-b', },
+                { 'title': 'Related item C', 'link': '/related-item-c', },
+              ],
+            },
+            {
+              title: "Taxon C",
+              url: "/taxon-c",
+              description: "The C taxon.",
+              related_content: [],
+            },
+          ]
+        )
+      end
     end
 
     context 'when Rummager raises an exception' do
