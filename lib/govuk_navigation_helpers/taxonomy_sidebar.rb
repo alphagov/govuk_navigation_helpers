@@ -9,7 +9,7 @@ module GovukNavigationHelpers
 
     def sidebar
       {
-        items: taxons
+        items: [taxons, elsewhere_on_govuk, elsewhere_on_the_web].flatten
       }
     end
 
@@ -34,9 +34,46 @@ module GovukNavigationHelpers
       end
     end
 
-    # This method will fetch content related to @content_item, and tagged to taxon. This is a
-    # temporary method that uses search to achieve this. This behaviour is to be moved into
-    # the content store
+    def elsewhere_on_govuk
+      return [] if @content_item.related_overrides.empty?
+
+      related_content = @content_item.related_overrides.map do |override|
+        {
+          title: override.title,
+          link: override.base_path
+        }
+      end
+
+      [
+        {
+          title: "Elsewhere on GOV.UK",
+          related_content: related_content
+        }
+      ]
+    end
+
+    def elsewhere_on_the_web
+      return [] if @content_item.external_links.empty?
+
+      related_content = @content_item.external_links.map do |external_link|
+        {
+          title: external_link.fetch('title'),
+          link: external_link.fetch('url'),
+          rel: 'external'
+        }
+      end
+
+      [
+        {
+          title: "Elsewhere on the web",
+          related_content: related_content
+        }
+      ]
+    end
+
+    # This method will fetch content related to @content_item, and tagged to
+    # taxon. This is a temporary method that uses search to achieve this. This
+    # behaviour is to be moved into the content store.
     def content_related_to(taxon)
       statsd.time(:taxonomy_sidebar_search_time) do
         begin
