@@ -1,3 +1,8 @@
+## 5.1.0
+
+* Display Elsewhere in GOV.UK and Elsewhere on the web related links on new
+  taxonomy sidebar.
+
 ## 5.0.0
 
 * **BREAKING CHANGE**: Update the gds-api-adapters gem. This includes a change
