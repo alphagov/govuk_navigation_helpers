@@ -21,18 +21,16 @@ node {
 
     stage('Bundle') {
       echo 'Bundling'
-      sh("bundle install --path ${JENKINS_HOME}/bundles/${JOB_NAME}")
+      govuk.bundleGem()
     }
 
     stage('Linter') {
       govuk.rubyLinter()
     }
 
-    stage('Tests') {
-      govuk.setEnvar('RAILS_ENV', 'test')
-      testGem()
-      // govuk.runTests('spec')
-    }
+    govuk.setEnvar('RAILS_ENV', 'test')
+    testGem()
+    // govuk.runTests('spec')
 
     if(env.BRANCH_NAME == "master") {
       stage('Publish Gem') {
@@ -50,8 +48,9 @@ node {
   }
 }
 
-def testGem() {
+def testGem(extraVersions = []) {
   def supportedRubyVersions = ['2.3']
+  supportedRubyVersions.addAll(extraVersions)
   testGemWithAllRubies(supportedRubyVersions)
 }
 
@@ -66,10 +65,14 @@ def testGemWithAllRubies(supportedRubyVersions) {
 
   for (rubyVersion in supportedRubyVersions) {
     stage("Test with ruby $rubyVersion") {
+      echo "Removing Gemfile.lock"
       sh "rm -f Gemfile.lock"
+      echo "Setting Ruby version"
       govuk.setEnvar("RBENV_VERSION", rubyVersion)
+      echo "Bundling gem"
       govuk.bundleGem()
 
+      echo "Running tests"
       govuk.runTests('spec')
     }
   }
