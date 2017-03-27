@@ -30,7 +30,8 @@ node {
 
     stage('Tests') {
       govuk.setEnvar('RAILS_ENV', 'test')
-      govuk.runTests('spec')
+      testGem()
+      // govuk.runTests('spec')
     }
 
     if(env.BRANCH_NAME == "master") {
@@ -47,4 +48,30 @@ node {
           sendToIndividuals: true])
     throw e
   }
+}
+
+def testGem() {
+  def supportedRubyVersions = ['2.3']
+  testGemWithAllRubies(supportedRubyVersions)
+}
+
+/**
+ * Runs the tests with all the Ruby versions that are currently supported.
+ *
+ * Adds a Jenkins stage for each Ruby version, so do not call this from within
+ * a stage.
+ */
+def testGemWithAllRubies(supportedRubyVersions) {
+  def govuk = load '/var/lib/jenkins/groovy_scripts/govuk_jenkinslib.groovy'
+
+  for (rubyVersion in supportedRubyVersions) {
+    stage("Test with ruby $rubyVersion") {
+      sh "rm -f Gemfile.lock"
+      govuk.setEnvar("RBENV_VERSION", rubyVersion)
+      govuk.bundleGem()
+
+      govuk.runTests('spec')
+    }
+  }
+  sh "unset RBENV_VERSION"
 }
