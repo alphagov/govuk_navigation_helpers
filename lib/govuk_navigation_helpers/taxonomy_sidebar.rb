@@ -4,12 +4,16 @@ require 'govuk_navigation_helpers/configuration'
 module GovukNavigationHelpers
   class TaxonomySidebar
     def initialize(content_item)
-      @content_item = ContentItem.new content_item
+      @content_item = ContentItem.new(content_item)
     end
 
     def sidebar
+      items = taxons_with_related_links
+        .concat(elsewhere_on_govuk)
+        .concat(elsewhere_on_the_web)
+
       {
-        items: [taxons, elsewhere_on_govuk, elsewhere_on_the_web].flatten
+        items: items
       }
     end
 
@@ -19,11 +23,14 @@ module GovukNavigationHelpers
       GovukNavigationHelpers.configuration.statsd
     end
 
-    def taxons
+    def taxons_with_related_links
       parent_taxons = @content_item.parent_taxons
 
       parent_taxons.each_with_index.map do |parent_taxon, index|
-        related_content = index < 2 ? content_related_to(parent_taxon) : []
+        related_content = related_content_for_taxon(
+          taxon: parent_taxon,
+          show_search_related_links: index < 2
+        )
 
         {
           title: parent_taxon.title,
@@ -34,15 +41,32 @@ module GovukNavigationHelpers
       end
     end
 
-    def elsewhere_on_govuk
-      return [] if @content_item.related_overrides.empty?
+    def related_content_for_taxon(taxon:, show_search_related_links:)
+      curated_related_links = @content_item.curated_related_links_for_taxon(taxon)
 
-      related_content = @content_item.related_overrides.map do |override|
+      if curated_related_links.empty?
+        return [] if !show_search_related_links
+        return search_related_links_tagged_to(taxon)
+      end
+
+      curated_related_links.map do |curated_related_link|
         {
-          title: override.title,
-          link: override.base_path
+          title: curated_related_link.title,
+          link: curated_related_link.base_path
         }
       end
+    end
+
+    def elsewhere_on_govuk
+      return [] if @content_item.curated_related_links_elsewhere_on_govuk.empty?
+
+      related_content =
+        @content_item.curated_related_links_elsewhere_on_govuk.map do |override|
+          {
+            title: override.title,
+            link: override.base_path
+          }
+        end
 
       [
         {
@@ -74,7 +98,7 @@ module GovukNavigationHelpers
     # This method will fetch content related to @content_item, and tagged to
     # taxon. This is a temporary method that uses search to achieve this. This
     # behaviour is to be moved into the content store.
-    def content_related_to(taxon)
+    def search_related_links_tagged_to(taxon)
       statsd.time(:taxonomy_sidebar_search_time) do
         begin
           results = Services.rummager.search(

@@ -165,6 +165,45 @@ RSpec.describe GovukNavigationHelpers::TaxonomySidebar do
           ]
         )
       end
+
+      it "includes curated related links grouped per taxon when available" do
+        expect(GovukNavigationHelpers.configuration.statsd).to receive(
+          :increment
+        ).with(
+          :taxonomy_sidebar_searches
+        ).once
+
+        content_item = content_item_and_curated_links_tagged_to_same_taxon
+
+        expect(sidebar_for(content_item)).to eq(
+          items: [
+            {
+              title: "Taxon A",
+              url: "/taxon-a",
+              description: "The A taxon.",
+              related_content: [
+                { title: "Curated link 1", link: "/curated-link-1" }
+              ],
+            },
+            {
+              title: "Taxon B",
+              url: "/taxon-b",
+              description: "The B taxon.",
+              related_content: [
+                { 'title': 'Related item A', 'link': '/related-item-a', },
+                { 'title': 'Related item B', 'link': '/related-item-b', },
+                { 'title': 'Related item C', 'link': '/related-item-c', },
+              ],
+            },
+            {
+              title: "Elsewhere on GOV.UK",
+              related_content: [
+                { title: "Curated link 2", link: "/curated-link-2" }
+              ]
+            },
+          ]
+        )
+      end
     end
 
     context 'when Rummager raises an exception' do
@@ -250,6 +289,54 @@ RSpec.describe GovukNavigationHelpers::TaxonomySidebar do
         "external_related_links" => [
           "url" => "www.external-link.com",
           "title" => "An external link"
+        ]
+      }
+    }
+  end
+
+  def content_item_and_curated_links_tagged_to_same_taxon
+    {
+      "title" => "A piece of content",
+      "base_path" => "/a-piece-of-content",
+      "links" => {
+        "taxons" => [
+          {
+            "title" => "Taxon A",
+            "base_path" => "/taxon-a",
+            "content_id" => "taxon-a",
+            "description" => "The A taxon.",
+          },
+          {
+            "title" => "Taxon B",
+            "base_path" => "/taxon-b",
+            "content_id" => "taxon-b",
+            "description" => "The B taxon.",
+          },
+        ],
+        "ordered_related_items_overrides" => [
+          {
+            "title" => "Curated link 1",
+            "base_path" => "/curated-link-1",
+            "content_id" => "curated-link-1",
+            "links" => {
+              "taxons" => [
+                {
+                  "title" => "Taxon A",
+                  "base_path" => "/taxon-a",
+                  "content_id" => "taxon-a",
+                  "description" => "The A taxon.",
+                }
+              ],
+            }
+          },
+          {
+            "title" => "Curated link 2",
+            "base_path" => "/curated-link-2",
+            "content_id" => "curated-link-2",
+            "links" => {
+              "taxons" => [],
+            }
+          }
         ]
       }
     }

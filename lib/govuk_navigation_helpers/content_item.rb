@@ -40,6 +40,20 @@ module GovukNavigationHelpers
       end
     end
 
+    def taxons
+      content_store_response.dig("links", "taxons").to_a.map do |link|
+        ContentItem.new(link)
+      end
+    end
+
+    def taxon_base_paths
+      taxons.map(&:base_path)
+    end
+
+    def tagged_to_taxon?(taxon_base_path)
+      taxon_base_paths.include?(taxon_base_path)
+    end
+
     def title
       content_store_response.fetch("title")
     end
@@ -62,9 +76,24 @@ module GovukNavigationHelpers
       end
     end
 
-    def related_overrides
+    def curated_related_links
+      # TODO: rename the fiel in the schemas
       content_store_response.dig("links", "ordered_related_items_overrides").to_a.map do |link|
         ContentItem.new(link)
+      end
+    end
+
+    def curated_related_links_for_taxon(taxon)
+      return [] if curated_related_links.empty?
+
+      curated_related_links.select do |curated_related_link|
+        curated_related_link.tagged_to_taxon?(taxon.base_path)
+      end
+    end
+
+    def curated_related_links_elsewhere_on_govuk
+      curated_related_links.select do |curated_related_link|
+        (curated_related_link.taxon_base_paths & taxon_base_paths).empty?
       end
     end
 
