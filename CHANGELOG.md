@@ -1,7 +1,7 @@
-## Unreleased
+## 6.0.0
 
-* Bump gds-api-adapters to 42.2, which makes `lgil` mandatory when requesting
-links from Local Links Manager.
+* **BREAKING CHANGE**: Bump gds-api-adapters to 42.2, which makes `lgil`
+mandatory when requesting links from Local Links Manager.
 
 ## 5.1.0
 
