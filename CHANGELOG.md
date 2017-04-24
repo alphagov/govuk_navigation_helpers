@@ -1,3 +1,8 @@
+## Unreleased
+
+* Bump gds-api-adapters to 42.2, which makes `lgil` mandatory when requesting
+links from Local Links Manager.
+
 ## 5.1.0
 
 * Display Elsewhere in GOV.UK and Elsewhere on the web related links on new
