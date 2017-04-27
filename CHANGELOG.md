@@ -1,3 +1,7 @@
+## 6.0.1
+
+* Remove duplicate related links from search for the new taxonomy sidebar.
+
 ## 6.0.0
 
 * **BREAKING CHANGE**: Bump gds-api-adapters to 42.2, which makes `lgil`
