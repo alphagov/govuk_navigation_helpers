@@ -123,48 +123,6 @@ RSpec.describe GovukNavigationHelpers::TaxonomySidebar do
           ]
         )
       end
-
-      it "includes curated and external links when available" do
-        expect(GovukNavigationHelpers.configuration.statsd).to receive(
-          :increment
-        ).with(
-          :taxonomy_sidebar_searches
-        ).once
-
-        content_item =
-          content_item_tagged_to_taxon_with_curated_and_external_links
-
-        expect(sidebar_for(content_item)).to eq(
-          items: [
-            {
-              title: "Taxon A",
-              url: "/taxon-a",
-              description: "The A taxon.",
-              related_content: [
-                { 'title': 'Related item A', 'link': '/related-item-a', },
-                { 'title': 'Related item B', 'link': '/related-item-b', },
-                { 'title': 'Related item C', 'link': '/related-item-c', },
-              ],
-            },
-            {
-              title: "Elsewhere on GOV.UK",
-              related_content: [
-                { title: "Curated link 1", link: "/curated-link-1" }
-              ]
-            },
-            {
-              title: "Elsewhere on the web",
-              related_content: [
-                {
-                  title: "An external link",
-                  link: "www.external-link.com",
-                  rel: "external"
-                }
-              ]
-            }
-          ]
-        )
-      end
     end
 
     context 'when Rummager raises an exception' do
@@ -224,34 +182,6 @@ RSpec.describe GovukNavigationHelpers::TaxonomySidebar do
           },
         ],
       },
-    }
-  end
-
-  def content_item_tagged_to_taxon_with_curated_and_external_links
-    {
-      "title" => "A piece of content",
-      "base_path" => "/a-piece-of-content",
-      "links" => {
-        "taxons" => [
-          {
-            "title" => "Taxon A",
-            "base_path" => "/taxon-a",
-            "content_id" => "taxon-a",
-            "description" => "The A taxon.",
-          }
-        ],
-        "ordered_related_items_overrides" => [
-          "title" => "Curated link 1",
-          "base_path" => "/curated-link-1",
-          "content_id" => "curated-link-1",
-        ]
-      },
-      "details" => {
-        "external_related_links" => [
-          "url" => "www.external-link.com",
-          "title" => "An external link"
-        ]
-      }
     }
   end
 end

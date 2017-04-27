@@ -62,12 +62,6 @@ module GovukNavigationHelpers
       end
     end
 
-    def related_overrides
-      content_store_response.dig("links", "ordered_related_items_overrides").to_a.map do |link|
-        ContentItem.new(link)
-      end
-    end
-
     def external_links
       content_store_response.dig("details", "external_related_links").to_a
     end
