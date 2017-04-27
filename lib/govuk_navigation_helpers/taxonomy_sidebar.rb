@@ -21,9 +21,14 @@ module GovukNavigationHelpers
 
     def taxons
       parent_taxons = @content_item.parent_taxons
+      used_related_links = Set.new
 
       parent_taxons.each_with_index.map do |parent_taxon, index|
-        related_content = index < 2 ? content_related_to(parent_taxon) : []
+        related_content = index < 2 ? content_related_to(parent_taxon, used_related_links) : []
+
+        used_related_links.merge(
+          related_content.map { |content| content[:link] }
+        )
 
         {
           title: parent_taxon.title,
@@ -37,7 +42,7 @@ module GovukNavigationHelpers
     # This method will fetch content related to @content_item, and tagged to taxon. This is a
     # temporary method that uses search to achieve this. This behaviour is to be moved into
     # the content store
-    def content_related_to(taxon)
+    def content_related_to(taxon, used_related_links)
       statsd.time(:taxonomy_sidebar_search_time) do
         begin
           results = Services.rummager.search(
@@ -46,6 +51,7 @@ module GovukNavigationHelpers
             count: 3,
             filter_taxons: [taxon.content_id],
             filter_navigation_document_supertype: 'guidance',
+            reject_link: used_related_links.to_a,
             fields: %w[title link],
           )['results']
 
