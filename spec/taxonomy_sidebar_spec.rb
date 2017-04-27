@@ -6,9 +6,9 @@ include GdsApi::TestHelpers::Rummager
 
 RSpec.describe GovukNavigationHelpers::TaxonomySidebar do
   describe '#sidebar' do
-    before { stub_any_rummager_search_to_return_no_results }
-
     it 'can handle any valid content item' do
+      stub_any_rummager_search_to_return_no_results
+
       generator = GovukSchemas::RandomExample.for_schema(
         'placeholder',
         schema_type: 'frontend'
@@ -123,16 +123,44 @@ RSpec.describe GovukNavigationHelpers::TaxonomySidebar do
           ]
         )
       end
+    end
 
-      it "includes curated and external links when available" do
+    context 'given there are repeated related links across different parent taxons' do
+      before do
+        # First taxon should have links A and B
+        stub_request(
+          :get,
+          %r{.*search.json?.*\&filter_taxons%5B%5D=taxon-a.*}
+        ).to_return(
+          body: {
+            'results': [
+              { 'title': 'Related item A', 'link': '/related-item-a', },
+              { 'title': 'Related item B', 'link': '/related-item-b', },
+            ],
+          }.to_json
+        )
+
+        # Second taxon should only return link C, and reject the other 2
+        stub_request(
+          :get,
+          %r{.*search.json?.*\&filter_taxons%5B%5D=taxon-b.*&reject_link%5B%5D=/related-item-a&reject_link%5B%5D=/related-item-b.*}
+        ).to_return(
+          body: {
+            'results': [
+              { 'title': 'Related item C', 'link': '/related-item-c', },
+            ],
+          }.to_json
+        )
+      end
+
+      it 'does not duplicate the related links across each taxon' do
         expect(GovukNavigationHelpers.configuration.statsd).to receive(
           :increment
         ).with(
           :taxonomy_sidebar_searches
-        ).once
+        ).twice
 
-        content_item =
-          content_item_tagged_to_taxon_with_curated_and_external_links
+        content_item = content_item_tagged_to_taxon
 
         expect(sidebar_for(content_item)).to eq(
           items: [
@@ -143,24 +171,15 @@ RSpec.describe GovukNavigationHelpers::TaxonomySidebar do
               related_content: [
                 { 'title': 'Related item A', 'link': '/related-item-a', },
                 { 'title': 'Related item B', 'link': '/related-item-b', },
-                { 'title': 'Related item C', 'link': '/related-item-c', },
               ],
             },
             {
-              title: "Elsewhere on GOV.UK",
+              title: "Taxon B",
+              url: "/taxon-b",
+              description: "The B taxon.",
               related_content: [
-                { title: "Curated link 1", link: "/curated-link-1" }
-              ]
-            },
-            {
-              title: "Elsewhere on the web",
-              related_content: [
-                {
-                  title: "An external link",
-                  link: "www.external-link.com",
-                  rel: "external"
-                }
-              ]
+                { 'title': 'Related item C', 'link': '/related-item-c', },
+              ],
             }
           ]
         )
@@ -224,34 +243,6 @@ RSpec.describe GovukNavigationHelpers::TaxonomySidebar do
           },
         ],
       },
-    }
-  end
-
-  def content_item_tagged_to_taxon_with_curated_and_external_links
-    {
-      "title" => "A piece of content",
-      "base_path" => "/a-piece-of-content",
-      "links" => {
-        "taxons" => [
-          {
-            "title" => "Taxon A",
-            "base_path" => "/taxon-a",
-            "content_id" => "taxon-a",
-            "description" => "The A taxon.",
-          }
-        ],
-        "ordered_related_items_overrides" => [
-          "title" => "Curated link 1",
-          "base_path" => "/curated-link-1",
-          "content_id" => "curated-link-1",
-        ]
-      },
-      "details" => {
-        "external_related_links" => [
-          "url" => "www.external-link.com",
-          "title" => "An external link"
-        ]
-      }
     }
   end
 end
