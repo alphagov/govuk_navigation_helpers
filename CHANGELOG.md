@@ -17,7 +17,7 @@ mandatory when requesting links from Local Links Manager.
 * **BREAKING CHANGE**: Update the gds-api-adapters gem. This includes a change
   which replaces the `GOVUK-Fact-Check-Id` header with the
   `GOVUK-Auth-Bypass-Id` header when passing on requests from the client to
-  APIs. See the gds-api-adapters changelog for more information on upgrading.
+  APIs. See the [gds-api-adapters changelog](https://github.com/alphagov/gds-api-adapters/blob/master/CHANGELOG.md#4100) for more information on upgrading.
 * Limit related links to the first two taxons.
 
 ## 4.0.0
