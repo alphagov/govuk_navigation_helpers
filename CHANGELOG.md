@@ -1,3 +1,7 @@
+## 6.0.2
+
+* Bump gds-api-adapters to 43.0.0
+
 ## 6.0.1
 
 * Remove duplicate related links from search for the new taxonomy sidebar.
