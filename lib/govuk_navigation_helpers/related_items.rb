@@ -20,6 +20,7 @@ module GovukNavigationHelpers
     def related_items
       {
         sections: [
+          register_to_vote_section,
           tagged_to_same_mainstream_browse_page_section,
           parents_tagged_to_same_mainstream_browse_page_section,
           tagged_to_different_mainstream_browse_pages_section,
@@ -31,6 +32,21 @@ module GovukNavigationHelpers
   private
 
     attr_reader :content_item
+
+    def register_to_vote_section
+      return unless content_item.document_type == 'completed_transaction'
+      return if content_item.base_path =~ /register-to-vote/
+
+      {
+        title: 'Register to vote',
+        description: 'To vote in the General Election on 8 June, you need to apply to register by 11:59pm on 22 May.',
+        url: nil,
+        items: [
+          title: 'Register to vote',
+          url: '/register-to-vote'
+        ]
+      }
+    end
 
     def tagged_to_same_mainstream_browse_page_section
       return unless grouped.tagged_to_same_mainstream_browse_page.any?
