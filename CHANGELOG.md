@@ -1,3 +1,8 @@
+## 6.1.0
+
+* Add "Register to vote" section to related links data. This will only affect
+  completed transactions (apart from register-to-vote) until May 23rd 2017.
+
 ## 6.0.2
 
 * Bump gds-api-adapters to 43.0.0
