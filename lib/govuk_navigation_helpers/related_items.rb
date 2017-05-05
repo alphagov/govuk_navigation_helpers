@@ -37,9 +37,7 @@ module GovukNavigationHelpers
     attr_reader :content_item
 
     def register_to_vote_section
-      return if register_to_vote_deadline_reached?
-      return unless content_item.document_type == 'completed_transaction'
-      return if content_item.base_path =~ /register-to-vote/
+      return unless should_show_register_to_vote_section?
 
       {
         title: 'Register to vote',
@@ -52,8 +50,14 @@ module GovukNavigationHelpers
       }
     end
 
-    def register_to_vote_deadline_reached?
-      Time.now >= ActiveSupport::TimeZone['London'].parse('2017-05-22T23:59:59')
+    def should_show_register_to_vote_section?
+      content_item.document_type == 'completed_transaction' &&
+        register_to_vote_on_time? &&
+        content_item.base_path !~ /register-to-vote/
+    end
+
+    def register_to_vote_on_time?
+      Time.now < ActiveSupport::TimeZone['London'].parse('2017-05-22T23:59:59')
     end
 
     def tagged_to_same_mainstream_browse_page_section
