@@ -1,3 +1,6 @@
+require 'time'
+require 'active_support/core_ext/string/zones'
+require 'active_support/values/time_zone'
 require 'govuk_navigation_helpers/grouped_related_links'
 require 'govuk_navigation_helpers/content_item'
 
@@ -20,6 +23,7 @@ module GovukNavigationHelpers
     def related_items
       {
         sections: [
+          register_to_vote_section,
           tagged_to_same_mainstream_browse_page_section,
           parents_tagged_to_same_mainstream_browse_page_section,
           tagged_to_different_mainstream_browse_pages_section,
@@ -31,6 +35,30 @@ module GovukNavigationHelpers
   private
 
     attr_reader :content_item
+
+    def register_to_vote_section
+      return unless should_show_register_to_vote_section?
+
+      {
+        title: 'Register to vote',
+        description: 'To vote in the General Election on 8 June, you need to apply to register by 11:59pm on 22 May.',
+        url: nil,
+        items: [
+          title: 'Register to vote',
+          url: '/register-to-vote'
+        ]
+      }
+    end
+
+    def should_show_register_to_vote_section?
+      content_item.document_type == 'completed_transaction' &&
+        register_to_vote_on_time? &&
+        content_item.base_path !~ /register-to-vote/
+    end
+
+    def register_to_vote_on_time?
+      Time.now < ActiveSupport::TimeZone['London'].parse('2017-05-22T23:59:59')
+    end
 
     def tagged_to_same_mainstream_browse_page_section
       return unless grouped.tagged_to_same_mainstream_browse_page.any?

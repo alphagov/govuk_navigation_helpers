@@ -1,8 +1,8 @@
 require "spec_helper"
 
 RSpec.describe GovukNavigationHelpers::RelatedItems do
-  def payload_for(content_item)
-    generator = GovukSchemas::RandomExample.for_schema("placeholder", schema_type: "frontend")
+  def payload_for(content_item, schema = "placeholder")
+    generator = GovukSchemas::RandomExample.for_schema(schema, schema_type: "frontend")
     fully_valid_content_item = generator.merge_and_validate(content_item)
     GovukNavigationHelpers::NavigationHelper.new(fully_valid_content_item).related_items
   end
@@ -262,6 +262,73 @@ RSpec.describe GovukNavigationHelpers::RelatedItems do
           },
         ]
       )
+    end
+
+    it 'does not generate the register to vote section for /register-to-vote' do
+      allow(Time).to receive(:now).and_return(Time.parse('2017-05-05'))
+      content_item = {
+        "base_path" => "/register-to-vote",
+        "document_type" => "completed_transaction",
+        "links" => {},
+        "details" => {
+          "external_related_links" => [],
+          "promotion" => {
+            "category" => "organ_donor",
+            "url" => "https://www.organdonation.nhs.uk/"
+          }
+        }
+      }
+      transaction_payload = payload_for(content_item, "completed_transaction")
+
+      expect(transaction_payload).to eql(sections: [])
+    end
+
+    it 'generates the register to vote section for completed transactions with register to vote promotion' do
+      allow(Time).to receive(:now).and_return(Time.parse('2017-05-05'))
+      content_item = {
+        "base_path" => "/done/pay-dvla-fine",
+        "document_type" => "completed_transaction",
+        "links" => {},
+        "details" => {
+          "external_related_links" => [],
+          "promotion" => {
+            "category" => "register_to_vote",
+            "url" => "/register-to-vote"
+          }
+        }
+      }
+      transaction_payload = payload_for(content_item, "completed_transaction")
+
+      expect(transaction_payload).to eql(
+        sections: [{
+          title: "Register to vote",
+          description: "To vote in the General Election on 8 June, you need to apply to register by 11:59pm on 22 May.",
+          url: nil,
+          items: [
+            title: "Register to vote",
+            url: "/register-to-vote"
+          ]
+        }]
+      )
+    end
+
+    it 'does not show the register to vote section after May 23rd' do
+      allow(Time).to receive(:now).and_return(Time.parse('2017-05-24'))
+      content_item = {
+        "base_path" => "/done/pay-dvla-fine",
+        "document_type" => "completed_transaction",
+        "links" => {},
+        "details" => {
+          "external_related_links" => [],
+          "promotion" => {
+            "category" => "register_to_vote",
+            "url" => "/register-to-vote"
+          }
+        }
+      }
+      transaction_payload = payload_for(content_item, "completed_transaction")
+
+      expect(transaction_payload).to eql(sections: [])
     end
   end
 end
