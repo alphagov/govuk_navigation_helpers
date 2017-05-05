@@ -265,6 +265,7 @@ RSpec.describe GovukNavigationHelpers::RelatedItems do
     end
 
     it 'does not generate the register to vote section for /register-to-vote' do
+      allow(Time).to receive(:now).and_return(Time.parse('2017-05-05'))
       content_item = {
         "base_path" => "/register-to-vote",
         "document_type" => "completed_transaction",
@@ -283,6 +284,7 @@ RSpec.describe GovukNavigationHelpers::RelatedItems do
     end
 
     it 'generates the register to vote section for completed transactions with register to vote promotion' do
+      allow(Time).to receive(:now).and_return(Time.parse('2017-05-05'))
       content_item = {
         "base_path" => "/done/pay-dvla-fine",
         "document_type" => "completed_transaction",
@@ -308,6 +310,25 @@ RSpec.describe GovukNavigationHelpers::RelatedItems do
           ]
         }]
       )
+    end
+
+    it 'does not show the register to vote section after May 23rd' do
+      allow(Time).to receive(:now).and_return(Time.parse('2017-05-24'))
+      content_item = {
+        "base_path" => "/done/pay-dvla-fine",
+        "document_type" => "completed_transaction",
+        "links" => {},
+        "details" => {
+          "external_related_links" => [],
+          "promotion" => {
+            "category" => "register_to_vote",
+            "url" => "/register-to-vote"
+          }
+        }
+      }
+      transaction_payload = payload_for(content_item, "completed_transaction")
+
+      expect(transaction_payload).to eql(sections: [])
     end
   end
 end
