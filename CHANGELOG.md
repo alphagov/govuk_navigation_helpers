@@ -1,3 +1,8 @@
+## 6.2.0
+
+* Remove "Register to vote" section from related links data as deadline of
+  May 23rd 2017 has passed.
+
 ## 6.1.0
 
 * Add "Register to vote" section to related links data. This will only affect
