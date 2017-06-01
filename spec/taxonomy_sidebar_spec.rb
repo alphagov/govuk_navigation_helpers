@@ -186,6 +186,273 @@ RSpec.describe GovukNavigationHelpers::TaxonomySidebar do
       end
     end
 
+    context 'when there are related link overrides' do
+      context 'belonging to the same taxon' do
+        it 'displays the related link overrides under a single taxon' do
+          content_item = content_item_tagged_to_taxon
+
+          content_item['links']['ordered_related_items_overrides'] = [
+            {
+              'title' => 'Related link override B',
+              'base_path' => '/override-b',
+              'content_id' => 'override-b',
+              'links' => {
+                'taxons' => [
+                  content_item['links']['taxons'][0],
+                ],
+              },
+            },
+          ]
+
+          expect(sidebar_for(content_item)).to eq(
+            items: [
+              {
+                title: "Taxon A",
+                url: "/taxon-a",
+                description: "The A taxon.",
+                related_content: [],
+              },
+              {
+                title: "Taxon B",
+                url: "/taxon-b",
+                description: "The B taxon.",
+                related_content: [
+                  { title: 'Related link override B', link: '/override-b' },
+                ],
+              }
+            ]
+          )
+        end
+
+        it 'displays the related link overrides under a multiple taxons' do
+          content_item = content_item_tagged_to_taxon
+
+          content_item['links']['ordered_related_items_overrides'] = [
+            {
+              'title' => 'Related link override B',
+              'base_path' => '/override-b',
+              'content_id' => 'override-b',
+              'links' => {
+                'taxons' => [
+                  content_item['links']['taxons'][0],
+                ],
+              },
+            },
+            {
+              'title' => 'Related link override A-2',
+              'base_path' => '/override-a-2',
+              'content_id' => 'override-a-2',
+              'links' => {
+                'taxons' => [
+                  content_item['links']['taxons'][1],
+                ],
+              },
+            },
+            {
+              'title' => 'Related link override A-1',
+              'base_path' => '/override-a-1',
+              'content_id' => 'override-a-1',
+              'links' => {
+                'taxons' => [
+                  content_item['links']['taxons'][1],
+                ],
+              },
+            },
+          ]
+
+          expect(sidebar_for(content_item)).to eq(
+            items: [
+              {
+                title: "Taxon A",
+                url: "/taxon-a",
+                description: "The A taxon.",
+                related_content: [
+                  { 'title': 'Related link override A-1', 'link': '/override-a-1' },
+                  { 'title': 'Related link override A-2', 'link': '/override-a-2' },
+                ],
+              },
+              {
+                title: "Taxon B",
+                url: "/taxon-b",
+                description: "The B taxon.",
+                related_content: [
+                  { 'title': 'Related link override B', 'link': '/override-b' },
+                ],
+              }
+            ]
+          )
+        end
+
+        it 'displays a related link tagged to multiple taxons under a single taxon' do
+          content_item = content_item_tagged_to_taxon
+
+          content_item['links']['ordered_related_items_overrides'] = [
+            {
+              'title' => 'Related link override',
+              'base_path' => '/override',
+              'content_id' => 'override',
+              'links' => {
+                'taxons' => [
+                  content_item['links']['taxons'][0],
+                  content_item['links']['taxons'][1],
+                ],
+              },
+            },
+          ]
+
+          expect(sidebar_for(content_item)).to eq(
+            items: [
+              {
+                title: "Taxon A",
+                url: "/taxon-a",
+                description: "The A taxon.",
+                related_content: [
+                  { 'title': 'Related link override', 'link': '/override' },
+                ],
+              },
+              {
+                title: "Taxon B",
+                url: "/taxon-b",
+                description: "The B taxon.",
+                related_content: [],
+              }
+            ]
+          )
+        end
+
+        it 'displays a related link tagged to another taxon under "Elsewhere"' do
+          content_item = content_item_tagged_to_taxon
+
+          content_item['links']['ordered_related_items_overrides'] = [
+            {
+              'title' => 'Related link override',
+              'base_path' => '/override',
+              'content_id' => 'override',
+              'links' => {
+                'taxons' => [
+                  {
+                    'title' => 'Some other taxon',
+                    'content_id' => 'some-other-taxon',
+                    'base_path' => '/some-other-taxon',
+                  }
+                ],
+              },
+            },
+          ]
+
+          expect(sidebar_for(content_item)).to eq(
+            items: [
+              {
+                title: "Taxon A",
+                url: "/taxon-a",
+                description: "The A taxon.",
+                related_content: [],
+              },
+              {
+                title: "Taxon B",
+                url: "/taxon-b",
+                description: "The B taxon.",
+                related_content: [],
+              },
+              {
+                title: "Elsewhere on GOV.UK",
+                related_content: [
+                  { title: 'Related link override', link: '/override' }
+                ],
+              },
+            ]
+          )
+        end
+
+        it 'displays a related link not tagged to any taxons under "Elsewhere"' do
+          content_item = content_item_tagged_to_taxon
+
+          content_item['links']['ordered_related_items_overrides'] = [
+            {
+              'title' => 'Related link override',
+              'base_path' => '/override',
+              'content_id' => 'override',
+              'links' => {},
+            },
+          ]
+
+          expect(sidebar_for(content_item)).to eq(
+            items: [
+              {
+                title: "Taxon A",
+                url: "/taxon-a",
+                description: "The A taxon.",
+                related_content: [],
+              },
+              {
+                title: "Taxon B",
+                url: "/taxon-b",
+                description: "The B taxon.",
+                related_content: [],
+              },
+              {
+                title: "Elsewhere on GOV.UK",
+                related_content: [
+                  { title: 'Related link override', link: '/override' }
+                ],
+              },
+            ]
+          )
+        end
+
+        it 'displays an external related link under "Elsewhere"' do
+          content_item = content_item_tagged_to_taxon
+
+          content_item['links']['ordered_related_items_overrides'] = [
+            {
+              'title' => 'Related link override',
+              'base_path' => '/override',
+              'content_id' => 'override',
+              'links' => {},
+            },
+          ]
+
+          content_item['details'] = {
+            'external_related_links' => [
+              {
+                'title' => 'External related link',
+                'url' => 'http://example.com',
+              },
+            ]
+          }
+
+          expect(sidebar_for(content_item)).to eq(
+            items: [
+              {
+                title: "Taxon A",
+                url: "/taxon-a",
+                description: "The A taxon.",
+                related_content: [],
+              },
+              {
+                title: "Taxon B",
+                url: "/taxon-b",
+                description: "The B taxon.",
+                related_content: [],
+              },
+              {
+                title: "Elsewhere on GOV.UK",
+                related_content: [
+                  { title: 'Related link override', link: '/override' }
+                ],
+              },
+              {
+                title: "Elsewhere on the web",
+                related_content: [
+                  { title: 'External related link', link: 'http://example.com' }
+                ],
+              },
+            ]
+          )
+        end
+      end
+    end
+
     context 'when Rummager raises an exception' do
       error_handler = nil
 

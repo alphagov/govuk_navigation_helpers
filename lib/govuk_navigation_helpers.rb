@@ -3,6 +3,8 @@ require "govuk_navigation_helpers/breadcrumbs"
 require "govuk_navigation_helpers/related_items"
 require "govuk_navigation_helpers/taxon_breadcrumbs"
 require "govuk_navigation_helpers/taxonomy_sidebar"
+require "govuk_navigation_helpers/rummager_taxonomy_sidebar_links"
+require "govuk_navigation_helpers/curated_taxonomy_sidebar_links"
 
 module GovukNavigationHelpers
   class NavigationHelper
