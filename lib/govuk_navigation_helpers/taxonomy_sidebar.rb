@@ -9,61 +9,27 @@ module GovukNavigationHelpers
 
     def sidebar
       {
-        items: taxons
+        items: related_items,
       }
     end
 
   private
 
-    def statsd
-      GovukNavigationHelpers.configuration.statsd
+    def there_are_related_item_overrides?
+      # TODO: We should check for any external links when we have "new"
+      # external links being curated in Content Tagger
+      @content_item.curated_taxonomy_sidebar_links.any?
     end
 
-    def taxons
-      parent_taxons = @content_item.parent_taxons
-      used_related_links = Set.new
-
-      parent_taxons.each_with_index.map do |parent_taxon, index|
-        related_content = index < 2 ? content_related_to(parent_taxon, used_related_links) : []
-
-        used_related_links.merge(
-          related_content.map { |content| content[:link] }
-        )
-
-        {
-          title: parent_taxon.title,
-          url: parent_taxon.base_path,
-          description: parent_taxon.description,
-          related_content: related_content,
-        }
-      end
+    def related_items
+      related_items_factory.new(@content_item).related_items
     end
 
-    # This method will fetch content related to @content_item, and tagged to taxon. This is a
-    # temporary method that uses search to achieve this. This behaviour is to be moved into
-    # the content store
-    def content_related_to(taxon, used_related_links)
-      statsd.time(:taxonomy_sidebar_search_time) do
-        begin
-          results = Services.rummager.search(
-            similar_to: @content_item.base_path,
-            start: 0,
-            count: 3,
-            filter_taxons: [taxon.content_id],
-            filter_navigation_document_supertype: 'guidance',
-            reject_link: used_related_links.to_a,
-            fields: %w[title link],
-          )['results']
-
-          statsd.increment(:taxonomy_sidebar_searches)
-
-          results
-            .map { |result| { title: result['title'], link: result['link'], } }
-            .sort_by { |result| result[:title] }
-        rescue StandardError => e
-          GovukNavigationHelpers.configuration.error_handler.notify(e)
-          []
-        end
+    def related_items_factory
+      if there_are_related_item_overrides?
+        CuratedTaxonomySidebarLinks
+      else
+        RummagerTaxonomySidebarLinks
       end
     end
   end

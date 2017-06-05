@@ -62,8 +62,33 @@ module GovukNavigationHelpers
       end
     end
 
+    def curated_taxonomy_sidebar_links
+      content_store_response.dig("links", "ordered_related_items_overrides").to_a.map do |link|
+        ContentItem.new(link)
+      end
+    end
+
     def external_links
       content_store_response.dig("details", "external_related_links").to_a
+    end
+
+    def as_taxonomy_sidebar_link
+      {
+        title: title,
+        link: base_path,
+      }
+    end
+
+    def ==(other)
+      content_id == other.content_id
+    end
+
+    def hash
+      content_id.hash
+    end
+
+    def eql?(other)
+      self == other
     end
   end
 end
