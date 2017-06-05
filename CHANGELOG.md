@@ -1,3 +1,10 @@
+## 6.3.0
+
+* Allow curated related links to be shown on the new navigation sidebar. If the
+  link type `ordered_related_items_overrides` contains links to content items,
+  we will use those instead of the "more like this" links from search. These
+  links can be added in `content-tagger`.
+
 ## 6.2.0
 
 * Remove "Register to vote" section from related links data as deadline of
