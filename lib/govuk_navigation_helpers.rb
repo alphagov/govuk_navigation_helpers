@@ -17,24 +17,11 @@ module GovukNavigationHelpers
     # @return [Hash] Payload for the GOV.UK breadcrumbs component
     # @see http://govuk-component-guide.herokuapp.com/components/breadcrumbs
     def breadcrumbs
-      Breadcrumbs.new(content_item).breadcrumbs
-    end
-
-    # Generate a breadcrumb trail for a taxon, using the taxon_parent link field
-    #
-    # @return [Hash] Payload for the GOV.UK breadcrumbs component
-    # @see http://govuk-component-guide.herokuapp.com/components/breadcrumbs
-    def taxon_breadcrumbs
-      TaxonBreadcrumbs.new(content_item).breadcrumbs
-    end
-
-    # Generate a payload containing taxon sidebar data. Intended for use with
-    # the related items component.
-    #
-    # @return [Hash] Payload for the GOV.UK related items component
-    # @see http://govuk-component-guide.herokuapp.com/components/related_items
-    def taxonomy_sidebar
-      TaxonomySidebar.new(content_item).sidebar
+      if show_taxonomy_navigation?
+        TaxonBreadcrumbs.new(content_item).breadcrumbs
+      else
+        Breadcrumbs.new(content_item).breadcrumbs
+      end
     end
 
     # Generate a related items payload
@@ -42,10 +29,27 @@ module GovukNavigationHelpers
     # @return [Hash] Payload for the GOV.UK Component
     # @see http://govuk-component-guide.herokuapp.com/components/related_items
     def related_items
-      RelatedItems.new(content_item).related_items
+      if show_taxonomy_navigation?
+        TaxonomySidebar.new(content_item).sidebar
+      else
+        RelatedItems.new(content_item).related_items
+      end
     end
 
   private
+
+    def show_taxonomy_navigation?
+      content_is_tagged_to_a_taxon? && !content_is_tagged_to_mainstream_browse?
+    end
+
+    def content_is_tagged_to_mainstream_browse?
+      # TODO: What determines that something is in mainstream browse?
+      false
+    end
+
+    def content_is_tagged_to_a_taxon?
+      content_item.dig("links", "taxons").present?
+    end
 
     attr_reader :content_item
   end
