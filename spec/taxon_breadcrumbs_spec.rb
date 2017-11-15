@@ -16,7 +16,11 @@ RSpec.describe GovukNavigationHelpers::TaxonBreadcrumbs do
     end
 
     it "returns the root when taxon is not specified" do
-      content_item = { "title" => "Some Content", "links" => {} }
+      content_item = {
+        "title" => "Some Content",
+        "document_type" => "answer",
+        "links" => {},
+      }
       breadcrumbs = breadcrumbs_for(content_item)
 
       expect(breadcrumbs).to eq(
@@ -40,23 +44,23 @@ RSpec.describe GovukNavigationHelpers::TaxonBreadcrumbs do
       )
     end
 
-    context 'with a taxon content item with taxon parents' do
+    context 'with a taxon with taxon parents' do
       it "includes parents and grandparents when available" do
         grandparent = {
-            "title" => "Another-parent",
-            "base_path" => "/another-parent",
-            "content_id" => "30c1b93d-2553-47c9-bc3c-fc5b513ecc32",
-            "locale" => "en",
+          "title" => "Another-parent",
+          "base_path" => "/another-parent",
+          "content_id" => "30c1b93d-2553-47c9-bc3c-fc5b513ecc32",
+          "locale" => "en",
         }
 
         parent = {
-            "content_id" => "30c1b93d-2553-47c9-bc3c-fc5b513ecc32",
-            "locale" => "en",
-            "title" => "A-parent",
-            "base_path" => "/a-parent",
-            "links" => {
-                "parent_taxons" => [grandparent]
-            }
+          "content_id" => "30c1b93d-2553-47c9-bc3c-fc5b513ecc32",
+          "locale" => "en",
+          "title" => "A-parent",
+          "base_path" => "/a-parent",
+          "links" => {
+            "parent_taxons" => [grandparent]
+          }
         }
 
         content_item = content_item_tagged_to_taxon([parent])
@@ -74,16 +78,16 @@ RSpec.describe GovukNavigationHelpers::TaxonBreadcrumbs do
       end
     end
 
-    context 'with a taxon with parent taxons' do
+    context 'with a taxon content item with parent taxons' do
       it "includes parents and grandparents when available" do
         parent = {
-            "content_id" => "30c1b93d-2553-47c9-bc3c-fc5b513ecc32",
-            "locale" => "en",
-            "title" => "A-parent",
-            "base_path" => "/a-parent",
-            "links" => {
-                "parent_taxons" => []
-            }
+          "content_id" => "30c1b93d-2553-47c9-bc3c-fc5b513ecc32",
+          "locale" => "en",
+          "title" => "A-parent",
+          "base_path" => "/a-parent",
+          "links" => {
+            "parent_taxons" => []
+          }
         }
 
         content_item = taxon_with_parent_taxons([parent])
@@ -102,22 +106,22 @@ RSpec.describe GovukNavigationHelpers::TaxonBreadcrumbs do
     context 'with multiple parents' do
       it "selects the first parent taxon in alphabetical order by title" do
         parent_1 = {
-            "content_id" => "30c1b93d-2553-47c9-bc3c-fc5b513ecc32",
-            "locale" => "en",
-            "title" => "Parent A",
-            "base_path" => "/parent-a",
-            "links" => {
-                "parent_taxons" => []
-            }
+          "content_id" => "30c1b93d-2553-47c9-bc3c-fc5b513ecc32",
+          "locale" => "en",
+          "title" => "Parent A",
+          "base_path" => "/parent-a",
+          "links" => {
+            "parent_taxons" => []
+          }
         }
         parent_2 = {
-            "content_id" => "30c1b93d-2553-47c9-bc3c-fc5b513ecc32",
-            "locale" => "en",
-            "title" => "Parent B",
-            "base_path" => "/parent-b",
-            "links" => {
-                "parent_taxons" => []
-            }
+          "content_id" => "30c1b93d-2553-47c9-bc3c-fc5b513ecc32",
+          "locale" => "en",
+          "title" => "Parent B",
+          "base_path" => "/parent-b",
+          "links" => {
+            "parent_taxons" => []
+          }
         }
 
         content_item = taxon_with_parent_taxons([parent_2, parent_1])
@@ -135,7 +139,7 @@ RSpec.describe GovukNavigationHelpers::TaxonBreadcrumbs do
   end
 
   def breadcrumbs_for(content_item)
-    generator = GovukSchemas::RandomExample.for_schema("taxon", schema_type: "frontend")
+    generator = GovukSchemas::RandomExample.for_schema(content_item["document_type"], schema_type: "frontend")
     fully_valid_content_item = generator.merge_and_validate(content_item)
 
     # Use the main class instead of GovukNavigationHelpers::Breadcrumbs, so that
@@ -156,7 +160,7 @@ RSpec.describe GovukNavigationHelpers::TaxonBreadcrumbs do
   def content_item_tagged_to_taxon(parents)
     {
       "title" => "Some Content",
-      "document_type" => "guidance",
+      "document_type" => "answer",
       "links" => {
         "taxons" => [
           {
