@@ -1,3 +1,9 @@
+## 7.0.0
+
+* Root taxons are now whitelisted, so that only taxons descendant from one of
+  the three published root taxons (education, childcare-parenting and world)
+  will appear in breadcrumbs and the side bar. See the [PR](https://github.com/alphagov/govuk_navigation_helpers/pull/82) for more information
+
 ## 6.3.0
 
 * Allow curated related links to be shown on the new navigation sidebar. If the
