@@ -2,6 +2,12 @@ require 'spec_helper'
 
 RSpec.describe GovukNavigationHelpers::TaxonBreadcrumbs do
   describe "Taxon breadcrumbs" do
+    before do
+      allow(GovukNavigationHelpers::ContentItem)
+        .to receive(:whitelisted_root_taxon_content_ids)
+        .and_return(['30c1b93d-2553-47c9-bc3c-fc5b513ecc32'])
+    end
+
     it "can handle any valid content item" do
       generator = GovukSchemas::RandomExample.for_schema(
         "taxon",

@@ -5,6 +5,18 @@ module GovukNavigationHelpers
   #
   # @private
   class ContentItem
+    WORLD_TAXON_CONTENT_ID = "91b8ef20-74e7-4552-880c-50e6d73c2ff9".freeze
+    EDUCATION_TAXON_CONTENT_ID = "c58fdadd-7743-46d6-9629-90bb3ccc4ef0".freeze
+    CHILDCARE_PARENTING_TAXON_CONTENT_ID = "206b7f3a-49b5-476f-af0f-fd27e2a68473".freeze
+
+    def self.whitelisted_root_taxon_content_ids
+      [
+        WORLD_TAXON_CONTENT_ID,
+        EDUCATION_TAXON_CONTENT_ID,
+        CHILDCARE_PARENTING_TAXON_CONTENT_ID,
+      ]
+    end
+
     attr_reader :content_store_response
 
     def initialize(content_store_response)
@@ -24,14 +36,11 @@ module GovukNavigationHelpers
     end
 
     def parent_taxons
-      # First handle the case for content items tagged to the taxonomy.
-      taxons = Array(content_store_response.dig("links", "taxons"))
-      return taxons.map { |taxon| ContentItem.new(taxon) }.sort_by(&:title) if taxons.any?
-
-      # If that link isn't present, assume we're dealing with a taxon and check
-      # for its parents in the taxonomy.
-      parent_taxons = Array(content_store_response.dig("links", "parent_taxons"))
-      parent_taxons.map { |taxon| ContentItem.new(taxon) }.sort_by(&:title)
+      @_parent_taxons ||= begin
+        taxon_links
+          .select { |t| descendent_from_whitelisted_root_taxon?(t) }
+          .map { |taxon| ContentItem.new(taxon) }.sort_by(&:title)
+      end
     end
 
     def mainstream_browse_pages
@@ -89,6 +98,30 @@ module GovukNavigationHelpers
 
     def eql?(other)
       self == other
+    end
+
+  private
+
+    def taxon_links
+      # A normal content item's taxon links are stored in ["links"]["taxons"]
+      # whereas a Taxon content item's taxon links are stored in ["links"]["parent_taxons"]
+      # so here we cater for both possibilities
+      content_store_response.dig("links", "taxons") || content_store_response.dig("links", "parent_taxons") || []
+    end
+
+    def descendent_from_whitelisted_root_taxon?(taxon)
+      root_taxon = get_root_taxon(taxon)
+      ContentItem.whitelisted_root_taxon_content_ids.include?(root_taxon["content_id"])
+    end
+
+    def get_root_taxon(taxon)
+      parent_taxons = taxon.dig("links", "parent_taxons")
+
+      if parent_taxons.nil? || parent_taxons.empty?
+        taxon
+      else
+        get_root_taxon(parent_taxons.first)
+      end
     end
   end
 end
