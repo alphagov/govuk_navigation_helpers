@@ -77,6 +77,26 @@ module GovukNavigationHelpers
       end
     end
 
+    def navigation_sidebar_related_links
+      content_store_response.dig("links", "ordered_related_items").to_a
+    end
+
+    def related_collections
+      content_store_response.dig("links", "document_collections").to_a
+    end
+
+    def related_organisations
+      content_store_response.dig("links", "organisations").to_a
+    end
+
+    def related_policies
+      content_store_response.dig("links", "related_policies").to_a
+    end
+
+    def related_topics
+      content_store_response.dig("links", "topics").to_a
+    end
+
     def external_links
       content_store_response.dig("details", "external_related_links").to_a
     end
