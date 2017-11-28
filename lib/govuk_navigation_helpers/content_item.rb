@@ -77,24 +77,32 @@ module GovukNavigationHelpers
       end
     end
 
-    def navigation_sidebar_related_links
+    def related_ordered_items
       content_store_response.dig("links", "ordered_related_items").to_a
     end
 
+    def quick_links
+      content_store_response.dig("details", "quick_links").to_a
+    end
+
     def related_collections
-      content_store_response.dig("links", "document_collections").to_a
+      filter_link_type(content_store_response.dig("links", "document_collections").to_a, "document_collection")
+    end
+
+    def related_other_contacts
+      filter_link_type(content_store_response.dig("links", "related").to_a, "contact")
     end
 
     def related_organisations
-      content_store_response.dig("links", "organisations").to_a
+      filter_link_type(content_store_response.dig("links", "organisations").to_a, "organisation")
     end
 
     def related_policies
-      content_store_response.dig("links", "related_policies").to_a
+      filter_link_type(content_store_response.dig("links", "related_policies").to_a, "policy")
     end
 
     def related_topics
-      content_store_response.dig("links", "topics").to_a
+      filter_link_type(content_store_response.dig("links", "topics").to_a, "topic")
     end
 
     def external_links
@@ -141,6 +149,12 @@ module GovukNavigationHelpers
         taxon
       else
         get_root_taxon(parent_taxons.first)
+      end
+    end
+
+    def filter_link_type(links, type)
+      links.select do |link|
+        link["document_type"] == type
       end
     end
   end
