@@ -1,3 +1,7 @@
+## 7.1.0
+
+* Add helper for rendering related navigation sidebar on content pages with universal layout
+
 ## 7.0.0
 
 * Root taxons are now whitelisted, so that only taxons descendant from one of
