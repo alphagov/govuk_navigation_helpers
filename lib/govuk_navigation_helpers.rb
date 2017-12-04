@@ -47,10 +47,10 @@ module GovukNavigationHelpers
     end
 
     # Generate a payload containing related navigation sidebar data. Intended for use with
-    # the related navigation sidebar component
+    # the related navigation component
     #
-    # @return [Hash] Payload for the GOV.UK related navigation sidebar component
-    # @see https://government-frontend.herokuapp.com/component-guide/related-navigation-sidebar
+    # @return [Hash] Payload for the GOV.UK related navigation component
+    # @see https://government-frontend.herokuapp.com/component-guide/related-navigation
     def related_navigation_sidebar
       RelatedNavigationSidebar.new(content_item).related_navigation_sidebar
     end
