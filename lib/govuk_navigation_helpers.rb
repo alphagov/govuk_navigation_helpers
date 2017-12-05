@@ -12,6 +12,8 @@ require "govuk_navigation_helpers/concerns/tasklist_pages"
 require "govuk_navigation_helpers/concerns/tasklist_ab_testable"
 require "govuk_navigation_helpers/concerns/tasklist_header_ab_testable"
 
+require "govuk_navigation_helpers/engine"
+
 module GovukNavigationHelpers
   class NavigationHelper
     def initialize(content_item)
