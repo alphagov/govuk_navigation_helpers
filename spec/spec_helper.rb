@@ -1,3 +1,8 @@
+ENV['RAILS_ENV'] ||= 'test'
+
+require 'action_controller/railtie'
+require 'rails/engine'
+
 require 'govuk_navigation_helpers'
 require 'govuk_schemas'
 require 'webmock/rspec'
