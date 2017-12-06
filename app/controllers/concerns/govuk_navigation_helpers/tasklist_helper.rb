@@ -1,7 +1,5 @@
 module GovukNavigationHelpers
   module TasklistHelper
-    TasklistRenderable
-
     def self.included(base)
       base.helper_method(
         :show_tasklist_header?,

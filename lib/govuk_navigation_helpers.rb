@@ -8,10 +8,6 @@ require "govuk_navigation_helpers/rummager_taxonomy_sidebar_links"
 require "govuk_navigation_helpers/curated_taxonomy_sidebar_links"
 require "govuk_navigation_helpers/tasklist_content"
 
-require "govuk_navigation_helpers/concerns/tasklist_pages"
-require "govuk_navigation_helpers/concerns/tasklist_ab_testable"
-require "govuk_navigation_helpers/concerns/tasklist_header_ab_testable"
-
 require "govuk_navigation_helpers/engine"
 
 module GovukNavigationHelpers
