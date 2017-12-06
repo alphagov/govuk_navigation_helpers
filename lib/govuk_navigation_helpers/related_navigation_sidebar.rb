@@ -14,6 +14,7 @@ module GovukNavigationHelpers
         topics: related_topics,
         policies: related_policies,
         publishers: related_organisations,
+        world_locations: related_world_locations,
         other: [related_external_links, related_contacts]
       }
     end
@@ -29,6 +30,10 @@ module GovukNavigationHelpers
       end
     end
 
+    def world_location_base_path(title)
+      "/world/#{title.downcase.tr(' ', '-')}/news"
+    end
+
     def related_items
       quick_links = build_links_for_sidebar(@content_item.quick_links, "url")
 
@@ -37,6 +42,12 @@ module GovukNavigationHelpers
 
     def related_organisations
       build_links_for_sidebar(@content_item.related_organisations)
+    end
+
+    def related_world_locations
+      locations = @content_item.related_world_locations
+      locations.map! { |link| link.merge("base_path" => world_location_base_path(link["title"])) }
+      build_links_for_sidebar(locations)
     end
 
     def related_collections
