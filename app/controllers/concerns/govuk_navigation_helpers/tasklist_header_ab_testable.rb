@@ -21,11 +21,13 @@ module GovukNavigationHelpers
     end
 
     def tasklist_header_ab_test_applies?
-      page_is_included_in_test?
+      is_page_included_in_ab_test?
+      true
     end
 
     def should_show_tasklist_header?
       tasklist_header_ab_test_applies? && tasklist_header_variant.variant?("B")
+      true
     end
 
     def tasklist_header_variant
@@ -35,12 +37,6 @@ module GovukNavigationHelpers
 
     def set_tasklist_header_response_header
       tasklist_header_variant.configure_response(response) if tasklist_header_ab_test_applies?
-    end
-
-    def page_is_included_in_test?
-      GovukNavigationHelpers::TasklistPages::PRIMARY_PAGES.include?(request.path) ||
-        GovukNavigationHelpers::TasklistPages::SECONDARY_PAGES.include?(request.path) ||
-        GovukNavigationHelpers::TasklistPages::MATCHING_PAGES.include?(request.path)
     end
   end
 end

@@ -22,13 +22,13 @@ module GovukNavigationHelpers
     end
 
     def tasklist_ab_test_applies?
-      return true
-      page_is_included_in_test?
+      is_page_included_in_ab_test?
+      true
     end
 
     def should_show_tasklist_sidebar?
-      return true
       tasklist_ab_test_applies? && tasklist_variant.variant?('B')
+      true
     end
 
     def publication_with_sidebar?
@@ -47,12 +47,6 @@ module GovukNavigationHelpers
 
     def set_tasklist_response_header
       tasklist_variant.configure_response(response) if tasklist_ab_test_applies?
-    end
-
-    def page_is_included_in_test?
-      GovukNavigationHelpers::TasklistPages::PRIMARY_PAGES.include?(request.path) ||
-        GovukNavigationHelpers::TasklistPages::SECONDARY_PAGES.include?(request.path) ||
-        GovukNavigationHelpers::TasklistPages::MATCHING_PAGES.include?(request.path)
     end
   end
 end

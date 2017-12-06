@@ -44,5 +44,11 @@ module GovukNavigationHelpers
       end
       tasklist
     end
+
+    def is_page_included_in_ab_test?
+      GovukNavigationHelpers::TasklistPages::PRIMARY_PAGES.include?(request.path) ||
+        GovukNavigationHelpers::TasklistPages::SECONDARY_PAGES.include?(request.path) ||
+        GovukNavigationHelpers::TasklistPages::MATCHING_PAGES.include?(request.path)
+    end
   end
 end
