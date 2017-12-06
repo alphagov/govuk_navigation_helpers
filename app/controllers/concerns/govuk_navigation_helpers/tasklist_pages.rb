@@ -45,7 +45,6 @@ module GovukNavigationHelpers
       /speed-limits
       /track-your-driving-licence-application
       /vehicle-insurance
-      /view-driving-licence
     ).freeze
 
     MATCHING_PAGES = %w(
