@@ -14,15 +14,19 @@ module GovukNavigationHelpers
 
     def self.primary_content
       if current
-        current.dig(:tasklist, :groups).flat_map { |group|
-          group.first[:contents].select { |content| content[:links] }
+        current.dig(:tasklist, :groups).flat_map { |groups|
+          groups.flat_map { |group|
+            group[:contents].select { |content| content[:links] }
+          }
         }.flat_map { |hash| hash[:links] }
       end
     end
 
-    def self.primary_links
+    def self.primary_paths
       if current
-        primary_content.map { |content| content[:href] }
+        primary_content.map do |content|
+          content[:href] unless content[:href].start_with?('http')
+        end.select(&:present?)
       end
     end
 

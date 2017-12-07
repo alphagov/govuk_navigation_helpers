@@ -23,6 +23,36 @@ module GovukNavigationHelpers
         expect(first_link[:href]).to eql("/vehicles-can-drive")
         expect(first_link[:text]).to eql("Check what age you can drive")
       end
+
+      it 'has all the primary paths' do
+        primary_paths = %w(
+          /apply-first-provisional-driving-licence
+          /book-driving-test
+          /book-theory-test
+          /cancel-driving-test
+          /cancel-theory-test
+          /change-driving-test
+          /change-theory-test
+          /check-driving-test
+          /check-theory-test
+          /driving-eyesight-rules
+          /driving-lessons-learning-to-drive
+          /driving-test/what-to-take
+          /find-driving-schools-and-lessons
+          /government/publications/car-show-me-tell-me-vehicle-safety-questions
+          /guidance/the-highway-code
+          /legal-obligations-drivers-riders
+          /pass-plus
+          /take-practice-theory-test
+          /theory-test/revision-and-practice
+          /theory-test/what-to-take
+          /vehicles-can-drive
+        ).sort
+
+        expect(
+          described_class.primary_paths.sort
+        ).to match_array(primary_paths)
+      end
     end
 
     context "get a divorce tasklist" do
