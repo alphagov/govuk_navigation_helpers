@@ -30,6 +30,10 @@ module GovukNavigationHelpers
       end
     end
 
+    def self.related_paths
+      current.dig(:related_paths) if current
+    end
+
     def parse_file(file)
       @file ||=
         JSON.parse(
