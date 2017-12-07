@@ -29,6 +29,7 @@ RSpec.describe GovukNavigationHelpers::RelatedNavigationSidebar do
         topics: [],
         policies: [],
         publishers: [],
+        world_locations: [],
         other: [[], []]
       }
 
@@ -91,7 +92,14 @@ RSpec.describe GovukNavigationHelpers::RelatedNavigationSidebar do
               "title" => "related policy",
               "document_type" => "policy"
             }
-          ]
+          ],
+          "world_locations" => [
+            {
+              "content_id" => "32c1b93d-2553-47c9-bc3c-fc5b513ecc32",
+              "title" => "World Location",
+              "locale" => "en"
+            }
+          ],
         }
       )
 
@@ -101,6 +109,7 @@ RSpec.describe GovukNavigationHelpers::RelatedNavigationSidebar do
         topics: [{ path: "/related-topic", text: "related topic" }],
         policies: [{ path: "/related-policy", text: "related policy" }],
         publishers: [{ path: "/related-organisation", text: "related organisation" }],
+        world_locations: [{ path: "/world/world-location/news", text: "World Location" }],
         other: [[], []]
       }
 
