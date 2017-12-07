@@ -1,11 +1,29 @@
 module GovukNavigationHelpers
   class TasklistContent
     def self.learn_to_drive_config
-      new.parse_file("learn-to-drive-a-car.json")
+      @current = new.parse_file("learn-to-drive-a-car.json")
     end
 
     def self.get_a_divorce_config
-      new.parse_file("get-a-divorce.json")
+      @current = new.parse_file("get-a-divorce.json")
+    end
+
+    def self.current
+      @current
+    end
+
+    def self.primary_content
+      if current
+        current.dig(:tasklist, :groups).flat_map { |group|
+          group.first[:contents].select { |content| content[:links] }
+        }.flat_map { |hash| hash[:links] }
+      end
+    end
+
+    def self.primary_links
+      if current
+        primary_content.map { |content| content[:href] }
+      end
     end
 
     def parse_file(file)
