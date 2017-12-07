@@ -7,6 +7,10 @@ module GovukNavigationHelpers
       )
     end
 
+    def current_tasklist_content(tasklist_content)
+      @current_tasklist_content = tasklist_content
+    end
+
     def show_tasklist_header?
       if defined?(should_show_tasklist_header?)
         should_show_tasklist_header?
@@ -19,12 +23,10 @@ module GovukNavigationHelpers
       end
     end
 
-    def configure_current_task(config)
-      tasklist = config[:tasklist]
+    def configure_current_task
+      tasklist = @current_tasklist_content.tasklist
 
-      config[:tasklist] = set_task_as_active_if_current_page(tasklist)
-
-      config
+      set_task_as_active_if_current_page(tasklist)
     end
 
     def set_task_as_active_if_current_page(tasklist)
@@ -46,9 +48,8 @@ module GovukNavigationHelpers
     end
 
     def is_page_included_in_ab_test?
-      GovukNavigationHelpers::TasklistPages::PRIMARY_PAGES.include?(request.path) ||
-        GovukNavigationHelpers::TasklistPages::SECONDARY_PAGES.include?(request.path) ||
-        GovukNavigationHelpers::TasklistPages::MATCHING_PAGES.include?(request.path)
+      @current_tasklist_content.primary_paths.include?(request.path) ||
+        @current_tasklist_content.related_paths.include?(request.path)
     end
   end
 end

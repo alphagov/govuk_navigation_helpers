@@ -3,21 +3,21 @@ require 'spec_helper'
 module GovukNavigationHelpers
   RSpec.describe TasklistContent do
     context "learning to drive a car tasklist" do
-      let(:config) { described_class.learn_to_drive_config }
+      let(:config) { described_class.new("learn-to-drive-a-car") }
 
       it "configures a sidebar" do
-        expect(config[:tasklist][:heading_level]).to eql(3)
-        expect(config[:tasklist][:small]).to be true
+        expect(config.tasklist[:heading_level]).to eql(3)
+        expect(config.tasklist[:small]).to be true
       end
 
       it "has symbolized keys" do
-        config.keys.each do |key|
+        config.tasklist.keys.each do |key|
           expect(key.is_a?(Symbol)).to be true
         end
       end
 
       it "has a link in the correct structure" do
-        first_link = config[:tasklist][:groups][0][0][:contents][1][:links][0]
+        first_link = config.tasklist[:groups][0][0][:contents][1][:links][0]
         expect(first_link[:href]).to eql("/vehicles-can-drive")
         expect(first_link[:text]).to eql("Check what age you can drive")
       end
@@ -48,7 +48,7 @@ module GovukNavigationHelpers
         ).sort
 
         expect(
-          described_class.primary_paths.sort
+          config.primary_paths.sort
         ).to match_array(primary_paths)
       end
 
@@ -98,27 +98,27 @@ module GovukNavigationHelpers
         ).sort
 
         expect(
-          described_class.related_paths.sort
+          config.related_paths.sort
         ).to match_array(related_paths)
       end
     end
 
     context "get a divorce tasklist" do
-      let(:config) { described_class.get_a_divorce_config }
+      let(:config) { described_class.new("get-a-divorce") }
 
       it "configures a sidebar" do
-        expect(config[:tasklist][:heading_level]).to eql(3)
-        expect(config[:tasklist][:small]).to be true
+        expect(config.tasklist[:heading_level]).to eql(3)
+        expect(config.tasklist[:small]).to be true
       end
 
       it "has symbolized keys" do
-        config.keys.each do |key|
+        config.tasklist.keys.each do |key|
           expect(key.is_a?(Symbol)).to be true
         end
       end
 
       it "has a link in the correct structure" do
-        first_link = config[:tasklist][:groups][0][0][:contents][1][:links][0]
+        first_link = config.tasklist[:groups][0][0][:contents][1][:links][0]
         expect(first_link[:href]).to eql("https://www.relate.org.uk/relationship-help/help-separation-and-divorce")
         expect(first_link[:text]).to eql("Get advice from Relate")
       end
