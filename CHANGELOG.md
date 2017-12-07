@@ -1,3 +1,7 @@
+## 7.2.0
+
+* Update related navigation sidebar helper to also return world location data
+
 ## 7.1.0
 
 * Add helper for rendering related navigation sidebar on content pages with universal layout
