@@ -52,7 +52,7 @@ module GovukNavigationHelpers
         ).to match_array(primary_paths)
       end
 
-      it 'has related pages' do
+      it 'has related paths' do
         related_paths = %w(
           /apply-for-your-full-driving-licence
           /automatic-driving-licence-to-manual
@@ -115,6 +115,59 @@ module GovukNavigationHelpers
         config.tasklist.keys.each do |key|
           expect(key.is_a?(Symbol)).to be true
         end
+      end
+
+      it 'has all the primary paths' do
+        primary_paths = %w(
+          /divorce
+          /looking-after-children-divorce
+          /money-property-when-relationship-ends
+          /benefits-calculators
+          /report-benefits-change-circumstances
+          /contact-pension-service
+          /visas-when-you-separate-or-divorce
+          /stay-in-home-during-separation-or-divorce
+          /divorce/file-for-divorce
+          /divorce/grounds-for-divorce
+          /get-help-with-court-fees
+          /find-a-legal-adviser
+          /divorce-missing-husband-wife
+          /divorce/if-your-husband-or-wife-lacks-mental-capacity
+          /divorce/apply-for-decree-nisi
+          /divorce/apply-for-a-decree-absolute
+        ).sort
+
+        # there are two primary paths twice in the JSON structure
+        # that's legit.
+        expect(
+          config.primary_paths.sort.uniq
+        ).to match_array(primary_paths)
+      end
+
+      it 'has related paths' do
+        related_paths = %w(
+          /stay-in-home-during-separation-or-divorce
+          /copy-decree-absolute-final-order
+          /visas-when-you-separate-or-divorce
+          /contact-grandchild-parents-divorce-separate
+          /government/publications/application-for-a-state-pension-forecast-on-divorce-or-dissolution-br20
+          /government/publications/family-law-the-ground-for-divorce
+          /government/publications/get-a-copy-of-a-domestic-violence-protection-notice--2
+          /how-to-annul-marriage
+          /marriage-allowance/if-your-circumstances-change
+          /changing-passport-information/divorce-or-returning-to-a-previous-surname
+          /make-will/updating-your-will
+          /marriage-allowance/if-your-circumstances-change
+          /marriage-allowance/how-to-apply
+          /make-will
+          /make-will/writing-your-will
+          /make-will/make-sure-your-will-is-legal
+          /divorce/respond-to-a-divorce-petition
+        ).sort
+
+        expect(
+          config.related_paths.sort
+        ).to match_array(related_paths)
       end
 
       it "has a link in the correct structure" do

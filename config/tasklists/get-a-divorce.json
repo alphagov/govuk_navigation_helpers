@@ -18,6 +18,25 @@
       }
     ]
   },
+  "related_paths": [
+    "/stay-in-home-during-separation-or-divorce",
+    "/copy-decree-absolute-final-order",
+    "/visas-when-you-separate-or-divorce",
+    "/contact-grandchild-parents-divorce-separate",
+    "/government/publications/application-for-a-state-pension-forecast-on-divorce-or-dissolution-br20",
+    "/government/publications/family-law-the-ground-for-divorce",
+    "/government/publications/get-a-copy-of-a-domestic-violence-protection-notice--2",
+    "/how-to-annul-marriage",
+    "/marriage-allowance/if-your-circumstances-change",
+    "/changing-passport-information/divorce-or-returning-to-a-previous-surname",
+    "/make-will/updating-your-will",
+    "/marriage-allowance/if-your-circumstances-change",
+    "/marriage-allowance/how-to-apply",
+    "/make-will",
+    "/make-will/writing-your-will",
+    "/make-will/make-sure-your-will-is-legal",
+    "/divorce/respond-to-a-divorce-petition"
+  ],
   "tasklist": {
     "groups": [
       [
@@ -67,7 +86,7 @@
               "style": "required",
               "links": [
                 {
-                  "href": "https://www.gov.uk/divorce",
+                  "href": "/divorce",
                   "text": "Check you can get a divorce"
                 }
               ]
@@ -88,11 +107,11 @@
               "type": "list",
               "links": [
                 {
-                  "href": "https://www.gov.uk/looking-after-children-divorce",
+                  "href": "/looking-after-children-divorce",
                   "text": "Make arrangements for your children"
                 },
                 {
-                  "href": "https://www.gov.uk/money-property-when-relationship-ends",
+                  "href": "/money-property-when-relationship-ends",
                   "text": "Divide your money and property"
                 }
               ]
@@ -106,23 +125,23 @@
               "style": "choice",
               "links": [
                 {
-                  "href": "https://www.gov.uk/benefits-calculators",
+                  "href": "/benefits-calculators",
                   "text": "benefits you're eligible for"
                 },
                 {
-                  "href": "https://www.gov.uk/report-benefits-change-circumstances",
+                  "href": "/report-benefits-change-circumstances",
                   "text": "benefits you already receive"
                 },
                 {
-                  "href": "https://www.gov.uk/contact-pension-service",
+                  "href": "/contact-pension-service",
                   "text": "your State Pension"
                 },
                 {
-                  "href": "https://www.gov.uk/visas-when-you-separate-or-divorce",
+                  "href": "/visas-when-you-separate-or-divorce",
                   "text": "your UK visa status"
                 },
                 {
-                  "href": "https://www.gov.uk/stay-in-home-during-separation-or-divorce",
+                  "href": "/stay-in-home-during-separation-or-divorce",
                   "text": "whether you can live in your current home"
                 }
               ]
@@ -143,11 +162,11 @@
               "style": "required",
               "links": [
                 {
-                  "href": "https://www.gov.uk/divorce/file-for-divorce",
+                  "href": "/divorce/file-for-divorce",
                   "text": "How to start the divorce process"
                 },
                 {
-                  "href": "https://www.gov.uk/divorce/grounds-for-divorce",
+                  "href": "/divorce/grounds-for-divorce",
                   "text": "Check the list of reasons why you can get a divorce"
                 },
                 {
@@ -155,12 +174,12 @@
                   "text": "Fill in the divorce petition form"
                 },
                 {
-                  "href": "https://www.gov.uk/divorce/file-for-divorce",
+                  "href": "/divorce/file-for-divorce",
                   "text": "Pay the court fee",
                   "cost": "£550"
                 },
                 {
-                  "href": "https://www.gov.uk/get-help-with-court-fees",
+                  "href": "/get-help-with-court-fees",
                   "text": "Get help with court fees"
                 },
                 {
@@ -182,7 +201,7 @@
               "style": "required",
               "links": [
                 {
-                  "href": "https://www.gov.uk/get-help-with-court-fees",
+                  "href": "/find-a-legal-adviser",
                   "text": "Get legal advice"
                 }
               ]
@@ -195,7 +214,7 @@
               "type": "list",
               "links": [
                 {
-                  "href": "https://www.gov.uk/divorce-missing-husband-wife",
+                  "href": "/divorce-missing-husband-wife",
                   "text": "Find your husband or wife’s address",
                   "cost": "£0 to £100"
                 },
@@ -205,11 +224,11 @@
                   "cost": "£50"
                 },
                 {
-                  "href": "https://www.gov.uk/divorce/if-your-husband-or-wife-lacks-mental-capacity",
+                  "href": "/divorce/if-your-husband-or-wife-lacks-mental-capacity",
                   "text": "Get help if your husband or wife can’t make decisions for themselves"
                 },
                 {
-                  "href": "https://www.gov.uk/divorce-missing-husband-wife",
+                  "href": "/divorce-missing-husband-wife",
                   "text": "End the marriage because you think your husband or wife is dead",
                   "cost": "£365"
                 }
@@ -231,7 +250,7 @@
               "style": "required",
               "links": [
                 {
-                  "href": "https://www.gov.uk/divorce/apply-for-decree-nisi",
+                  "href": "/divorce/apply-for-decree-nisi",
                   "text": "Why you need a decree nisi"
                 },
                 {
@@ -294,7 +313,7 @@
               "style": "required",
               "links": [
                 {
-                  "href": "https://www.gov.uk/divorce/apply-for-a-decree-absolute",
+                  "href": "/divorce/apply-for-a-decree-absolute",
                   "text": "Why you need a decree absolute"
                 },
                 {
