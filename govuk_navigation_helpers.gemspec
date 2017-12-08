@@ -19,6 +19,8 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_runtime_dependency "gds-api-adapters", ">= 43.0"
+  spec.add_runtime_dependency 'govuk_ab_testing', '~> 2.4'
+  spec.add_runtime_dependency 'activesupport', '~> 5.1'
 
   spec.add_development_dependency "bundler", "~> 1.6"
   spec.add_development_dependency "rake", "~> 10.0"
