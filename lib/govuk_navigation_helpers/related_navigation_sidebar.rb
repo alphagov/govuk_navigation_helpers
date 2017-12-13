@@ -16,6 +16,7 @@ module GovukNavigationHelpers
         policies: related_policies,
         publishers: related_organisations,
         world_locations: related_world_locations,
+        worldwide_organisations: related_worldwide_organisations,
         other: [related_external_links, related_contacts]
       }
     end
@@ -49,6 +50,10 @@ module GovukNavigationHelpers
       locations = @content_item.related_world_locations
       locations.map! { |link| link.merge("base_path" => world_location_base_path(link["title"])) }
       build_links_for_sidebar(locations)
+    end
+
+    def related_worldwide_organisations
+      build_links_for_sidebar(@content_item.related_worldwide_organisations)
     end
 
     def related_collections
