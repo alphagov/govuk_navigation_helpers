@@ -12,6 +12,7 @@ module GovukNavigationHelpers
         related_items: related_items,
         collections: related_collections,
         topics: related_topics,
+        topical_events: related_topical_events,
         policies: related_policies,
         publishers: related_organisations,
         world_locations: related_world_locations,
@@ -60,6 +61,10 @@ module GovukNavigationHelpers
 
     def related_topics
       build_links_for_sidebar(@content_item.related_topics)
+    end
+
+    def related_topical_events
+      build_links_for_sidebar(@content_item.related_topical_events)
     end
 
     def related_contacts

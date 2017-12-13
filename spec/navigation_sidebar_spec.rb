@@ -27,6 +27,7 @@ RSpec.describe GovukNavigationHelpers::RelatedNavigationSidebar do
         related_items: [],
         collections: [],
         topics: [],
+        topical_events: [],
         policies: [],
         publishers: [],
         world_locations: [],
@@ -75,6 +76,15 @@ RSpec.describe GovukNavigationHelpers::RelatedNavigationSidebar do
               "document_type" => "topic"
             }
           ],
+          "topical_events" => [
+            {
+              "content_id" => "32c1b93d-2553-47c9-bc3c-fc5b513ecc32",
+              "locale" => "en",
+              "base_path" => "/related-topical-event",
+              "title" => "related topical event",
+              "document_type" => "topical_event"
+            }
+          ],
           "organisations" => [
             {
               "content_id" => "32c1b93d-2553-47c9-bc3c-fc5b513ecc32",
@@ -107,6 +117,7 @@ RSpec.describe GovukNavigationHelpers::RelatedNavigationSidebar do
         related_items: [{ path: "/related-item", text: "related item" }],
         collections: [{ path: "/related-collection", text: "related collection" }],
         topics: [{ path: "/related-topic", text: "related topic" }],
+        topical_events: [{ path: "/related-topical-event", text: "related topical event" }],
         policies: [{ path: "/related-policy", text: "related policy" }],
         publishers: [{ path: "/related-organisation", text: "related organisation" }],
         world_locations: [{ path: "/world/world-location/news", text: "World Location" }],
