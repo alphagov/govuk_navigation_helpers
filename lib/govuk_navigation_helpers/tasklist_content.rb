@@ -85,6 +85,7 @@ module GovukNavigationHelpers
               if link[:href] == path
                 link[:active] = true
                 tasklist[:show_step] = counter
+                tasklist[:highlight_group] = counter
                 return tasklist
               end
             end
