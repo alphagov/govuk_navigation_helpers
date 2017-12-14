@@ -105,8 +105,16 @@ module GovukNavigationHelpers
       filter_link_type(content_store_response.dig("links", "topics").to_a, "topic")
     end
 
+    def related_topical_events
+      filter_link_type(content_store_response.dig("links", "topical_events").to_a, "topical_event")
+    end
+
     def related_world_locations
       content_store_response.dig("links", "world_locations").to_a
+    end
+
+    def related_worldwide_organisations
+      filter_link_type(content_store_response.dig("links", "worldwide_organisations").to_a, "worldwide_organisation")
     end
 
     def external_links
