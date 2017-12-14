@@ -184,7 +184,7 @@
                   "text": "Get help with court fees"
                 },
                 {
-                  "href": "https://courttribunalfinder.service.gov.uk/search/postcode?aol=Divorce&spoe=start",
+                  "href": "https://courttribunalfinder.service.gov.uk/search/postcode?aol=Divorce&amp;spoe=start",
                   "text": "Send copies of the form to your nearest divorce centre"
                 }
               ]

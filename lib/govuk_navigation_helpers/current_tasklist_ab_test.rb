@@ -40,10 +40,12 @@ module GovukNavigationHelpers
 
     def show_tasklist_sidebar?
       sidebar_variant.variant?('B')
+      true
     end
 
     def show_tasklist_header?
       header_variant.variant?('B')
+      true
     end
 
     def set_response_header(response)
