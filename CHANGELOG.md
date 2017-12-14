@@ -1,3 +1,7 @@
+## 7.3.0
+
+* Update related navigation sidebar helper to return topical events and worldwide organisations.
+
 ## 7.2.0
 
 * Update related navigation sidebar helper to also return world location data
