@@ -74,7 +74,7 @@ module GovukNavigationHelpers
     def set_task_as_active_if_current_page
       counter = 0
 
-      groups.each do |grouped_steps|
+      groups.each_with_index.each do |grouped_steps, group_index|
         grouped_steps.each do |step|
           counter += 1
 
@@ -85,7 +85,7 @@ module GovukNavigationHelpers
               if link[:href] == path
                 link[:active] = true
                 tasklist[:show_step] = counter
-                tasklist[:highlight_group] = counter
+                tasklist[:highlight_group] = group_index + 1
                 return tasklist
               end
             end
