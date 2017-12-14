@@ -17,8 +17,8 @@ module GovukNavigationHelpers
           end
         end
 
-        context 'when the path is /make-will' do
-          let(:path) { '/make-will' }
+        context 'when the path is /divorce/respond-to-a-divorce-petition' do
+          let(:path) { '/divorce/respond-to-a-divorce-petition' }
 
           it 'returns "Get Divorce" tasklist' do
             current_tasklist = described_class.current_tasklist(path)
@@ -251,22 +251,6 @@ module GovukNavigationHelpers
 
       it 'has related paths' do
         related_paths = %w(
-          /stay-in-home-during-separation-or-divorce
-          /copy-decree-absolute-final-order
-          /visas-when-you-separate-or-divorce
-          /contact-grandchild-parents-divorce-separate
-          /government/publications/application-for-a-state-pension-forecast-on-divorce-or-dissolution-br20
-          /government/publications/family-law-the-ground-for-divorce
-          /government/publications/get-a-copy-of-a-domestic-violence-protection-notice--2
-          /how-to-annul-marriage
-          /marriage-allowance/if-your-circumstances-change
-          /changing-passport-information/divorce-or-returning-to-a-previous-surname
-          /make-will/updating-your-will
-          /marriage-allowance/if-your-circumstances-change
-          /marriage-allowance/how-to-apply
-          /make-will
-          /make-will/writing-your-will
-          /make-will/make-sure-your-will-is-legal
           /divorce/respond-to-a-divorce-petition
         ).sort
 
