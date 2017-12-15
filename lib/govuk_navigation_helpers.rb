@@ -1,11 +1,20 @@
-require "govuk_navigation_helpers/version"
-require "govuk_navigation_helpers/breadcrumbs"
-require "govuk_navigation_helpers/related_items"
-require "govuk_navigation_helpers/taxon_breadcrumbs"
-require "govuk_navigation_helpers/taxonomy_sidebar"
-require "govuk_navigation_helpers/related_navigation_sidebar"
-require "govuk_navigation_helpers/rummager_taxonomy_sidebar_links"
-require "govuk_navigation_helpers/curated_taxonomy_sidebar_links"
+require 'active_support'
+require 'active_support/core_ext/hash/keys'
+require 'active_support/core_ext/object/blank'
+
+require 'govuk_ab_testing'
+
+require_relative "govuk_navigation_helpers/version"
+require_relative "govuk_navigation_helpers/breadcrumbs"
+require_relative "govuk_navigation_helpers/related_items"
+require_relative "govuk_navigation_helpers/taxon_breadcrumbs"
+require_relative "govuk_navigation_helpers/taxonomy_sidebar"
+require_relative "govuk_navigation_helpers/related_navigation_sidebar"
+require_relative "govuk_navigation_helpers/rummager_taxonomy_sidebar_links"
+require_relative "govuk_navigation_helpers/curated_taxonomy_sidebar_links"
+
+require_relative "govuk_navigation_helpers/tasklist_content"
+require_relative "govuk_navigation_helpers/current_tasklist_ab_test"
 
 module GovukNavigationHelpers
   class NavigationHelper
