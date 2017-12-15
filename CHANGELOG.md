@@ -1,3 +1,9 @@
+## 7.4.0
+
+* Adds functionality to render the tasklist content into frontend applications under AB Testing.
+* Adds govuk_ab_testing as dependency.
+* Introduces TasklistContent & CurrentTasklistAbTest [PR#90](https://github.com/alphagov/govuk_navigation_helpers/pull/90).
+
 ## 7.3.0
 
 * Update related navigation sidebar helper to return topical events and worldwide organisations.
