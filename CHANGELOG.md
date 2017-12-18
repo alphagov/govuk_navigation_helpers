@@ -1,3 +1,6 @@
+## 7.5.0
+* Adds ability to detect if the current page is under test
+
 ## 7.4.0
 
 * Adds functionality to render the tasklist content into frontend applications under AB Testing.
