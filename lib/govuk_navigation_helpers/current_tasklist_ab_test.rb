@@ -39,16 +39,20 @@ module GovukNavigationHelpers
     end
 
     def show_tasklist_sidebar?
-      sidebar_variant.variant?('B')
+      sidebar_variant.variant?('B') && is_tested_page?
     end
 
     def show_tasklist_header?
-      header_variant.variant?('B')
+      header_variant.variant?('B') && is_tested_page?
+    end
+
+    def is_tested_page?
+      return current_tasklist.is_page_included_in_ab_test? if current_tasklist
     end
 
     def set_response_header(response)
-      sidebar_variant.configure_response(response) if show_tasklist_sidebar?
-      header_variant.configure_response(response) if show_tasklist_header?
+      sidebar_variant.configure_response(response) if is_tested_page?
+      header_variant.configure_response(response) if is_tested_page?
     end
 
     def publication_with_sidebar?
