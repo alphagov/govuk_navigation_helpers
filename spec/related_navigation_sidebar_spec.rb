@@ -26,6 +26,7 @@ RSpec.describe GovukNavigationHelpers::RelatedNavigationSidebar do
       expected = {
         related_items: [],
         collections: [],
+        statistical_data_sets: [],
         topics: [],
         topical_events: [],
         policies: [],
@@ -123,6 +124,7 @@ RSpec.describe GovukNavigationHelpers::RelatedNavigationSidebar do
         publishers: [{ path: "/related-organisation", text: "related organisation" }],
         world_locations: [{ path: "/world/world-location/news", text: "World Location" }],
         worldwide_organisations: [],
+        statistical_data_sets: [],
         other: [[], []]
       }
 
@@ -156,12 +158,53 @@ RSpec.describe GovukNavigationHelpers::RelatedNavigationSidebar do
       expected = {
         related_items: [],
         collections: [],
+        statistical_data_sets: [],
         topics: [],
         topical_events: [],
         policies: [],
         publishers: [],
         world_locations: [],
         worldwide_organisations: [{ path: "/related-worldwide-organisation", text: "related worldwide organisation" }],
+        other: [[], []]
+      }
+      expect(payload).to eql(expected)
+    end
+
+    it "returns statistical data sets" do
+      payload = payload_for("publication",
+        "details" => {
+          "body" => "body",
+          "government" => {
+            "title" => "government",
+            "slug" => "government",
+            "current" => true
+          },
+          "political" => false,
+          "documents" => [],
+          "first_public_at" => "2016-01-01T19:00:00Z",
+        },
+        "links" => {
+          "related_statistical_data_sets" => [
+            {
+              "content_id" => "32c1b93d-2553-47c9-bc3c-fc5b513ecc32",
+              "title" => "related statistical data set",
+              "base_path" => "/related-statistical-data-set",
+              "document_type" => "statistical_data_set",
+              "locale" => "en"
+            }
+          ],
+        }
+      )
+      expected = {
+        related_items: [],
+        collections: [],
+        statistical_data_sets: [{ path: "/related-statistical-data-set", text: "related statistical data set" }],
+        topics: [],
+        topical_events: [],
+        policies: [],
+        publishers: [],
+        world_locations: [],
+        worldwide_organisations: [],
         other: [[], []]
       }
       expect(payload).to eql(expected)

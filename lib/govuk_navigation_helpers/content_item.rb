@@ -101,6 +101,10 @@ module GovukNavigationHelpers
       filter_link_type(content_store_response.dig("links", "related_policies").to_a, "policy")
     end
 
+    def related_statistical_data_sets
+      filter_link_type(content_store_response.dig("links", "related_statistical_data_sets").to_a, "statistical_data_set")
+    end
+
     def related_topics
       filter_link_type(content_store_response.dig("links", "topics").to_a, "topic")
     end
