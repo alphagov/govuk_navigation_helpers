@@ -1,3 +1,7 @@
+## 8.0.0
+* Remove special handling of publication formats as the default layouts in government-frontend are sufficient
+* Fix a link in tasklist content for /end-a-civil-partnership
+
 ## 7.5.1
 * Change context for the Get Divorce & End Civil Partnership tasklists
 
