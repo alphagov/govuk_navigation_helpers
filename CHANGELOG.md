@@ -1,3 +1,6 @@
+## 8.1.0
+* Update related navigation sidebar helper to return statistical data sets.
+
 ## 8.0.0
 * Remove special handling of publication formats as the default layouts in government-frontend are sufficient
 * Fix a link in tasklist content for /end-a-civil-partnership
