@@ -2,7 +2,6 @@ module GovukNavigationHelpers
   class CurrentTasklistAbTest
     TASKLIST_HEADER_DIMENSION = 44
     TASKLIST_SIDEBAR_DIMENSION = 66
-    PUBLICATION_PAGE = "/government/publications/car-show-me-tell-me-vehicle-safety-questions".freeze
 
     def initialize(current_tasklist:, request:)
       @current_tasklist = current_tasklist
@@ -53,14 +52,6 @@ module GovukNavigationHelpers
     def set_response_header(response)
       sidebar_variant.configure_response(response) if is_tested_page?
       header_variant.configure_response(response) if is_tested_page?
-    end
-
-    def publication_with_sidebar?
-      show_tasklist_sidebar? && request.path == PUBLICATION_PAGE
-    end
-
-    def publication_with_sidebar_template_name
-      "publication_with_tasklist_sidebar"
     end
 
   private
