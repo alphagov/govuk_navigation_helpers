@@ -11,6 +11,7 @@ module GovukNavigationHelpers
       {
         related_items: related_items,
         collections: related_collections,
+        statistical_data_sets: related_statistical_data_sets,
         topics: related_topics,
         topical_events: related_topical_events,
         policies: related_policies,
@@ -62,6 +63,10 @@ module GovukNavigationHelpers
 
     def related_policies
       build_links_for_sidebar(@content_item.related_policies)
+    end
+
+    def related_statistical_data_sets
+      build_links_for_sidebar(@content_item.related_statistical_data_sets)
     end
 
     def related_topics
