@@ -108,7 +108,7 @@ RSpec.describe GovukNavigationHelpers::RelatedNavigationSidebar do
           "world_locations" => [
             {
               "content_id" => "32c1b93d-2553-47c9-bc3c-fc5b513ecc32",
-              "title" => "World Location",
+              "title" => "World, ~ (@Location)",
               "locale" => "en"
             }
           ],
@@ -122,7 +122,7 @@ RSpec.describe GovukNavigationHelpers::RelatedNavigationSidebar do
         topical_events: [{ path: "/related-topical-event", text: "related topical event" }],
         policies: [{ path: "/related-policy", text: "related policy" }],
         publishers: [{ path: "/related-organisation", text: "related organisation" }],
-        world_locations: [{ path: "/world/world-location/news", text: "World Location" }],
+        world_locations: [{ path: "/world/world-location/news", text: "World, ~ (@Location)" }],
         worldwide_organisations: [],
         statistical_data_sets: [],
         other: [[], []]
