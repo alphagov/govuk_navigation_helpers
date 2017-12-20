@@ -94,7 +94,8 @@
               "contents": [
                 {
                   "href": "/apply-first-provisional-driving-licence",
-                  "text": "Apply for your first provisional driving licence"
+                  "text": "Apply for your first provisional driving licence",
+                  "context": "£34"
                 }
               ]
             }
@@ -171,7 +172,8 @@
               "contents": [
                 {
                   "href": "/book-theory-test",
-                  "text": "Book your theory test"
+                  "text": "Book your theory test",
+                  "context": "£23"
                 },
                 {
                   "href": "/theory-test/what-to-take",
@@ -208,7 +210,8 @@
               "contents": [
                 {
                   "href": "/book-driving-test",
-                  "text": "Book your driving test"
+                  "text": "Book your driving test",
+                  "context": "£62"
                 },
                 {
                   "href": "/driving-test/what-to-take",
