@@ -34,7 +34,7 @@ module GovukNavigationHelpers
     end
 
     def world_location_base_path(title)
-      "/world/#{title.downcase.tr(' ', '-')}/news"
+      "/world/#{parameterise(title)}/news"
     end
 
     def related_items
@@ -91,6 +91,18 @@ module GovukNavigationHelpers
         title: "Elsewhere on the web",
         links: build_links_for_sidebar(@content_item.external_links, "url", rel: 'external')
       ]
+    end
+
+    def parameterise(str, sep = "-")
+      parameterised_str = str.gsub(/[^\w\-]+/, sep)
+      unless sep.nil? || sep.empty?
+        re_sep = Regexp.escape(sep)
+        # No more than one of the separator in a row.
+        parameterised_str.gsub!(/#{re_sep}{2,}/, sep)
+        # Remove leading/trailing separator.
+        parameterised_str.gsub!(/^#{re_sep}|#{re_sep}$/, '')
+      end
+      parameterised_str.downcase
     end
   end
 end
