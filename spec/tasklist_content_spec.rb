@@ -252,6 +252,22 @@ module GovukNavigationHelpers
       it 'has related paths' do
         related_paths = %w(
           /divorce/respond-to-a-divorce-petition
+          /divorce/file-for-divorce
+          /looking-after-children-divorce/if-you-agree
+          /looking-after-children-divorce/mediation
+          /looking-after-children-divorce/types-of-court-order
+          /looking-after-children-divorce/apply-for-court-order
+          /looking-after-children-divorce/after-you-apply-for-a-court-order
+          /looking-after-children-divorce/change-or-enforce-an-order
+          /money-property-when-relationship-ends/apply-for-consent-order
+          /money-property-when-relationship-ends/mediation
+          /money-property-when-relationship-ends/apply-for-a-financial-order
+          /money-property-when-relationship-ends/how-the-court-splits-assets
+          /money-property-when-relationship-ends/maintenance-payments
+          /money-property-when-relationship-ends/tax
+          /visas-when-you-separate-or-divorce/apply-stay-uk
+          /stay-in-home-during-separation-or-divorce/apply-if-the-property-is-registered
+          /stay-in-home-during-separation-or-divorce/apply-if-the-property-is-unregistered
         ).sort
 
         expect(
