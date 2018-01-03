@@ -70,7 +70,9 @@ module GovukNavigationHelpers
     end
 
     def related_topics
-      build_links_for_sidebar(@content_item.related_topics)
+      topics = build_links_for_sidebar(@content_item.related_topics)
+      topics << related_mainstream_topic << related_mainstream_parent_topic
+      topics.compact
     end
 
     def related_topical_events
@@ -93,6 +95,16 @@ module GovukNavigationHelpers
       ]
     end
 
+    def related_mainstream_topic
+      return unless grouped.tagged_to_same_mainstream_browse_page.any?
+      { text: @content_item.parent.title, path: @content_item.parent.base_path }
+    end
+
+    def related_mainstream_parent_topic
+      return unless grouped.parents_tagged_to_same_mainstream_browse_page.any?
+      { text: @content_item.parent.parent.title, path: @content_item.parent.parent.base_path }
+    end
+
     def parameterise(str, sep = "-")
       parameterised_str = str.gsub(/[^\w\-]+/, sep)
       unless sep.nil? || sep.empty?
@@ -103,6 +115,10 @@ module GovukNavigationHelpers
         parameterised_str.gsub!(/^#{re_sep}|#{re_sep}$/, '')
       end
       parameterised_str.downcase
+    end
+
+    def grouped
+      @grouped ||= GroupedRelatedLinks.new(@content_item)
     end
   end
 end
