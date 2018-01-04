@@ -1,3 +1,6 @@
+## 8.1.2
+* Update content in the /end-a-civil-partnership, /get-a-divorce tasklists
+
 ## 8.1.1
 * Update content in the /end-a-civil-partnership, /get-a-divorce, and /learn-to-drive-a-car tasklists
 * Strip non-alphanumeric characters from world location links for related navigation helper.
