@@ -52,12 +52,30 @@ RSpec.describe GovukNavigationHelpers::RelatedNavigationSidebar do
           "delivered_on" => "2017-09-22T14:30:00+01:00"
         },
         "links" => {
+          "parent" => [
+            {
+              "content_id" => "32c1b93d-2553-47c9-bc3c-fc5b513ecc32",
+              "locale" => "en",
+              "base_path" => "/mainstream-topic",
+              "title" => "mainstream topic"
+            }
+          ],
           "ordered_related_items" => [
             {
               "content_id" => "32c1b93d-2553-47c9-bc3c-fc5b513ecc32",
               "locale" => "en",
               "base_path" => "/related-item",
-              "title" => "related item"
+              "title" => "related item",
+              "links" => {
+                "mainstream_browse_pages" => [
+                  {
+                    "content_id" => "32c1b93d-2553-47c9-bc3c-fc5b513ecc32",
+                    "locale" => "en",
+                    "base_path" => "/mainstream-topic",
+                    "title" => "mainstream topic"
+                  }
+                ]
+              }
             }
           ],
           "document_collections" => [
@@ -118,7 +136,7 @@ RSpec.describe GovukNavigationHelpers::RelatedNavigationSidebar do
       expected = {
         related_items: [{ path: "/related-item", text: "related item" }],
         collections: [{ path: "/related-collection", text: "related collection" }],
-        topics: [{ path: "/related-topic", text: "related topic" }],
+        topics: [{ path: "/related-topic", text: "related topic" }, { path: "/mainstream-topic", text: "mainstream topic" }],
         topical_events: [{ path: "/related-topical-event", text: "related topical event" }],
         policies: [{ path: "/related-policy", text: "related policy" }],
         publishers: [{ path: "/related-organisation", text: "related organisation" }],
