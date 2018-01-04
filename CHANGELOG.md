@@ -1,5 +1,6 @@
 ## 8.2.0
 * Update related navigation sidebar helper to return mainstream topics alongside whitehall topics
+* Update content in the /end-a-civil-partnership, /get-a-divorce tasklists
 
 ## 8.1.1
 * Update content in the /end-a-civil-partnership, /get-a-divorce, and /learn-to-drive-a-car tasklists
