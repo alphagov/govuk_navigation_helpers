@@ -28,7 +28,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "gem_publisher", "~> 1.5.0"
   spec.add_development_dependency "govuk-lint", "~> 1.2.1"
   spec.add_development_dependency "pry-byebug", "~> 3.4"
-  spec.add_development_dependency "yard", "~> 0.8"
+  spec.add_development_dependency "yard", "~> 0.9.12"
   spec.add_development_dependency "govuk_schemas", "~> 1.0"
   spec.add_development_dependency "webmock", "~> 2.3"
 
