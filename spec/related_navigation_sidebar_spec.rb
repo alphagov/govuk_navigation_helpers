@@ -256,5 +256,54 @@ RSpec.describe GovukNavigationHelpers::RelatedNavigationSidebar do
 
       expect(payload[:other]).to eql(expected)
     end
+
+    it "deduplicates topics for mainstream content" do
+      mainstream_browse_link = {
+        "content_id" => "fecdc8c8-4006-4f8e-95d5-fe40ca49c7a8",
+        "locale" => "en",
+        "title" => "Self Assessment",
+        "base_path" => "/browse/tax/self-assessment",
+        "document_type" => "mainstream_browse_page",
+      }
+      payload = payload_for("answer",
+        "links" => {
+          "mainstream_browse_pages" => [mainstream_browse_link],
+          "ordered_related_items" => [
+            {
+              "content_id" => "f29ca4a8-8ed9-4b0f-bb6a-11e373095dee",
+              "locale" => "en",
+              "title" => "Self Assessment tax returns",
+              "base_path" => "/self-assessment-tax-returns",
+              "document_type" => "guide",
+              "links" => { "mainstream_browse_pages" => [mainstream_browse_link] },
+            }
+          ],
+          "parent" => [mainstream_browse_link],
+          "topics" => [
+            {
+              "content_id" => "7beb97b6-75c9-4aa7-86be-a733ab3a21aa",
+              "locale" => "en",
+              "base_path" => "/topic/personal-tax/self-assessment",
+              "title" => "Self Assessment",
+              "document_type" => "topic",
+            }
+          ],
+        }
+      )
+      expected = {
+        related_items: [{ text: "Self Assessment tax returns", path: "/self-assessment-tax-returns" }],
+        collections: [],
+        statistical_data_sets: [],
+        topics: [{ text: "Self Assessment", path: "/browse/tax/self-assessment" }],
+        topical_events: [],
+        policies: [],
+        publishers: [],
+        world_locations: [],
+        worldwide_organisations: [],
+        other: [[], []]
+      }
+
+      expect(payload).to eql(expected)
+    end
   end
 end

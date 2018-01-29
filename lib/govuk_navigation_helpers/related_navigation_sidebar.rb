@@ -72,7 +72,7 @@ module GovukNavigationHelpers
     def related_topics
       topics = build_links_for_sidebar(@content_item.related_topics)
       topics << related_mainstream_topic << related_mainstream_parent_topic
-      topics.compact
+      deduplicate_topics_by_title(topics.compact)
     end
 
     def related_topical_events
@@ -103,6 +103,22 @@ module GovukNavigationHelpers
     def related_mainstream_parent_topic
       return unless grouped.parents_tagged_to_same_mainstream_browse_page.any?
       { text: @content_item.parent.parent.title, path: @content_item.parent.parent.base_path }
+    end
+
+    # This method post-processes the topics collated by the helper.
+    # We add mainstream browse page links if they are present, however
+    # if these have the same title as an existing topic we should prefer
+    # the mainstream version and remove the existing topic.
+    # @see spec/related_navigation_sidebar_spec.rb:260 for test coverage.
+    def deduplicate_topics_by_title(topics)
+      is_dupe = lambda { |a, b| a && a != b && a[:text] == b[:text] }
+
+      topics.delete_if do |t|
+        is_dupe.call(related_mainstream_topic, t) ||
+          is_dupe.call(related_mainstream_parent_topic, t)
+      end
+
+      topics
     end
 
     def parameterise(str, sep = "-")
