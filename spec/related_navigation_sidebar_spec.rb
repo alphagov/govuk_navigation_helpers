@@ -266,6 +266,9 @@ RSpec.describe GovukNavigationHelpers::RelatedNavigationSidebar do
         "document_type" => "mainstream_browse_page",
       }
       payload = payload_for("answer",
+        "details" => {
+          "external_related_links" => []
+        },
         "links" => {
           "mainstream_browse_pages" => [mainstream_browse_link],
           "ordered_related_items" => [
