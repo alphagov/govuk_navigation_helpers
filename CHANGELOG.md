@@ -1,3 +1,8 @@
+## 8.2.1
+* Update related navigation sidebar helper to deduplicate mainstream topics with the same title as whithall topics.
+  Mainstream topics are preferred in the case of duplicates.
+* Update Yard dependency to 0.9.12
+
 ## 8.2.0
 * Update related navigation sidebar helper to return mainstream topics alongside whitehall topics
 * Update content in the /end-a-civil-partnership, /get-a-divorce tasklists
