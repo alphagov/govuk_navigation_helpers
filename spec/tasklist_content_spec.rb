@@ -44,22 +44,22 @@ module GovukNavigationHelpers
         tasklist_content.set_current_task
 
         expect(
-          tasklist_content.groups.last[0][:contents].last[:contents][0][:href]
+          tasklist_content.steps.last[:contents].last[:contents][0][:href]
         ).to eql('/pass-plus')
 
         expect(
-          tasklist_content.tasklist[:show_step]
+          tasklist_content.step_nav[:show_step]
         ).to eql(7)
 
         expect(
-          tasklist_content.groups.last[0][:contents].last[:contents][0][:active]
+          tasklist_content.steps.last[:contents].last[:contents][0][:active]
         ).to be true
       end
     end
 
     context "learning to drive a car tasklist content" do
       it "has symbolized keys" do
-        tasklist_content.tasklist.keys.each do |key|
+        tasklist_content.step_nav.keys.each do |key|
           expect(key.is_a?(Symbol)).to be true
         end
       end
@@ -73,12 +73,12 @@ module GovukNavigationHelpers
       end
 
       it "configures a sidebar" do
-        expect(tasklist_content.tasklist[:heading_level]).to eql(3)
-        expect(tasklist_content.tasklist[:small]).to be true
+        expect(tasklist_content.step_nav[:heading_level]).to eql(3)
+        expect(tasklist_content.step_nav[:small]).to be true
       end
 
       it "has a link in the correct structure" do
-        first_link = tasklist_content.tasklist[:groups][0][0][:contents][1][:contents][0]
+        first_link = tasklist_content.step_nav[:steps][0][:contents][1][:contents][0]
         expect(first_link[:href]).to eql("/vehicles-can-drive")
         expect(first_link[:text]).to eql("Check what age you can drive")
       end

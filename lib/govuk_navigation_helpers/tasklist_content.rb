@@ -25,8 +25,8 @@ module GovukNavigationHelpers
       parsed_file.dig(:base_path)
     end
 
-    def tasklist
-      parsed_file.dig(:tasklist)
+    def step_nav
+      parsed_file.dig(:step_by_step_nav)
     end
 
     def ab_test_prefix
@@ -34,17 +34,17 @@ module GovukNavigationHelpers
     end
 
     def skip_link
-      "##{groups.flatten.first[:title].downcase.tr(' ', '-')}"
+      "##{steps.first[:title].downcase.tr(' ', '-')}"
     end
 
     def primary_paths
-      primary_content.map { |content|
-        content[:href] unless content[:href].start_with?('http')
+      primary_content.select { |href|
+        !href.start_with?('http')
       }.select(&:present?)
     end
 
-    def groups
-      tasklist.dig(:groups)
+    def steps
+      step_nav.dig(:steps)
     end
 
     def related_paths
@@ -70,38 +70,31 @@ module GovukNavigationHelpers
     attr_reader :file_name, :file, :path
 
     def set_task_as_active_if_current_page
-      counter = 0
+      steps.each_with_index do |step, step_index|
+        step[:contents].each do |content|
+          next unless content[:contents]
 
-      groups.each_with_index.each do |grouped_steps, group_index|
-        grouped_steps.each do |step|
-          counter += 1
-
-          step[:contents].each do |content|
-            next unless content[:contents]
-
-            content[:contents].each do |link|
-              if link[:href] == path
-                link[:active] = true
-                tasklist[:show_step] = counter
-                tasklist[:highlight_group] = group_index + 1
-                return tasklist
-              end
+          content[:contents].each do |link|
+            if link[:href] == path
+              link[:active] = true
+              step_nav[:show_step] = step_index + 1
+              step_nav[:highlight_group] = step_index + 1
+              return step_nav
             end
           end
         end
       end
 
-      tasklist
+      step_nav
     end
 
     def primary_content
-      primary_content = groups.flat_map do |grouped_steps|
-        grouped_steps.flat_map do |group|
-          group[:contents].select { |content| content[:contents] }
-        end
+      list_content = steps.flat_map do |step|
+        step[:contents].select { |item| item[:type] == "list" }
+        .flat_map { |item| item[:contents] }
       end
 
-      primary_content.flat_map { |hash| hash[:contents] }
+      list_content.map { |list_item| list_item[:href] }
     end
 
     def parsed_file
@@ -111,7 +104,7 @@ module GovukNavigationHelpers
             File.join(File.dirname(__FILE__), "../../", "config", "tasklists", "#{file_name}.json")
           )
         ).deep_symbolize_keys.tap do |json_file|
-          json_file[:tasklist].merge!(small: true, heading_level: 3)
+          json_file[:step_by_step_nav].merge!(small: true, heading_level: 3)
         end
     end
   end
