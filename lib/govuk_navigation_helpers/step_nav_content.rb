@@ -29,10 +29,6 @@ module GovukNavigationHelpers
       parsed_file.dig(:step_by_step_nav)
     end
 
-    def ab_test_prefix
-      parsed_file.dig(:ab_test_prefix)
-    end
-
     def skip_link
       "##{steps.first[:title].downcase.tr(' ', '-')}"
     end

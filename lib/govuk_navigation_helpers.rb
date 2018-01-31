@@ -14,7 +14,6 @@ require_relative "govuk_navigation_helpers/rummager_taxonomy_sidebar_links"
 require_relative "govuk_navigation_helpers/curated_taxonomy_sidebar_links"
 
 require_relative "govuk_navigation_helpers/step_nav_content"
-require_relative "govuk_navigation_helpers/current_step_nav_ab_test"
 
 module GovukNavigationHelpers
   class NavigationHelper
