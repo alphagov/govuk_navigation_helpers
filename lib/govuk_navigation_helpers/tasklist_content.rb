@@ -1,8 +1,6 @@
 module GovukNavigationHelpers
   class TasklistContent
     TASKLIST_NAMES = %w(
-      get-a-divorce
-      end-a-civil-partnership
       learn-to-drive-a-car
     ).freeze
 

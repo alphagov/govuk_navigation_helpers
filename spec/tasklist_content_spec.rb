@@ -16,42 +16,6 @@ module GovukNavigationHelpers
             ).to eql('Learn to drive a car: step by step')
           end
         end
-
-        context 'when the path is /divorce/respond-to-a-divorce-petition' do
-          let(:path) { '/divorce/respond-to-a-divorce-petition' }
-
-          it 'returns "Get Divorce" tasklist' do
-            current_tasklist = described_class.current_tasklist(path)
-
-            expect(
-              current_tasklist.title
-            ).to eql('Get a divorce: step by step')
-          end
-        end
-
-        context 'when the path is /end-civil-partnership' do
-          let(:path) { '/end-civil-partnership' }
-
-          it 'returns "End Civil Partnership" tasklist' do
-            current_tasklist = described_class.current_tasklist(path)
-
-            expect(
-              current_tasklist.title
-            ).to eql('End a civil partnership: step by step')
-          end
-        end
-
-        context 'when the path is in "Get Divorce" and "End Civil Partnership"' do
-          let(:path) { '/money-property-when-relationship-ends' }
-
-          it 'returns "Get Divorce" tasklist by default' do
-            current_tasklist = described_class.current_tasklist(path)
-
-            expect(
-              current_tasklist.title
-            ).to eql('Get a divorce: step by step')
-          end
-        end
       end
     end
 
@@ -165,12 +129,8 @@ module GovukNavigationHelpers
           /government/publications/l-plate-size-rules
           /guidance/rules-for-observing-driving-tests
           /report-an-illegal-driving-instructor
-          /report-driving-medical-condition
           /report-driving-test-impersonation
-          /seat-belts-law
-          /speed-limits
           /track-your-driving-licence-application
-          /vehicle-insurance
           /driving-lessons-learning-to-drive/practising-with-family-or-friends
           /driving-lessons-learning-to-drive/taking-driving-lessons
           /driving-lessons-learning-to-drive/using-l-and-p-plates
@@ -197,88 +157,6 @@ module GovukNavigationHelpers
         expect(
           tasklist_content.related_paths.sort
         ).to match_array(related_paths)
-      end
-    end
-
-    context "get a divorce tasklist content" do
-      let(:tasklist_content) { described_class.new(file_name: "get-a-divorce", path: path) }
-
-      it "has symbolized keys" do
-        tasklist_content.tasklist.keys.each do |key|
-          expect(key.is_a?(Symbol)).to be true
-        end
-      end
-
-      it "has a title" do
-        expect(tasklist_content.title).to eql("Get a divorce: step by step")
-      end
-
-      it "has a base_path" do
-        expect(tasklist_content.base_path).to eql("/get-a-divorce")
-      end
-
-      it "configures a sidebar" do
-        expect(tasklist_content.tasklist[:heading_level]).to eql(3)
-        expect(tasklist_content.tasklist[:small]).to be true
-      end
-
-      it 'has all the primary paths' do
-        primary_paths = %w(
-          /divorce
-          /looking-after-children-divorce
-          /money-property-when-relationship-ends
-          /benefits-calculators
-          /report-benefits-change-circumstances
-          /contact-pension-service
-          /visas-when-you-separate-or-divorce
-          /stay-in-home-during-separation-or-divorce
-          /divorce/file-for-divorce
-          /divorce/grounds-for-divorce
-          /get-help-with-court-fees
-          /find-a-legal-adviser
-          /divorce-missing-husband-wife
-          /divorce/if-your-husband-or-wife-lacks-mental-capacity
-          /divorce/apply-for-decree-nisi
-          /divorce/apply-for-a-decree-absolute
-        ).sort
-
-        # there are two primary paths twice in the JSON structure
-        # that's legit.
-        expect(
-          tasklist_content.primary_paths.sort.uniq
-        ).to match_array(primary_paths)
-      end
-
-      it 'has related paths' do
-        related_paths = %w(
-          /divorce/respond-to-a-divorce-petition
-          /divorce/file-for-divorce
-          /looking-after-children-divorce/if-you-agree
-          /looking-after-children-divorce/mediation
-          /looking-after-children-divorce/types-of-court-order
-          /looking-after-children-divorce/apply-for-court-order
-          /looking-after-children-divorce/after-you-apply-for-a-court-order
-          /looking-after-children-divorce/change-or-enforce-an-order
-          /money-property-when-relationship-ends/apply-for-consent-order
-          /money-property-when-relationship-ends/mediation
-          /money-property-when-relationship-ends/apply-for-a-financial-order
-          /money-property-when-relationship-ends/how-the-court-splits-assets
-          /money-property-when-relationship-ends/maintenance-payments
-          /money-property-when-relationship-ends/tax
-          /visas-when-you-separate-or-divorce/apply-stay-uk
-          /stay-in-home-during-separation-or-divorce/apply-if-the-property-is-registered
-          /stay-in-home-during-separation-or-divorce/apply-if-the-property-is-unregistered
-        ).sort
-
-        expect(
-          tasklist_content.related_paths.sort
-        ).to match_array(related_paths)
-      end
-
-      it "has a link in the correct structure" do
-        first_link = tasklist_content.tasklist[:groups][0][0][:contents][1][:contents][0]
-        expect(first_link[:href]).to eql("https://www.relate.org.uk/relationship-help/help-separation-and-divorce")
-        expect(first_link[:text]).to eql("Get advice from Relate")
       end
     end
   end

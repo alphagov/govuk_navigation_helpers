@@ -1,3 +1,7 @@
+## Unreleased
+* Remove get-a-divorce and end-a-civil-partnership content.  The schema is changing and these aren't live at the moment
+* Update secondary content list for learn-to-drive-a-car after performance analysis on which nav works better for these pages.
+
 ## 8.2.1
 * Update related navigation sidebar helper to deduplicate mainstream topics with the same title as whithall topics.
   Mainstream topics are preferred in the case of duplicates.
