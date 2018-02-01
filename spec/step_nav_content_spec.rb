@@ -1,84 +1,84 @@
 require 'spec_helper'
 
 module GovukNavigationHelpers
-  RSpec.describe TasklistContent do
+  RSpec.describe StepNavContent do
     let(:path) { '/pass-plus' }
-    let(:tasklist_content) { described_class.new(file_name: "learn-to-drive-a-car", path: path) }
+    let(:step_nav_content) { described_class.new(file_name: "learn-to-drive-a-car", path: path) }
 
-    context '.current_tasklist' do
+    context '.current_step_nav' do
       context 'based on the request' do
         context 'when the path is /pass-plus' do
-          it 'returns "Learn to Drive" tasklist' do
-            current_tasklist = described_class.current_tasklist(path)
+          it 'returns "Learn to Drive" step nav' do
+            current_step_nav = described_class.current_step_nav(path)
 
             expect(
-              current_tasklist.title
+              current_step_nav.title
             ).to eql('Learn to drive a car: step by step')
           end
         end
       end
     end
 
-    context '#is_page_included_in_ab_test?' do
-      context 'when the requested path is part of the current tasklist' do
+    context '#show_step_nav?' do
+      context 'when the requested path is part of the current step nav' do
         it 'returns true' do
           expect(
-            tasklist_content.is_page_included_in_ab_test?
+            step_nav_content.show_step_nav?
           ).to be true
         end
       end
 
-      context 'when the requested path is not part of the current tasklist' do
+      context 'when the requested path is not part of the current step nav' do
         let(:path) { '/pink-plus' }
 
         it 'returns false' do
           expect(
-            tasklist_content.is_page_included_in_ab_test?
+            step_nav_content.show_step_nav?
           ).to be false
         end
       end
     end
 
-    context '#set_current_task' do
+    context '#set_current_step' do
       it 'sets /pass-plus as active' do
-        tasklist_content.set_current_task
+        step_nav_content.set_current_step
 
         expect(
-          tasklist_content.steps.last[:contents].last[:contents][0][:href]
+          step_nav_content.steps.last[:contents].last[:contents][0][:href]
         ).to eql('/pass-plus')
 
         expect(
-          tasklist_content.step_nav[:show_step]
+          step_nav_content.step_nav[:show_step]
         ).to eql(7)
 
         expect(
-          tasklist_content.steps.last[:contents].last[:contents][0][:active]
+          step_nav_content.steps.last[:contents].last[:contents][0][:active]
         ).to be true
       end
     end
 
-    context "learning to drive a car tasklist content" do
+    context "learning to drive a car step nav content" do
       it "has symbolized keys" do
-        tasklist_content.step_nav.keys.each do |key|
+        step_nav_content.step_nav.keys.each do |key|
           expect(key.is_a?(Symbol)).to be true
         end
       end
 
       it "has a title" do
-        expect(tasklist_content.title).to eql("Learn to drive a car: step by step")
+        expect(step_nav_content.title).to eql("Learn to drive a car: step by step")
       end
 
       it "has a base_path" do
-        expect(tasklist_content.base_path).to eql("/learn-to-drive-a-car")
+        expect(step_nav_content.base_path).to eql("/learn-to-drive-a-car")
       end
 
       it "configures a sidebar" do
-        expect(tasklist_content.step_nav[:heading_level]).to eql(3)
-        expect(tasklist_content.step_nav[:small]).to be true
+        expect(step_nav_content.step_nav[:heading_level]).to eql(3)
+        expect(step_nav_content.step_nav[:small]).to be true
       end
 
       it "has a link in the correct structure" do
-        first_link = tasklist_content.step_nav[:steps][0][:contents][1][:contents][0]
+        first_link = step_nav_content.step_nav[:steps][0][:contents][1][:contents][0]
         expect(first_link[:href]).to eql("/vehicles-can-drive")
         expect(first_link[:text]).to eql("Check what age you can drive")
       end
@@ -109,7 +109,7 @@ module GovukNavigationHelpers
         ).sort
 
         expect(
-          tasklist_content.primary_paths.sort
+          step_nav_content.primary_paths.sort
         ).to match_array(primary_paths)
       end
 
@@ -155,7 +155,7 @@ module GovukNavigationHelpers
         ).sort
 
         expect(
-          tasklist_content.related_paths.sort
+          step_nav_content.related_paths.sort
         ).to match_array(related_paths)
       end
     end

@@ -1,4 +1,6 @@
 ## Unreleased
+* Task lists are now called "step by step navigation".  Things have been renamed to support this
+* The (now) step nav component has an updated data format.  Updated /learn-to-drive-a-car to support this
 
 ## 8.2.2
 * Remove get-a-divorce and end-a-civil-partnership content.  The schema is changing and these aren't live at the moment

@@ -1,13 +1,13 @@
 module GovukNavigationHelpers
-  class TasklistContent
-    TASKLIST_NAMES = %w(
+  class StepNavContent
+    STEP_NAV_NAMES = %w(
       learn-to-drive-a-car
     ).freeze
 
-    def self.current_tasklist(path)
-      TASKLIST_NAMES.each do |tasklist_name|
-        tasklist = new(file_name: tasklist_name, path: path)
-        return tasklist if tasklist.current?
+    def self.current_step_nav(path)
+      STEP_NAV_NAMES.each do |step_nav_name|
+        step_nav = new(file_name: step_nav_name, path: path)
+        return step_nav if step_nav.current?
       end
       nil
     end
@@ -51,11 +51,11 @@ module GovukNavigationHelpers
       parsed_file.dig(:related_paths)
     end
 
-    def set_current_task
-      set_task_as_active_if_current_page
+    def set_current_step
+      set_step_as_active_if_current_page
     end
 
-    def is_page_included_in_ab_test?
+    def show_step_nav?
       primary_paths.include?(path) ||
         related_paths.include?(path)
     end
@@ -69,7 +69,7 @@ module GovukNavigationHelpers
 
     attr_reader :file_name, :file, :path
 
-    def set_task_as_active_if_current_page
+    def set_step_as_active_if_current_page
       steps.each_with_index do |step, step_index|
         step[:contents].each do |content|
           next unless content[:contents]
@@ -78,7 +78,7 @@ module GovukNavigationHelpers
             if link[:href] == path
               link[:active] = true
               step_nav[:show_step] = step_index + 1
-              step_nav[:highlight_group] = step_index + 1
+              step_nav[:highlight_step] = step_index + 1
               return step_nav
             end
           end
@@ -101,7 +101,7 @@ module GovukNavigationHelpers
       @parsed_file ||=
         JSON.parse(
           File.read(
-            File.join(File.dirname(__FILE__), "../../", "config", "tasklists", "#{file_name}.json")
+            File.join(File.dirname(__FILE__), "../../", "config", "step_navs", "#{file_name}.json")
           )
         ).deep_symbolize_keys.tap do |json_file|
           json_file[:step_by_step_nav].merge!(small: true, heading_level: 3)

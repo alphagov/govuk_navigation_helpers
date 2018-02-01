@@ -1,16 +1,16 @@
 module GovukNavigationHelpers
-  class CurrentTasklistAbTest
+  class CurrentStepNavAbTest
     TASKLIST_HEADER_DIMENSION = 44
     TASKLIST_SIDEBAR_DIMENSION = 66
 
-    def initialize(current_tasklist:, request:)
-      @current_tasklist = current_tasklist
-      @ab_test_prefix = current_tasklist.ab_test_prefix if current_tasklist
+    def initialize(current_step_nav:, request:)
+      @current_step_nav = current_step_nav
+      @ab_test_prefix = current_step_nav.ab_test_prefix if current_step_nav
       @request = request
     end
 
     def eligible?
-      !! current_tasklist
+      !! current_step_nav
     end
 
     def header
@@ -37,16 +37,16 @@ module GovukNavigationHelpers
         header.requested_variant(request.headers)
     end
 
-    def show_tasklist_sidebar?
+    def show_step_nav_sidebar?
       sidebar_variant.variant?('B') && is_tested_page?
     end
 
-    def show_tasklist_header?
+    def show_step_nav_header?
       header_variant.variant?('B') && is_tested_page?
     end
 
     def is_tested_page?
-      return current_tasklist.is_page_included_in_ab_test? if current_tasklist
+      return current_step_nav.show_step_nav? if current_step_nav
     end
 
     def set_response_header(response)
@@ -56,7 +56,7 @@ module GovukNavigationHelpers
 
   private
 
-    attr_reader :current_tasklist, :ab_test_prefix, :request
+    attr_reader :current_step_nav, :ab_test_prefix, :request
 
     def set_ab_test(name:, dimension:)
       GovukAbTesting::AbTest.new(name, dimension: dimension)

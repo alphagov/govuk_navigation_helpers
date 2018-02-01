@@ -1,17 +1,17 @@
 require 'spec_helper'
 
 module GovukNavigationHelpers
-  RSpec.describe CurrentTasklistAbTest do
-    let(:tasklist) { TasklistContent.current_tasklist('/vehicles-can-drive') }
+  RSpec.describe CurrentStepNavAbTest do
+    let(:step_nav) { StepNavContent.current_step_nav('/vehicles-can-drive') }
 
     it "indicates when to show the task list components" do
       request = double('request', headers: {
         'HTTP_GOVUK_ABTEST_TASKLISTSIDEBAR' => 'B',
         'HTTP_GOVUK_ABTEST_TASKLISTHEADER' => 'B'
         })
-      ab_test = described_class.new(current_tasklist: tasklist, request: request)
-      expect(ab_test.show_tasklist_sidebar?).to be true
-      expect(ab_test.show_tasklist_header?).to be true
+      ab_test = described_class.new(current_step_nav: step_nav, request: request)
+      expect(ab_test.show_step_nav_sidebar?).to be true
+      expect(ab_test.show_step_nav_header?).to be true
     end
 
     it "indicates when to not show the task list components" do
@@ -19,9 +19,9 @@ module GovukNavigationHelpers
         'HTTP_GOVUK_ABTEST_TASKLISTSIDEBAR' => 'A',
         'HTTP_GOVUK_ABTEST_TASKLISTHEADER' => 'A'
         })
-      ab_test = described_class.new(current_tasklist: tasklist, request: request)
-      expect(ab_test.show_tasklist_sidebar?).to be false
-      expect(ab_test.show_tasklist_header?).to be false
+      ab_test = described_class.new(current_step_nav: step_nav, request: request)
+      expect(ab_test.show_step_nav_sidebar?).to be false
+      expect(ab_test.show_step_nav_header?).to be false
     end
 
     it "copes with a mixture when to not show the task list components" do
@@ -29,9 +29,9 @@ module GovukNavigationHelpers
         'HTTP_GOVUK_ABTEST_TASKLISTSIDEBAR' => 'B',
         'HTTP_GOVUK_ABTEST_TASKLISTHEADER' => 'A'
         })
-      ab_test = described_class.new(current_tasklist: tasklist, request: request)
-      expect(ab_test.show_tasklist_sidebar?).to be true
-      expect(ab_test.show_tasklist_header?).to be false
+      ab_test = described_class.new(current_step_nav: step_nav, request: request)
+      expect(ab_test.show_step_nav_sidebar?).to be true
+      expect(ab_test.show_step_nav_header?).to be false
     end
 
     it "configures the response vary header correctly " do
@@ -40,7 +40,7 @@ module GovukNavigationHelpers
         'HTTP_GOVUK_ABTEST_TASKLISTHEADER' => 'B'
         })
       response = double('response', headers: {})
-      ab_test = described_class.new(current_tasklist: tasklist, request: request)
+      ab_test = described_class.new(current_step_nav: step_nav, request: request)
 
       ab_test.set_response_header(response)
 
@@ -53,8 +53,8 @@ module GovukNavigationHelpers
         'HTTP_GOVUK_ABTEST_TASKLISTHEADER' => 'B'
         })
       response = double('response', headers: {})
-      tasklist = TasklistContent.current_tasklist("/not_under_test")
-      ab_test = described_class.new(current_tasklist: tasklist, request: request)
+      step_nav = StepNavContent.current_step_nav("/not_under_test")
+      ab_test = described_class.new(current_step_nav: step_nav, request: request)
 
       ab_test.set_response_header(response)
 
