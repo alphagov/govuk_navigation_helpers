@@ -126,6 +126,7 @@
       },
       {
         "title": "Prepare for your theory test",
+        "logic": "and",
         "contents": [
           {
             "type": "list",
@@ -232,7 +233,6 @@
           },
           {
             "type": "list",
-            "style": "required",
             "style": "required",
             "contents": [
               {
