@@ -111,7 +111,7 @@ RSpec.describe GovukNavigationHelpers::TaxonBreadcrumbs do
 
     context 'with multiple parents' do
       it "selects the first parent taxon in alphabetical order by title" do
-        parent_1 = {
+        parent1 = {
           "content_id" => "30c1b93d-2553-47c9-bc3c-fc5b513ecc32",
           "locale" => "en",
           "title" => "Parent A",
@@ -120,7 +120,7 @@ RSpec.describe GovukNavigationHelpers::TaxonBreadcrumbs do
             "parent_taxons" => []
           }
         }
-        parent_2 = {
+        parent2 = {
           "content_id" => "30c1b93d-2553-47c9-bc3c-fc5b513ecc32",
           "locale" => "en",
           "title" => "Parent B",
@@ -130,7 +130,7 @@ RSpec.describe GovukNavigationHelpers::TaxonBreadcrumbs do
           }
         }
 
-        content_item = taxon_with_parent_taxons([parent_2, parent_1])
+        content_item = taxon_with_parent_taxons([parent2, parent1])
         breadcrumbs = breadcrumbs_for(content_item)
 
         expect(breadcrumbs).to eq(

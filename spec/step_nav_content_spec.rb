@@ -59,7 +59,7 @@ module GovukNavigationHelpers
 
     context "learning to drive a car step nav content" do
       it "has symbolized keys" do
-        step_nav_content.step_nav.keys.each do |key|
+        step_nav_content.step_nav.each_key do |key|
           expect(key.is_a?(Symbol)).to be true
         end
       end

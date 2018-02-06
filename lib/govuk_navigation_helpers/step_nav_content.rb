@@ -34,8 +34,8 @@ module GovukNavigationHelpers
     end
 
     def primary_paths
-      primary_content.select { |href|
-        !href.start_with?('http')
+      primary_content.reject { |href|
+        href.start_with?('http')
       }.select(&:present?)
     end
 

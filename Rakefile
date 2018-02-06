@@ -4,7 +4,7 @@ require "gem_publisher"
 
 RSpec::Core::RakeTask.new(:spec)
 
-task default: [:spec, :lint]
+task default: %i(spec lint)
 
 desc "Publish gem to RubyGems"
 task :publish_gem do |_t|
