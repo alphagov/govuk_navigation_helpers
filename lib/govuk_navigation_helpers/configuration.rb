@@ -19,8 +19,7 @@ module GovukNavigationHelpers
     end
 
     class NoStatsd
-      def increment(*)
-      end
+      def increment(*); end
 
       def time(*)
         yield

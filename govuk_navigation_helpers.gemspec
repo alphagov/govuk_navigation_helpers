@@ -1,4 +1,5 @@
 # coding: utf-8
+
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'govuk_navigation_helpers/version'
@@ -18,19 +19,19 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_runtime_dependency "gds-api-adapters", ">= 43.0"
-  spec.add_runtime_dependency 'govuk_ab_testing', '~> 2.4'
   spec.add_runtime_dependency 'activesupport', '~> 5.1'
+  spec.add_runtime_dependency 'gds-api-adapters', '>= 43.0'
+  spec.add_runtime_dependency 'govuk_ab_testing', '~> 2.4'
 
   spec.add_development_dependency "bundler", "~> 1.6"
+  spec.add_development_dependency "gem_publisher", "~> 1.5.0"
+  spec.add_development_dependency "govuk-lint", "~> 3.6.0"
+  spec.add_development_dependency "govuk_schemas", "~> 1.0"
+  spec.add_development_dependency "pry-byebug", "~> 3.4"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.5"
-  spec.add_development_dependency "gem_publisher", "~> 1.5.0"
-  spec.add_development_dependency "govuk-lint", "~> 1.2.1"
-  spec.add_development_dependency "pry-byebug", "~> 3.4"
-  spec.add_development_dependency "yard", "~> 0.9.12"
-  spec.add_development_dependency "govuk_schemas", "~> 1.0"
   spec.add_development_dependency "webmock", "~> 2.3"
+  spec.add_development_dependency "yard", "~> 0.9.12"
 
   spec.required_ruby_version = ">= 2.3.1"
 end

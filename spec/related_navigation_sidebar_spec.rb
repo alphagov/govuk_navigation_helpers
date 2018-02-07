@@ -20,8 +20,7 @@ RSpec.describe GovukNavigationHelpers::RelatedNavigationSidebar do
           "external_related_links" => []
         },
         "links" => {
-        }
-      )
+        })
 
       expected = {
         related_items: [],
@@ -130,8 +129,7 @@ RSpec.describe GovukNavigationHelpers::RelatedNavigationSidebar do
               "locale" => "en"
             }
           ],
-        }
-      )
+        })
 
       expected = {
         related_items: [{ path: "/related-item", text: "related item" }],
@@ -171,8 +169,7 @@ RSpec.describe GovukNavigationHelpers::RelatedNavigationSidebar do
               "locale" => "en"
             }
           ],
-        }
-      )
+        })
       expected = {
         related_items: [],
         collections: [],
@@ -211,8 +208,7 @@ RSpec.describe GovukNavigationHelpers::RelatedNavigationSidebar do
               "locale" => "en"
             }
           ],
-        }
-      )
+        })
       expected = {
         related_items: [],
         collections: [],
@@ -237,8 +233,7 @@ RSpec.describe GovukNavigationHelpers::RelatedNavigationSidebar do
               "url" => "https://external"
             }
           ]
-        },
-      )
+        },)
 
       expected = [
         [
@@ -291,8 +286,7 @@ RSpec.describe GovukNavigationHelpers::RelatedNavigationSidebar do
               "document_type" => "topic",
             }
           ],
-        }
-      )
+        })
       expected = {
         related_items: [{ text: "Self Assessment tax returns", path: "/self-assessment-tax-returns" }],
         collections: [],

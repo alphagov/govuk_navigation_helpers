@@ -13,8 +13,7 @@ require_relative "govuk_navigation_helpers/related_navigation_sidebar"
 require_relative "govuk_navigation_helpers/rummager_taxonomy_sidebar_links"
 require_relative "govuk_navigation_helpers/curated_taxonomy_sidebar_links"
 
-require_relative "govuk_navigation_helpers/tasklist_content"
-require_relative "govuk_navigation_helpers/current_tasklist_ab_test"
+require_relative "govuk_navigation_helpers/step_nav_content"
 
 module GovukNavigationHelpers
   class NavigationHelper
