@@ -1,3 +1,3 @@
 module GovukNavigationHelpers
-  VERSION = "8.2.2".freeze
+  VERSION = "9.0.0".freeze
 end

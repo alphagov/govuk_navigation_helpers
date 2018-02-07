@@ -1,4 +1,6 @@
 ## Unreleased
+
+## 9.0.0
 * Task lists are now called "step by step navigation".  Things have been renamed to support this
 * The (now) step nav component has an updated data format.  Updated /learn-to-drive-a-car to support this
 * Remove tasklist AB test code as we don't currently need to use this.
