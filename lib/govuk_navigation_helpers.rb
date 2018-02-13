@@ -9,7 +9,6 @@ require_relative "govuk_navigation_helpers/breadcrumbs"
 require_relative "govuk_navigation_helpers/related_items"
 require_relative "govuk_navigation_helpers/taxon_breadcrumbs"
 require_relative "govuk_navigation_helpers/taxonomy_sidebar"
-require_relative "govuk_navigation_helpers/related_navigation_sidebar"
 require_relative "govuk_navigation_helpers/rummager_taxonomy_sidebar_links"
 require_relative "govuk_navigation_helpers/curated_taxonomy_sidebar_links"
 
@@ -50,15 +49,6 @@ module GovukNavigationHelpers
     # @see http://govuk-component-guide.herokuapp.com/components/related_items
     def related_items
       RelatedItems.new(content_item).related_items
-    end
-
-    # Generate a payload containing related navigation sidebar data. Intended for use with
-    # the related navigation component
-    #
-    # @return [Hash] Payload for the GOV.UK related navigation component
-    # @see https://government-frontend.herokuapp.com/component-guide/related-navigation
-    def related_navigation_sidebar
-      RelatedNavigationSidebar.new(content_item).related_navigation_sidebar
     end
 
   private
