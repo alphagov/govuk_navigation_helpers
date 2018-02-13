@@ -2,6 +2,11 @@
 
 This is a gem to share code between GOV.UK frontends.
 
+** It should not be used anymore ***
+
+This gem was a temporary solution to the problem of sharing code used to generate
+the input to components. Since the components can now be built into the [govuk_publishing_components gem](https://github.com/alphagov/govuk_publishing_components), it is no longer necessary.
+
 ## Nomenclature
 
 - **content item**: An object returned by the content store
