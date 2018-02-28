@@ -38,9 +38,13 @@ module GovukNavigationHelpers
     def parent_taxons
       @_parent_taxons ||= begin
         taxon_links
-          .select { |t| descendent_from_whitelisted_root_taxon?(t) }
+          .select { |t| phase_is_live?(t) }
           .map { |taxon| ContentItem.new(taxon) }.sort_by(&:title)
       end
+    end
+
+    def phase_is_live?(taxon)
+      taxon["phase"] == "live"
     end
 
     def mainstream_browse_pages

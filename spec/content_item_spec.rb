@@ -15,18 +15,13 @@ RSpec.describe GovukNavigationHelpers::ContentItem do
   end
 
   describe "#parent_taxons" do
-    before do
-      allow(described_class)
-        .to receive(:whitelisted_root_taxon_content_ids)
-        .and_return(["aaaa-bbbb"])
-    end
-
     context "for a content item with taxons links" do
-      context "with a whitelisted parent taxon" do
+      context "with a parent taxon with phase set to 'live'" do
         let(:taxon) do
           {
             "content_id" => "cccc-dddd",
             "title" => "Taxon",
+            "phase" => "live",
             "links" => {
               "parent_taxons" => [
                 {
@@ -54,11 +49,12 @@ RSpec.describe GovukNavigationHelpers::ContentItem do
         end
       end
 
-      context "with a non-whitelisted parent taxon" do
+      context "with a parent taxon with phase not set to 'live'" do
         let(:taxon) do
           {
             "content_id" => "cccc-dddd",
             "title" => "Taxon",
+            "phase" => "beta",
             "links" => {
               "parent_taxons" => [
                 {
@@ -116,11 +112,12 @@ RSpec.describe GovukNavigationHelpers::ContentItem do
     end
 
     context "for a taxon content item with parent taxon links" do
-      context "with a whitelisted parent taxon" do
+      context "with a parent taxon with phase set to 'live'" do
         let(:taxon) do
           {
             "content_id" => "cccc-dddd",
             "title" => "Taxon",
+            "phase" => "live",
             "links" => {
               "parent_taxons" => [
                 {
@@ -148,11 +145,12 @@ RSpec.describe GovukNavigationHelpers::ContentItem do
         end
       end
 
-      context "with a non-whitelisted parent taxon" do
+      context "with a parent taxon with phase not set to 'live'" do
         let(:taxon) do
           {
             "content_id" => "cccc-dddd",
             "title" => "Taxon",
+            "phase" => "beta",
             "links" => {
               "parent_taxons" => [
                 {

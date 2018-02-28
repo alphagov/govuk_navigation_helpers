@@ -57,6 +57,7 @@ RSpec.describe GovukNavigationHelpers::TaxonBreadcrumbs do
           "base_path" => "/another-parent",
           "content_id" => "30c1b93d-2553-47c9-bc3c-fc5b513ecc32",
           "locale" => "en",
+          "phase" => "live",
         }
 
         parent = {
@@ -64,6 +65,7 @@ RSpec.describe GovukNavigationHelpers::TaxonBreadcrumbs do
           "locale" => "en",
           "title" => "A-parent",
           "base_path" => "/a-parent",
+          "phase" => "live",
           "links" => {
             "parent_taxons" => [grandparent]
           }
@@ -91,6 +93,7 @@ RSpec.describe GovukNavigationHelpers::TaxonBreadcrumbs do
           "locale" => "en",
           "title" => "A-parent",
           "base_path" => "/a-parent",
+          "phase" => "live",
           "links" => {
             "parent_taxons" => []
           }
@@ -116,6 +119,7 @@ RSpec.describe GovukNavigationHelpers::TaxonBreadcrumbs do
           "locale" => "en",
           "title" => "Parent A",
           "base_path" => "/parent-a",
+          "phase" => "live",
           "links" => {
             "parent_taxons" => []
           }
@@ -125,6 +129,7 @@ RSpec.describe GovukNavigationHelpers::TaxonBreadcrumbs do
           "locale" => "en",
           "title" => "Parent B",
           "base_path" => "/parent-b",
+          "phase" => "live",
           "links" => {
             "parent_taxons" => []
           }
@@ -174,6 +179,7 @@ RSpec.describe GovukNavigationHelpers::TaxonBreadcrumbs do
             "locale" => "en",
             "title" => "Taxon",
             "base_path" => "/taxon",
+            "phase" => "live",
             "links" => {
               "parent_taxons" => parents
             },

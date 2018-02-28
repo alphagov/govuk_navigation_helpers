@@ -95,7 +95,8 @@ RSpec.describe GovukNavigationHelpers::TaxonomySidebar do
           "title" => "Taxon C",
           "base_path" => "/taxon-c",
           "content_id" => "taxon-c",
-          "description" => "The C taxon."
+          "description" => "The C taxon.",
+          "phase" => "live",
         }
 
         expect(sidebar_for(content_item)).to eq(
@@ -507,12 +508,14 @@ RSpec.describe GovukNavigationHelpers::TaxonomySidebar do
             "base_path" => "/taxon-b",
             "content_id" => "taxon-b",
             "description" => "The B taxon.",
+            "phase" => "live",
           },
           {
             "title" => "Taxon A",
             "base_path" => "/taxon-a",
             "content_id" => "taxon-a",
             "description" => "The A taxon.",
+            "phase" => "live",
           },
         ],
       },
