@@ -17,12 +17,13 @@ RSpec.describe GovukNavigationHelpers::TaxonomySidebar do
       expect { sidebar_for(generator.payload) }.to_not raise_error
     end
 
-    context 'given a content item not tagged to any taxon' do
+    context 'given a content item not tagged to any taxon with no document collections' do
       it 'returns an empty sidebar hash' do
         content_item = { "links" => {} }
 
         expect(sidebar_for(content_item)).to eq(
-          items: []
+          items: [],
+          collections: []
         )
       end
     end
@@ -72,7 +73,8 @@ RSpec.describe GovukNavigationHelpers::TaxonomySidebar do
                 { 'title': 'Related item C', 'link': '/related-item-c', },
               ],
             },
-          ]
+          ],
+          collections: [],
         )
       end
 
@@ -121,7 +123,8 @@ RSpec.describe GovukNavigationHelpers::TaxonomySidebar do
               description: "The C taxon.",
               related_content: [],
             },
-          ]
+          ],
+          collections: [],
         )
       end
     end
@@ -182,7 +185,8 @@ RSpec.describe GovukNavigationHelpers::TaxonomySidebar do
                 { 'title': 'Related item C', 'link': '/related-item-c', },
               ],
             }
-          ]
+          ],
+          collections: [],
         )
       end
     end
@@ -221,7 +225,8 @@ RSpec.describe GovukNavigationHelpers::TaxonomySidebar do
                   { title: 'Related link override B', link: '/override-b' },
                 ],
               }
-            ]
+            ],
+            collections: [],
           )
         end
 
@@ -280,7 +285,8 @@ RSpec.describe GovukNavigationHelpers::TaxonomySidebar do
                   { 'title': 'Related link override B', 'link': '/override-b' },
                 ],
               }
-            ]
+            ],
+            collections: [],
           )
         end
 
@@ -317,7 +323,8 @@ RSpec.describe GovukNavigationHelpers::TaxonomySidebar do
                 description: "The B taxon.",
                 related_content: [],
               }
-            ]
+            ],
+            collections: [],
           )
         end
 
@@ -361,7 +368,8 @@ RSpec.describe GovukNavigationHelpers::TaxonomySidebar do
                   { title: 'Related link override', link: '/override' }
                 ],
               },
-            ]
+            ],
+            collections: [],
           )
         end
 
@@ -397,7 +405,8 @@ RSpec.describe GovukNavigationHelpers::TaxonomySidebar do
                   { title: 'Related link override', link: '/override' }
                 ],
               },
-            ]
+            ],
+            collections: [],
           )
         end
 
@@ -448,12 +457,32 @@ RSpec.describe GovukNavigationHelpers::TaxonomySidebar do
                   { title: 'External related link', link: 'http://example.com' }
                 ],
               },
-            ]
+            ],
+            collections: [],
           )
         end
       end
     end
 
+    context 'given a content item with document collections' do
+      it 'returns a sidebar hash containing document collections' do
+        content_item = content_item_with_document_collections
+
+        expect(sidebar_for(content_item)).to eq(
+          items: [],
+          collections: [
+            {
+              path: "/collection-b",
+              text: "Collection B",
+            },
+            {
+              path: "/collection-a",
+              text: "Collection A",
+            },
+            ]
+        )
+      end
+    end
     context 'when Rummager raises an exception' do
       error_handler = nil
 
@@ -510,6 +539,29 @@ RSpec.describe GovukNavigationHelpers::TaxonomySidebar do
             "content_id" => "taxon-a",
             "description" => "The A taxon.",
             "phase" => "live",
+          },
+        ],
+      },
+    }
+  end
+
+  def content_item_with_document_collections
+    {
+      "title" => "A piece of content",
+      "base_path" => "/a-piece-of-content",
+      "links" => {
+        "document_collections" => [
+          {
+            "title" => "Collection B",
+            "base_path" => "/collection-b",
+            "content_id" => "collection-b",
+            "document_type" => "document_collection",
+          },
+          {
+            "title" => "Collection A",
+            "base_path" => "/collection-a",
+            "content_id" => "collection-a",
+            "document_type" => "document_collection",
           },
         ],
       },
