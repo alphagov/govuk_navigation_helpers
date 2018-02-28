@@ -6,12 +6,6 @@ include GdsApi::TestHelpers::Rummager
 
 RSpec.describe GovukNavigationHelpers::TaxonomySidebar do
   describe '#sidebar' do
-    before do
-      allow(GovukNavigationHelpers::ContentItem)
-        .to receive(:whitelisted_root_taxon_content_ids)
-        .and_return(['taxon-a', 'taxon-b', 'taxon-c'])
-    end
-
     it 'can handle any valid content item' do
       stub_any_rummager_search_to_return_no_results
 
