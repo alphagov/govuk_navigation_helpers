@@ -1,4 +1,4 @@
-## Unreleased
+## 9.1.0 
 
 * Check if a taxon's phase is 'live' to determine if it should be passed to a navigation component to be displayed on a page.
 * Remove the old content_id whitelisting approach to filtering for taxons.
