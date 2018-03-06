@@ -1,5 +1,8 @@
 ## Unreleased
 
+* Check if a taxon's phase is 'live' to determine if it should be passed to a navigation component to be displayed on a page.
+* Remove the old content_id whitelisting approach to filtering for taxons.
+
 ## 9.0.0
 * Task lists are now called "step by step navigation".  Things have been renamed to support this
 * The (now) step nav component has an updated data format.  Updated /learn-to-drive-a-car to support this

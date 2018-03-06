@@ -6,12 +6,6 @@ include GdsApi::TestHelpers::Rummager
 
 RSpec.describe GovukNavigationHelpers::TaxonomySidebar do
   describe '#sidebar' do
-    before do
-      allow(GovukNavigationHelpers::ContentItem)
-        .to receive(:whitelisted_root_taxon_content_ids)
-        .and_return(['taxon-a', 'taxon-b', 'taxon-c'])
-    end
-
     it 'can handle any valid content item' do
       stub_any_rummager_search_to_return_no_results
 
@@ -95,7 +89,8 @@ RSpec.describe GovukNavigationHelpers::TaxonomySidebar do
           "title" => "Taxon C",
           "base_path" => "/taxon-c",
           "content_id" => "taxon-c",
-          "description" => "The C taxon."
+          "description" => "The C taxon.",
+          "phase" => "live",
         }
 
         expect(sidebar_for(content_item)).to eq(
@@ -507,12 +502,14 @@ RSpec.describe GovukNavigationHelpers::TaxonomySidebar do
             "base_path" => "/taxon-b",
             "content_id" => "taxon-b",
             "description" => "The B taxon.",
+            "phase" => "live",
           },
           {
             "title" => "Taxon A",
             "base_path" => "/taxon-a",
             "content_id" => "taxon-a",
             "description" => "The A taxon.",
+            "phase" => "live",
           },
         ],
       },
