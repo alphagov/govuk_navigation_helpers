@@ -13,8 +13,6 @@ require_relative "govuk_navigation_helpers/related_navigation_sidebar"
 require_relative "govuk_navigation_helpers/rummager_taxonomy_sidebar_links"
 require_relative "govuk_navigation_helpers/curated_taxonomy_sidebar_links"
 
-require_relative "govuk_navigation_helpers/step_nav_content"
-
 module GovukNavigationHelpers
   class NavigationHelper
     def initialize(content_item)
