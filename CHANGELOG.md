@@ -1,4 +1,10 @@
-## 9.1.0 
+## Unreleased
+
+* Step by step navigation helpers have been removed from here.  They now live
+in govuk_publishing_components as they are closely coupled to components that
+also live there.  (All apps have been updated with this)
+
+## 9.1.0
 
 * Check if a taxon's phase is 'live' to determine if it should be passed to a navigation component to be displayed on a page.
 * Remove the old content_id whitelisting approach to filtering for taxons.
