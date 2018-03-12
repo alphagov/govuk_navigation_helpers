@@ -1,4 +1,4 @@
-## Unreleased
+## 9.2.0
 
 * Step by step navigation helpers have been removed from here.  They now live
 in govuk_publishing_components as they are closely coupled to components that
