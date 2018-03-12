@@ -3,6 +3,8 @@
 * Step by step navigation helpers have been removed from here.  They now live
 in govuk_publishing_components as they are closely coupled to components that
 also live there.  (All apps have been updated with this)
+* Remove Related Navigation Sidebar Helper as it has now been moved to govuk_publishing_components.
+* Enable Taxonomy Sidebar Helper to return collection links.
 
 ## 9.1.0
 

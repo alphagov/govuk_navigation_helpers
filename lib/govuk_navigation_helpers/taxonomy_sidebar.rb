@@ -10,6 +10,7 @@ module GovukNavigationHelpers
     def sidebar
       {
         items: related_items,
+        collections: collections,
       }
     end
 
@@ -30,6 +31,16 @@ module GovukNavigationHelpers
         CuratedTaxonomySidebarLinks
       else
         RummagerTaxonomySidebarLinks
+      end
+    end
+
+    def collections
+      links = @content_item.related_collections
+      links.map do |link|
+        {
+          path: link["base_path"],
+          text: link["title"]
+        }
       end
     end
   end
