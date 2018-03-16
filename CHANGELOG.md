@@ -1,3 +1,7 @@
+## Unreleased
+
+* No longer return the current page in taxon breadcrumbs.
+
 ## 9.2.0
 
 * Step by step navigation helpers have been removed from here.  They now live
