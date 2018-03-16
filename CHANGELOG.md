@@ -1,4 +1,4 @@
-## Unreleased
+## 9.2.1
 
 * No longer return the current page in taxon breadcrumbs.
 
